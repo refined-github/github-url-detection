@@ -1,0 +1,14 @@
+{
+	"extends": "@sindresorhus/tsconfig",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"lib": [
+			"dom",
+			"esnext.array"
+		]
+	},
+	"include": [
+		"test.ts"
+	]
+}

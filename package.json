@@ -1,0 +1,73 @@
+{
+	"name": "github-url-detection",
+	"version": "1.0.0",
+	"description": "Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.",
+	"keywords": [
+		"github",
+		"page",
+		"routes",
+		"detect",
+		"test",
+		"extension"
+	],
+	"repository": "fregante/github-url-detection",
+	"license": "MIT",
+	"author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+	"main": "cjs/index.js",
+	"module": "esm/index.js",
+	"files": [
+		"cjs/index.js",
+		"cjs/index.d.ts",
+		"esm/index.js",
+		"esm/index.d.ts"
+	],
+	"scripts": {
+		"ava": "TS_NODE_PROJECT=tsconfig.ava.json ava",
+		"build": "rollup -c",
+		"prepack": "rollup -c",
+		"test": "run-p build ava xo",
+		"watch": "rollup -c --watch",
+		"xo": "xo"
+	},
+	"xo": {
+		"envs": [
+			"browser"
+		],
+		"rules": {
+			"camelcase": "off",
+			"@typescript-eslint/prefer-readonly-parameter-types": "off",
+			"comma-dangle": [
+				"error",
+				"always-multiline"
+			]
+		}
+	},
+	"ava": {
+		"extensions": [
+			"ts"
+		],
+		"require": [
+			"esm",
+			"ts-node/register"
+		]
+	},
+	"devDependencies": {
+		"@rollup/plugin-json": "^4.0.3",
+		"@rollup/plugin-node-resolve": "^7.1.3",
+		"@rollup/plugin-typescript": "^4.1.1",
+		"@sindresorhus/tsconfig": "^0.7.0",
+		"@types/jsdom": "^16.2.1",
+		"ava": "^3.8.1",
+		"esm": "^3.2.25",
+		"github-reserved-names": "^1.1.8",
+		"jsdom": "^16.2.2",
+		"npm-run-all": "^4.1.5",
+		"rollup": "^2.7.6",
+		"rollup-plugin-terser": "^5.3.0",
+		"strip-indent": "^3.0.0",
+		"ts-node": "^8.10.1",
+		"tslib": "^1.11.2",
+		"typescript": "^3.8.3",
+		"xo": "^0.30.0"
+	}
+}
