@@ -168,9 +168,7 @@ collect.set('isConflict', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
 
-/**
- * Do not use this detection if you're looking for PRs, they may appear mixed with issues in search. Use `isDiscussionList`
- */
+/** Any `isDiscussionList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
 collect.set('isPRList', [
 	'https://github.com/pulls',
