@@ -7,7 +7,6 @@ import collector from './source/collector';
 const {window} = new JSDOM('…');
 
 (global as any).document = window.document;
-(global as any).location = new URL('https://github.com');
 
 const allUrls = new Set<string>([...collector.values()].flat());
 allUrls.delete('combinedTestOnly');
@@ -33,8 +32,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	for (const url of validURLs) {
 		test(`${detectName} ${url.replace('https://github.com', '')}`, t => {
-			location.href = url;
-			t.true(detect(), stripIndent(`
+			t.true(detect(new URL(url)), stripIndent(`
 				Is this URL \`${detectName}\`?
 					${url.replace('https://github.com', '')}
 
@@ -52,8 +50,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	for (const url of allUrls) {
 		if (!validURLs.includes(url)) {
 			test(`${detectName} NO ${url}`, t => {
-				location.href = url;
-				t.false(detect(), stripIndent(`
+				t.false(detect(new URL(url)), stripIndent(`
 					Is this URL \`${detectName}\`?
 						${url.replace('https://github.com', '')}
 
