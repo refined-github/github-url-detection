@@ -1,7 +1,5 @@
 import reservedNames from 'github-reserved-names/reserved-names.json';
-import {getUsername, getCleanPathname, getRepoPath} from './utils';
 import collect from './collector';
-export * as utils from './utils';
 
 const exists = (selector: string) => Boolean(document.querySelector(selector));
 
@@ -397,3 +395,25 @@ collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 ]);
 
+const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
+
+// Drops leading and trailing slash to avoid /\/?/ everywhere
+const getCleanPathname = (url: URL | Location = location): string => url.pathname.replace(/^\/|\/$/g, '');
+
+// Parses a repo's subpage, e.g.
+// '/user/repo/issues/' -> 'issues'
+// '/user/repo/' -> ''
+// returns undefined if the path is not a repo
+const getRepoPath = (url: URL | Location = location): string | undefined => {
+	if (isRepo(url)) {
+		return getCleanPathname(url).split('/').slice(2).join('/');
+	}
+
+	return undefined;
+};
+
+export const utils = {
+	getUsername,
+	getCleanPathname,
+	getRepoPath,
+};
