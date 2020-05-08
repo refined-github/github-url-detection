@@ -1,8 +1,8 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
-import * as pageDetect from './source';
-import collector from './source/collector';
+import * as pageDetect from './index'; // `index` ensures that it loads the source, not what's specified in `package.json`
+import collector from './collector';
 
 const {window} = new JSDOM('…');
 

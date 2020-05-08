@@ -35,6 +35,8 @@
 		],
 		"rules": {
 			"camelcase": "off",
+			"unicorn/import-index": "off",
+			"import/no-useless-path-segments": "off",
 			"@typescript-eslint/prefer-readonly-parameter-types": "off",
 			"comma-dangle": [
 				"error",

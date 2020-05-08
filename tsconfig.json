@@ -2,9 +2,9 @@
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
 		"outDir": "cjs",
-		"rootDir": "source"
+		"rootDir": "."
 	},
 	"include": [
-		"source"
+		"source", "index.ts", "globals.d.ts", "collector.ts"
 	]
 }
