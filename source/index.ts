@@ -143,7 +143,7 @@ collect.set('isOrganizationDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team',
 ]);
 
-export const isOwnUserProfile = (url: URL | Location = location): boolean => getCleanPathname(url) === getUsername();
+export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsername();
 
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
@@ -314,7 +314,7 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
-export const isRepoWithAccess = (url: URL | Location = location): boolean => isRepo(url) && exists('.reponav-item[href$="/settings"]');
+export const isRepoWithAccess = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
 
 export const isSingleCommit = (url: URL | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepoPath(url)!);
 collect.set('isSingleCommit', [
@@ -355,9 +355,9 @@ collect.set('isBranches', [
 
 export const isUserProfile = (): boolean => exists('.user-profile-nav');
 
-export const isUserProfileRepoTab = (url: URL | Location = location): boolean =>
+export const isUserProfileRepoTab = (): boolean =>
 	isUserProfile() &&
-	new URLSearchParams(url.search).get('tab') === 'repositories';
+	new URLSearchParams(location.search).get('tab') === 'repositories';
 
 export const isSingleTagPage = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
 collect.set('isSingleTagPage', [

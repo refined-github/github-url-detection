@@ -12,8 +12,6 @@ const {window} = new JSDOM('…');
 const allUrls = new Set<string>([...collector.values()].flat());
 allUrls.delete('combinedTestOnly');
 
-const domTestsIdentifiers = /\bexists\(|\bdocument\.|\bgetUsername\(|isUserProfile\(/;
-
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
 		continue;
@@ -21,7 +19,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = collector.get(detectName);
 
-	if (validURLs === 'combinedTestOnly' || domTestsIdentifiers.test(detect.toString())) {
+	if (validURLs === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
 		continue;
 	}
 
