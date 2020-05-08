@@ -73,6 +73,10 @@ if (pageDetect.isOrganizationProfile()) {
 }
 ```
 
+## Related
+
+- [github-reserved-names](https://github.com/Mottie/github-reserved-names) - Get a list, or check if a user or organization name is reserved by GitHub.
+- [shorten-repo-url](https://github.com/fregante/shorten-repo-url) - Shorten GitHub links like GitHub shortens Issues and Commit links.
 
 ## License
 
