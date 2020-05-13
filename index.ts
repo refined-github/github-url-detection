@@ -302,6 +302,11 @@ collect.set('isRepoSettings', [
 	'https://github.com/sindresorhus/refined-github/settings/branches',
 ]);
 
+export const isRepoMainSettings = (url: URL | Location = location): boolean => getRepoPath(url) === 'settings';
+collect.set('isRepoMainSettings', [
+	'https://github.com/sindresorhus/refined-github/settings',
+]);
+
 export const isRepoTree = (url: URL | Location = location): boolean => isRepoRoot(url) || String(getRepoPath(url)).startsWith('tree/');
 collect.set('isRepoTree', [
 	...collect.get('isRepoRoot') as string[],
