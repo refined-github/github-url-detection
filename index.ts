@@ -315,10 +315,6 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
-export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
-
-export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
-
 /** @deprecated use canUserEditRepo */
 export const isRepoWithAccess = canUserEditRepo;
 
@@ -404,6 +400,10 @@ export const isActionJobRun = (url: URL | Location = location): boolean => Strin
 collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 ]);
+
+export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
+
+export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
 
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
