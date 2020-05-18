@@ -58,6 +58,9 @@ collect.set('isDashboard', [
 	'https://not-github.com/',
 	'https://my-little-hub.com/',
 	'https://github.com/?tab=repositories', // Gotcha for `isUserProfileRepoTab`
+	'https://github.com/?tab=stars', // Gotcha for `isUserProfileStarsTab`
+	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
+	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
 ]);
 
 export const isEnterprise = (url: URL | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
@@ -354,9 +357,24 @@ collect.set('isBranches', [
 
 export const isUserProfile = (): boolean => exists('.user-profile-nav');
 
+export const isUserProfileMainTab = (): boolean =>
+	isUserProfile() && !new URLSearchParams(location.search).get('tab');
+
 export const isUserProfileRepoTab = (): boolean =>
 	isUserProfile() &&
 	new URLSearchParams(location.search).get('tab') === 'repositories';
+
+export const isUserProfileStarsTab = (): boolean =>
+	isUserProfile() &&
+	new URLSearchParams(location.search).get('tab') === 'stars';
+
+export const isUserProfileFollowersTab = (): boolean =>
+	isUserProfile() &&
+	new URLSearchParams(location.search).get('tab') === 'followers';
+
+export const isUserProfileFollowingTab = (): boolean =>
+	isUserProfile() &&
+	new URLSearchParams(location.search).get('tab') === 'following';
 
 export const isSingleTagPage = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
 collect.set('isSingleTagPage', [
