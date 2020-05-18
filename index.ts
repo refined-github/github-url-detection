@@ -315,8 +315,6 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
-export const isRepoWithAccess = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
-
 export const isSingleCommit = (url: URL | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepoPath(url)!);
 collect.set('isSingleCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
@@ -399,6 +397,13 @@ export const isActionJobRun = (url: URL | Location = location): boolean => Strin
 collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 ]);
+
+export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
+
+export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
+
+/** @deprecated use canUserEditRepo */
+export const isRepoWithAccess = canUserEditRepo;
 
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
