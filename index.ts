@@ -315,7 +315,12 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
-export const isRepoWithAccess = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
+export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
+
+export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
+
+/** @deprecated use canUserEditRepo */
+export const isRepoWithAccess = canUserEditRepo;
 
 export const isSingleCommit = (url: URL | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepoPath(url)!);
 collect.set('isSingleCommit', [
