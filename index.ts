@@ -405,15 +405,17 @@ export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[
 /** @deprecated use canUserEditRepo */
 export const isRepoWithAccess = canUserEditRepo;
 
+/** Get the logged-in user’s username */
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
-// Drops leading and trailing slash to avoid /\/?/ everywhere
+/** Drop leading and trailing slashes */
 const getCleanPathname = (url: URL | Location = location): string => url.pathname.replace(/^\/|\/$/g, '');
 
-// Parses a repo's subpage, e.g.
-// '/user/repo/issues/' -> 'issues'
-// '/user/repo/' -> ''
-// returns undefined if the path is not a repo
+/** Parses a repo's subpage
+@example '/user/repo/issues/' -> 'issues'
+@example '/user/repo/' -> ''
+@exampke '/settings/token/' -> undefined
+*/
 const getRepoPath = (url: URL | Location = location): string | undefined => {
 	if (isRepo(url)) {
 		return getCleanPathname(url).split('/').slice(2).join('/');
