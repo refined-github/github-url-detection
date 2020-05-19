@@ -239,6 +239,8 @@ collect.set('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
 
+export const isEmptyRepo = (): boolean => isRepo() && exists('.blankslate');
+
 export const isRepoTaxonomyDiscussionList = (url: URL | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
 collect.set('isRepoTaxonomyDiscussionList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
@@ -422,8 +424,6 @@ export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[
 
 /** @deprecated use canUserEditRepo */
 export const isRepoWithAccess = canUserEditRepo;
-
-export const isEmptyRepo = (): boolean => isRepo() && exists('.blankslate');
 
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
