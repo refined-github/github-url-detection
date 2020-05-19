@@ -423,6 +423,8 @@ export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[
 /** @deprecated use canUserEditRepo */
 export const isRepoWithAccess = canUserEditRepo;
 
+export const isEmptyRepo = (): boolean => isRepo() && exists('.blankslate');
+
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
 // Drops leading and trailing slash to avoid /\/?/ everywhere
