@@ -95,3 +95,48 @@ test('is500', t => {
 	document.title = 'Server Error · Issue #266 · sintaxi/surge · GitHub';
 	t.false(pageDetect.is500());
 });
+
+test('getRepoPath', t => {
+	const pairs = new Map<string, string | undefined>([
+		[
+			'https://github.com',
+			undefined,
+		],
+		[
+			'https://gist.github.com/',
+			undefined,
+		],
+		[
+			'https://github.com/settings/developers',
+			undefined,
+		],
+		[
+			'https://github.com/sindresorhus/refined-github',
+			'',
+		],
+		[
+			'https://github.com/sindresorhus/refined-github/',
+			'',
+		],
+		[
+			'https://github.com/sindresorhus/refined-github/blame/master/package.json',
+			'blame/master/package.json',
+		],
+		[
+			'https://github.com/sindresorhus/refined-github/commit/57bf4',
+			'commit/57bf4',
+		],
+		[
+			'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=0',
+			'compare/test-branch',
+		],
+		[
+			'https://github.com/sindresorhus/refined-github/tree/master/distribution',
+			'tree/master/distribution',
+		],
+	]);
+
+	for (const [url, result] of pairs) {
+		t.is(result, pageDetect.utils.getRepoPath(new URL(url)));
+	}
+});
