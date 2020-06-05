@@ -154,12 +154,11 @@ collect.set('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
-export const isPR = (url: URL | Location = location): boolean => /^pull\/\d+/.test(getRepoPath(url)!);
+export const isPR = (url: URL | Location = location): boolean => /^pull\/\d+/.test(getRepoPath(url)!) && !isPRConflicts(url);
 collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
-	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
