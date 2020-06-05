@@ -164,8 +164,10 @@ collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
 
-export const isConflict = (url: URL | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepoPath(url)!);
-collect.set('isConflict', [
+/** @deprecated use isPRConflicts instead */
+export const isConflict = isPRConflicts;
+export const isPRConflicts = (url: URL | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepoPath(url)!);
+collect.set('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
 
