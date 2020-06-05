@@ -171,6 +171,7 @@ collect.set('isPRConflicts', [
 
 /** @deprecated use isPRConflicts instead */
 export const isConflict = isPRConflicts;
+collect.set('isConflict', combinedTestOnly);
 
 /** Any `isDiscussionList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
