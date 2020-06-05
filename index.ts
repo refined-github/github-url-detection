@@ -163,10 +163,14 @@ collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
 
-export const isConflict = (url: URL | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepoPath(url)!);
-collect.set('isConflict', [
+export const isPRConflicts = (url: URL | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepoPath(url)!);
+collect.set('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
+
+/** @deprecated use isPRConflicts instead */
+export const isConflict = isPRConflicts;
+collect.set('isConflict', combinedTestOnly);
 
 /** Any `isDiscussionList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
