@@ -22,7 +22,7 @@
 		"esm/index.d.ts"
 	],
 	"scripts": {
-		"ava": "TS_NODE_PROJECT=tsconfig.ava.json ava",
+		"ava": "TS_NODE_PROJECT=tsconfig.ava.json ava --timeout 30s",
 		"build": "rollup -c",
 		"prepack": "rollup -c",
 		"test": "run-p build ava xo",
