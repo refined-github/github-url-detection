@@ -355,7 +355,7 @@ collect.set('isTrending', [
 	'https://github.com/trending/unknown',
 ]);
 
-export const isBranches = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('branches') ?? false;
+export const isBranches = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('branches');
 collect.set('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
