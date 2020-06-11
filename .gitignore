@@ -9,4 +9,5 @@ Thumbs.db
 logs
 *.map
 cjs
-esm
+esm/*
+!esm/package.json
