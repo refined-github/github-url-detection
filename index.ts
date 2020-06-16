@@ -225,6 +225,11 @@ collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
+export const isEditingRelease = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('releases/edit');
+collect.set('isEditingRelease', [
+	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
+]);
+
 export const isRepo = (url: URL | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
 	!reservedNames.includes(url.pathname.split('/', 2)[1]) &&
 	!isDashboard(url) &&
