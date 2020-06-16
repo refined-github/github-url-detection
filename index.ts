@@ -227,7 +227,7 @@ collect.set('isEditingFile', [
 
 export const isEditingRelease = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('releases/edit');
 collect.set('isEditingRelease', [
-	'https://github.com/sindresorhus/refined-github/releases/edit/11',
+	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
 export const isRepo = (url: URL | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
