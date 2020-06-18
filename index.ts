@@ -189,6 +189,8 @@ collect.set('isPRCommit', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
 ]);
 
+export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
+
 export const isPRConversation = (url: URL | Location = location): boolean => /^pull\/\d+$/.test(getRepoPath(url)!);
 collect.set('isPRConversation', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
