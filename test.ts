@@ -7,7 +7,7 @@ import collector from './collector';
 const {window} = new JSDOM('…');
 
 (global as any).document = window.document;
-(global as any).location = window.location;
+(global as any).location = new URL('https://github.com/');
 
 const allUrls = new Set<string>([...collector.values()].flat());
 allUrls.delete('combinedTestOnly');
