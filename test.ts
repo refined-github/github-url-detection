@@ -4,10 +4,10 @@ import stripIndent from 'strip-indent';
 import * as pageDetect from './index'; // `index` ensures that it loads the source, not what's specified in `package.json`
 import collector from './collector';
 
-const jsdom = new JSDOM('…');
+const {window} = new JSDOM('…');
 
-(global as any).document = jsdom.window.document;
-(global as any).location = jsdom.window.location;
+(global as any).document = window.document;
+(global as any).location = window.location;
 
 const allUrls = new Set<string>([...collector.values()].flat());
 allUrls.delete('combinedTestOnly');
@@ -99,15 +99,15 @@ test('is500', t => {
 
 test('isPRCommit404', t => {
 	document.title = 'Commit range not found · Pull Request #3227 · sindresorhus/refined-github';
-	jsdom.reconfigure({url: 'https://github.com/sindresorhus/refined-github/pull/3227/commits/32c8a88360a85739f151566eae0225d530ce6a15'});
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/32c8a88360a85739f151566eae0225d530ce6a15';
 	t.true(pageDetect.isPRCommit404());
 
 	document.title = 'Experiment with `@primer/octicons-react` icons by FloEdelmann · Pull Request #3227 · sindresorhus/refined-github';
-	jsdom.reconfigure({url: 'https://github.com/sindresorhus/refined-github/pull/3227/commits/edbdcdd5559a2a8da78abdc7cb0814155713974c'});
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/edbdcdd5559a2a8da78abdc7cb0814155713974c';
 	t.false(pageDetect.isPRCommit404());
 
 	document.title = 'Commit range not found by SomeContributor · Pull Request #999999 · sindresorhus/refined-github';
-	jsdom.reconfigure({url: 'https://github.com/sindresorhus/refined-github/pull/999999/commits/32c8a88360a85739f151566eae0225d530ce6a15'});
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/999999/commits/32c8a88360a85739f151566eae0225d530ce6a15';
 	t.false(pageDetect.isPRCommit404());
 });
 
