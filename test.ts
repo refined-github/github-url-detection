@@ -7,6 +7,7 @@ import collector from './collector';
 const {window} = new JSDOM('…');
 
 (global as any).document = window.document;
+(global as any).location = new URL('https://github.com/');
 
 const allUrls = new Set<string>([...collector.values()].flat());
 allUrls.delete('combinedTestOnly');
@@ -94,6 +95,20 @@ test('is500', t => {
 
 	document.title = 'Server Error · Issue #266 · sintaxi/surge · GitHub';
 	t.false(pageDetect.is500());
+});
+
+test('isPRCommit404', t => {
+	document.title = 'Commit range not found · Pull Request #3227 · sindresorhus/refined-github';
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/32c8a88360a85739f151566eae0225d530ce6a15';
+	t.true(pageDetect.isPRCommit404());
+
+	document.title = 'Experiment with `@primer/octicons-react` icons by FloEdelmann · Pull Request #3227 · sindresorhus/refined-github';
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/edbdcdd5559a2a8da78abdc7cb0814155713974c';
+	t.false(pageDetect.isPRCommit404());
+
+	document.title = 'Commit range not found by SomeContributor · Pull Request #999999 · sindresorhus/refined-github';
+	location.href = 'https://github.com/sindresorhus/refined-github/pull/999999/commits/32c8a88360a85739f151566eae0225d530ce6a15';
+	t.false(pageDetect.isPRCommit404());
 });
 
 test('getRepoPath', t => {
