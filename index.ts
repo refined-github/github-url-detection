@@ -287,6 +287,12 @@ collect.set('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
 ]);
 
+export const isRepoHome = (url: URL | Location = location): boolean => getRepoPath(url) === '';
+collect.set('isRepoHome', [
+	'https://github.com/sindresorhus/refined-github',
+	'https://github.com/sindresorhus/refined-github/',
+]);
+
 export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
 collect.set('isRepoRoot', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
