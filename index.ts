@@ -296,6 +296,7 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/edit',
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
+	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
 export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
@@ -307,7 +308,6 @@ collect.set('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6',
 	'https://github.com/sindresorhus/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6/',
 	'https://github.com/sindresorhus/refined-github/tree/57bf4',
-	'https://github.com/sindresorhus/refined-github?files=1',
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
