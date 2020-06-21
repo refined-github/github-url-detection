@@ -287,22 +287,27 @@ collect.set('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
 ]);
 
-export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
-collect.set('isRepoRoot', [
+export const isRepoHome = (url: URL | Location = location): boolean => getRepoPath(url) === '';
+collect.set('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
-	'https://github.com/sindresorhus/edit',
-	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/refined-github',
 	'https://github.com/sindresorhus/refined-github/',
 	'https://github.com/sindresorhus/notifications/',
+	'https://github.com/sindresorhus/edit',
+	'https://github.com/sindresorhus/search',
+	'https://github.com/sindresorhus/branches',
+	'https://github.com/sindresorhus/refined-github?files=1',
+]);
+
+export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
+collect.set('isRepoRoot', [
+	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons/',
 	'https://github.com/sindresorhus/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6',
 	'https://github.com/sindresorhus/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6/',
 	'https://github.com/sindresorhus/refined-github/tree/57bf4',
-	'https://github.com/sindresorhus/refined-github?files=1',
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
-	'https://github.com/sindresorhus/branches',
 ]);
 
 // This can't use `getRepoPath` to avoid infinite recursion.
