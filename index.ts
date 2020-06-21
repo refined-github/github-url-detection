@@ -301,7 +301,6 @@ collect.set('isRepoHome', [
 
 export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
 collect.set('isRepoRoot', [
-	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons/',
