@@ -287,7 +287,7 @@ collect.set('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
 ]);
 
-export const isRepoHome = (url: URL | Location = location): boolean => getRepoPath(url) === '';
+export const isRepoHome = (url: URL | Location = location): boolean => isRepoRoot(url) && getRepoPath(url) === '';
 collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github',
 	'https://github.com/sindresorhus/refined-github/',
