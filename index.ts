@@ -299,7 +299,9 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url: URL | Location = location): boolean => /^(tree\/[^/]+)?$/.test(getRepoPath(url)!);
+export const isRepoRoot = (url?: URL | Location): boolean =>
+	/^(tree\/[^/]+)?$/.test(getRepoPath(url ?? location)!) ||
+	(!url && document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL())); // #15
 collect.set('isRepoRoot', [
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
@@ -452,7 +454,7 @@ const getCleanPathname = (url: URL | Location = location): string => url.pathnam
 /** Parses a repo's subpage
 @example '/user/repo/issues/' -> 'issues'
 @example '/user/repo/' -> ''
-@exampke '/settings/token/' -> undefined
+@example '/settings/token/' -> undefined
 */
 const getRepoPath = (url: URL | Location = location): string | undefined => {
 	if (isRepo(url)) {
@@ -462,8 +464,12 @@ const getRepoPath = (url: URL | Location = location): string | undefined => {
 	return undefined;
 };
 
+/** Get the 'user/repo' part from an URL */
+const getRepoURL = (url: URL | Location = location): string => url.pathname.slice(1).split('/', 2).join('/');
+
 export const utils = {
 	getUsername,
 	getCleanPathname,
 	getRepoPath,
+	getRepoURL,
 };
