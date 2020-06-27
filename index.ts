@@ -79,8 +79,8 @@ collect.set('isGist', [
 	'https://my-little-hub.com/gist',
 ]);
 
-export const isGlobalDiscussionList = (url: URL | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]);
-collect.set('isGlobalDiscussionList', [
+export const isGlobalConversationList = (url: URL | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]);
+collect.set('isGlobalConversationList', [
 	'https://github.com/issues',
 	'https://github.com/issues?q=is%3Apr+is%3Aopen',
 	'https://github.com/issues/assigned',
@@ -92,6 +92,9 @@ collect.set('isGlobalDiscussionList', [
 	'https://github.com/pulls/review-requested',
 ]);
 
+/** @deprecated use isGlobalConversationList instead */
+export const isGlobalDiscussionList = isGlobalConversationList;
+
 export const isGlobalSearchResults = (url: URL | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
 collect.set('isGlobalSearchResults', [
 	'https://github.com/search?q=refined-github&ref=opensearch',
@@ -102,8 +105,11 @@ collect.set('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isDiscussionList = (url: URL | Location = location): boolean => isGlobalDiscussionList(url) || isRepoDiscussionList(url);
-collect.set('isDiscussionList', combinedTestOnly);
+export const isConversationList = (url: URL | Location = location): boolean => isGlobalConversationList(url) || isRepoConversationList(url);
+collect.set('isConversationList', combinedTestOnly);
+
+/** @deprecated use isConversationList instead */
+export const isDiscussionList = isConversationList;
 
 export const isLabelList = (url: URL | Location = location): boolean => getRepoPath(url) === 'labels';
 collect.set('isLabelList', [
@@ -172,7 +178,7 @@ collect.set('isPRConflicts', [
 export const isConflict = isPRConflicts;
 collect.set('isConflict', combinedTestOnly);
 
-/** Any `isDiscussionList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
+/** Any `isConversationList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
 collect.set('isPRList', [
 	'https://github.com/pulls',
@@ -243,8 +249,8 @@ collect.set('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 	'https://github.com/sindresorhus/notifications/',
 	'https://github.com/sindresorhus/refined-github/pull/148',
-	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyDiscussionList
-	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyDiscussionList
+	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyConversationList
+	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyConversationList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
@@ -254,17 +260,23 @@ export const isEmptyRepo = (): boolean => isRepo() && exists('.blankslate');
 
 export const isEmptyRepoRoot = (): boolean => isRepoRoot() && exists('.blankslate');
 
-export const isRepoTaxonomyDiscussionList = (url: URL | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
-collect.set('isRepoTaxonomyDiscussionList', [
+export const isRepoTaxonomyConversationList = (url: URL | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
+collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
 	'https://github.com/sindresorhus/refined-github/milestones/1',
 ]);
 
-export const isRepoDiscussionList = (url: URL | Location = location): boolean =>
+/** @deprecated use isRepoTaxonomyConversationList instead */
+export const isRepoTaxonomyDiscussionList = isRepoTaxonomyConversationList;
+
+export const isRepoConversationList = (url: URL | Location = location): boolean =>
 	isRepoPRList(url) ||
 	isRepoIssueList(url) ||
-	isRepoTaxonomyDiscussionList(url);
-collect.set('isRepoDiscussionList', combinedTestOnly);
+	isRepoTaxonomyConversationList(url);
+collect.set('isRepoConversationList', combinedTestOnly);
+
+/** @deprecated use isRepoConversationList instead */
+export const isRepoDiscussionList = isRepoConversationList;
 
 export const isRepoPRList = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('pulls');
 collect.set('isRepoPRList', [
