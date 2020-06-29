@@ -92,10 +92,6 @@ collect.set('isGlobalConversationList', [
 	'https://github.com/pulls/review-requested',
 ]);
 
-/** @deprecated use isGlobalConversationList instead */
-export const isGlobalDiscussionList = isGlobalConversationList;
-collect.set('isGlobalDiscussionList', combinedTestOnly);
-
 export const isGlobalSearchResults = (url: URL | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
 collect.set('isGlobalSearchResults', [
 	'https://github.com/search?q=refined-github&ref=opensearch',
@@ -108,10 +104,6 @@ collect.set('isIssue', [
 
 export const isConversationList = (url: URL | Location = location): boolean => isGlobalConversationList(url) || isRepoConversationList(url);
 collect.set('isConversationList', combinedTestOnly);
-
-/** @deprecated use isConversationList instead */
-export const isDiscussionList = isConversationList;
-collect.set('isDiscussionList', combinedTestOnly);
 
 export const isLabelList = (url: URL | Location = location): boolean => getRepoPath(url) === 'labels';
 collect.set('isLabelList', [
@@ -268,19 +260,11 @@ collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/milestones/1',
 ]);
 
-/** @deprecated use isRepoTaxonomyConversationList instead */
-export const isRepoTaxonomyDiscussionList = isRepoTaxonomyConversationList;
-collect.set('isRepoTaxonomyDiscussionList', combinedTestOnly);
-
 export const isRepoConversationList = (url: URL | Location = location): boolean =>
 	isRepoPRList(url) ||
 	isRepoIssueList(url) ||
 	isRepoTaxonomyConversationList(url);
 collect.set('isRepoConversationList', combinedTestOnly);
-
-/** @deprecated use isRepoConversationList instead */
-export const isRepoDiscussionList = isRepoConversationList;
-collect.set('isRepoDiscussionList', combinedTestOnly);
 
 export const isRepoPRList = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('pulls');
 collect.set('isRepoPRList', [
