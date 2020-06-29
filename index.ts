@@ -168,10 +168,6 @@ collect.set('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
 
-/** @deprecated use isPRConflicts instead */
-export const isConflict = isPRConflicts;
-collect.set('isConflict', combinedTestOnly);
-
 /** Any `isConversationList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
 collect.set('isPRList', [
@@ -248,9 +244,6 @@ collect.set('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
-
-/** @deprecated use isEmptyRepoRoot instead */
-export const isEmptyRepo = (): boolean => isRepo() && exists('.blankslate');
 
 export const isEmptyRepoRoot = (): boolean => isRepoRoot() && exists('.blankslate');
 
@@ -439,9 +432,6 @@ collect.set('isActionJobRun', [
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
-
-/** @deprecated use canUserEditRepo instead */
-export const isRepoWithAccess = canUserEditRepo;
 
 /** Get the logged-in user’s username */
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
