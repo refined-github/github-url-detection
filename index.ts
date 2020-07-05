@@ -186,6 +186,7 @@ collect.set('isPRCommit', [
 ]);
 
 export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
+export const isPRFile404 = (): boolean => isPRFiles() && document.title.startsWith('Commit range not found · Pull Request');
 
 export const isPRConversation = (url: URL | Location = location): boolean => /^pull\/\d+$/.test(getRepoPath(url)!);
 collect.set('isPRConversation', [
