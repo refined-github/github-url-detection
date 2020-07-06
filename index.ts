@@ -293,8 +293,8 @@ collect.set('isRepoHome', [
 ]);
 
 export const isRepoRoot = (url?: URL | Location): boolean =>
-	/^(tree\/[^/]+)?$/.test(getRepoPath(url ?? location)!) ||
-	(!url && document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL())); // #15
+	/^(tree\/[^/]+)?$/.test(getRepoPath(url ?? location)!) &&
+	(url ? true : document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL())); // #15
 collect.set('isRepoRoot', [
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
