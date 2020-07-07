@@ -111,6 +111,12 @@ test('isPRCommit404', t => {
 	t.false(pageDetect.isPRCommit404());
 });
 
+test('isPRFile404', t => {
+	document.title = 'Commit range not found · Pull Request #789 · sindresorhus/eslint-plugin-unicorn';
+	location.href = 'https://github.com/sindresorhus/eslint-plugin-unicorn/pull/789/files/a58b37845f1b2660221de019e4ae6c736feedc26..eed168224d7994652b1d1ff69a5c8cebee223faf';
+	t.true(pageDetect.isPRFile404());
+});
+
 test('getRepoPath', t => {
 	const pairs = new Map<string, string | undefined>([
 		[
