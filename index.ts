@@ -434,7 +434,7 @@ collect.set('isActionJobRun', [
 
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
 
-export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"]');
+export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item="settings-tab"]');
 
 /** Get the logged-in user’s username */
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
