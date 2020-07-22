@@ -293,9 +293,23 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | Location): boolean =>
-	/^(tree\/[^/]+)?$/.test(getRepoPath(url ?? location)!) &&
-	(url ? true : (document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL()))); // #15
+export const isRepoRoot = (url?: URL | Location): boolean => {
+	if (isRepoHome(url ?? location)) {
+		return true;
+	}
+
+	if (!/^tree\/[^/]+$/.test(getRepoPath(url ?? location)!)) {
+		// It doesn't look like the root
+		return false;
+	}
+
+	if (!url)
+		// If we're checking the current page, double-check the title // #15
+		return document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL());
+	}
+
+	return true;
+}
 collect.set('isRepoRoot', [
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
