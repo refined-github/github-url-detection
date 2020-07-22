@@ -309,7 +309,7 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 	}
 
 	return true;
-}
+};
 collect.set('isRepoRoot', [
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
