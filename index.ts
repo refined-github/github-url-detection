@@ -304,7 +304,7 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 	}
 
 	if (url) {
-		 return true;
+		return true;
 	}
 
 	// If we're checking the current page, double-check the title // #15
