@@ -456,7 +456,18 @@ const getRepoPath = (url: URL | Location = location): string | undefined => {
 };
 
 /** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL */
-const getRepoURL = (url: URL | Location = new URL(document.querySelector('[property="og:url"]')?.content ?? location.href)): string => url.pathname.slice(1).split('/', 2).join('/');
+const getRepoURL = (url: URL | Location): string => {
+	if (!url) {
+		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
+		if (canonical) {
+			url = new URL(canonical.content);
+		} else {
+			url = location;
+		}
+	}
+
+	return url.pathname.slice(1).split('/', 2).join('/')
+};
 
 export const utils = {
 	getUsername,
