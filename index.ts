@@ -459,11 +459,7 @@ const getRepoPath = (url: URL | Location = location): string | undefined => {
 const getRepoURL = (url?: URL | Location): string => {
 	if (!url) {
 		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
-		if (canonical) {
-			url = new URL(canonical.content);
-		} else {
-			url = location;
-		}
+		url = canonical ? new URL(canonical.content) : location;
 	}
 
 	return url.pathname.slice(1).split('/', 2).join('/');
