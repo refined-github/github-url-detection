@@ -294,7 +294,7 @@ collect.set('isRepoHome', [
 ]);
 
 export const isRepoRoot = (url?: URL | Location): boolean => {
-	const repoPath = getRepoPath(url ?? location)!;
+	const repoPath = getRepoPath(url ?? location);
 
 	if (repoPath === '') {
 		// Absolute repo root: `isRepoHome`
@@ -303,13 +303,13 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 
 	if (url) {
 		// Root of a branch/commit/tag
-		return /^tree\/[^/]+$/.test(repoPath);
+		return /^tree\/[^/]+$/.test(repoPath!);
 	}
 
 	// If we're checking the current page, add support for branches with slashes // #15 #24
 	const title = document.title.toLowerCase();
 	const repoURL = getRepoURL().toLowerCase();
-	return /^tree\//.test(repoPath) && title.startsWith(repoURL) && !title.endsWith(repoURL);
+	return String(repoPath).startsWith('tree/') && title.startsWith(repoURL) && !title.endsWith(repoURL);
 };
 
 collect.set('isRepoRoot', [
