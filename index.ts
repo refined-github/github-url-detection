@@ -455,8 +455,8 @@ const getRepoPath = (url: URL | Location = location): string | undefined => {
 	return undefined;
 };
 
-/** Get the 'user/repo' part from an URL */
-const getRepoURL = (url: URL | Location = location): string => url.pathname.slice(1).split('/', 2).join('/');
+/** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL */
+const getRepoURL = (url: URL | Location = new URL(document.querySelector('[property="og:url"]')?.content ?? location.href)): string => url.pathname.slice(1).split('/', 2).join('/');
 
 export const utils = {
 	getUsername,
