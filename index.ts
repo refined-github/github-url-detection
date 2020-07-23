@@ -303,12 +303,12 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 		return false;
 	}
 
-	if (!url) {
-		// If we're checking the current page, double-check the title // #15
-		return document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL());
+	if (url) {
+		 return true;
 	}
 
-	return true;
+	// If we're checking the current page, double-check the title // #15
+	return document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL());
 };
 
 collect.set('isRepoRoot', [
