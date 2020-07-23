@@ -308,7 +308,8 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 	}
 
 	// If we're checking the current page, double-check the title // #15
-	return document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL());
+	const title = document.title.toLowerCase();
+	return title.startsWith(getRepoURL()) && !title.endsWith(getRepoURL());
 };
 
 collect.set('isRepoRoot', [
