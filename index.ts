@@ -293,9 +293,24 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | Location): boolean =>
-	/^(tree\/[^/]+)?$/.test(getRepoPath(url ?? location)!) &&
-	(url ? true : (document.title.startsWith(getRepoURL()) && !document.title.endsWith(getRepoURL()))); // #15
+export const isRepoRoot = (url?: URL | Location): boolean => {
+	const repoPath = getRepoPath(url ?? location);
+
+	if (repoPath === '') {
+		// Absolute repo root: `isRepoHome`
+		return true;
+	}
+
+	if (url) {
+		// Root of a branch/commit/tag
+		return /^tree\/[^/]+$/.test(repoPath!);
+	}
+
+	// If we're checking the current page, add support for branches with slashes // #15 #24
+	const repoURL = getRepoURL();
+	return String(repoPath).startsWith('tree/') && document.title.startsWith(repoURL) && !document.title.endsWith(repoURL);
+};
+
 collect.set('isRepoRoot', [
 	...collect.get('isRepoHome') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
