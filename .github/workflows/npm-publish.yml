@@ -1,33 +1,26 @@
-# Collaborators can publish a new version **of what's on master** by leaving a review on any PR, generally the PR that just closed.
-# To trigger this, the comment must match the format `🚀 version`, where "version" is anything accepted by `npm version XXX`
+# Collaborators can publish a new version of what's on master via "workflow_dispatch"
+# https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
 
 name: Publish
 
 on:
-  pull_request_review:
-    types:
-      - submitted
+  workflow_dispatch:
+    inputs:
+      Version:
+        description: "Version, anything accepted by `npm version XXX`"
+        required: true
 
 jobs:
-
   npm:
     runs-on: ubuntu-latest
-    if: contains('OWNER,COLLABORATOR', github.event.review.author_association) && startsWith(github.event.review.body, '🚀')
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: master
       - run: npm install
       - uses: fregante/setup-git-token@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: npm version
-        run: |
-          WORDS=($COMMENT)
-          npm version ${WORDS[1]}
-        env:
-          COMMENT: ${{ github.event.review.body }}
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - run: npm version ${{ github.event.inputs.Version }}
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
       - run: git push --follow-tags
