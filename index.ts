@@ -307,9 +307,8 @@ export const isRepoRoot = (url?: URL | Location): boolean => {
 	}
 
 	// If we're checking the current page, add support for branches with slashes // #15 #24
-	const title = document.title.toLowerCase();
-	const repoURL = getRepoURL().toLowerCase();
-	return String(repoPath).startsWith('tree/') && title.startsWith(repoURL) && !title.endsWith(repoURL);
+	const repoURL = getRepoURL();
+	return String(repoPath).startsWith('tree/') && document.title.startsWith(repoURL) && !document.title.endsWith(repoURL);
 };
 
 collect.set('isRepoRoot', [
