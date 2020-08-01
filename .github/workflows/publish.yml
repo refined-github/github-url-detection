@@ -11,7 +11,7 @@ on:
         required: true
 
 jobs:
-  npm:
+  NPM:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,3 +24,16 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - run: git push --follow-tags
+
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+    - uses: notlmn/release-with-changelog@v1
+      with:
+        include-hash: true
+        include-range: true
+      env:
+        RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
