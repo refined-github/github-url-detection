@@ -407,11 +407,15 @@ export const isUserProfileFollowingTab = (): boolean =>
 	isUserProfile() &&
 	new URLSearchParams(location.search).get('tab') === 'following';
 
-export const isSingleTagPage = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
-collect.set('isSingleTagPage', [
+export const isSingleTag = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
+collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
+
+/** @deprecated use isSingleTag instead */
+export const isSingleTagPage = isSingleTag;
+collect.set('isSingleTagPage', combinedTestOnly);
 
 collect.set('hasComments', combinedTestOnly);
 export const hasComments = (url: URL | Location = location): boolean =>
