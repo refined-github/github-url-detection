@@ -407,11 +407,15 @@ export const isUserProfileFollowingTab = (): boolean =>
 	isUserProfile() &&
 	new URLSearchParams(location.search).get('tab') === 'following';
 
-export const isSingleTagPage = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
-collect.set('isSingleTagPage', [
+export const isSingleTag = (url: URL | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
+collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
+
+/** @deprecated use isSingleTag instead */
+export const isSingleTagPage = isSingleTag;
+collect.set('isSingleTagPage', combinedTestOnly);
 
 collect.set('hasComments', combinedTestOnly);
 export const hasComments = (url: URL | Location = location): boolean =>
@@ -435,12 +439,16 @@ export const hasCode = (url: URL | Location = location): boolean => // Static co
 	isCompare(url) ||
 	isBlame(url);
 
-export const isActionPage = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
-collect.set('isActionPage', [
+export const isActions = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
+collect.set('isActions', [
 	'https://github.com/marketplace/actions/urlchecker-action',
 	'https://github.com/marketplace/actions/github-action-for-assignee-to-reviewer',
 	'https://github.com/marketplace/actions/hugo-actions',
 ]);
+
+/** @deprecated use isActions instead */
+export const isActionPage = isActions;
+collect.set('isActionPage', combinedTestOnly);
 
 export const isActionJobRun = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('runs/');
 collect.set('isActionJobRun', [
