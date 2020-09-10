@@ -11,10 +11,12 @@ on:
         required: true
 
 jobs:
-  npm:
+  NPM:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 20 
       - run: npm install
       - uses: fregante/setup-git-token@v1
         with:
@@ -24,3 +26,6 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - run: git push --follow-tags
+      - uses: notlmn/release-with-changelog@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
