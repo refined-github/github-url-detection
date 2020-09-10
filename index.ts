@@ -389,9 +389,7 @@ collect.set('isBranches', [
 
 export const isUserProfile = (): boolean => exists('.user-profile-nav');
 
-export const isUserProfileMainTab = (): boolean =>
-	isUserProfile() &&
-	(!new URLSearchParams(location.search).get('tab') || new URLSearchParams(location.search).get('tab') === 'overview');
+export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
 
 export const isUserProfileRepoTab = (): boolean =>
 	isUserProfile() &&
