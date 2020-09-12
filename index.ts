@@ -61,6 +61,7 @@ collect.set('isDashboard', [
 	'https://github.com/?tab=stars', // Gotcha for `isUserProfileStarsTab`
 	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
 	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
+	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
 ]);
 
 export const isEnterprise = (url: URL | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
@@ -388,8 +389,7 @@ collect.set('isBranches', [
 
 export const isUserProfile = (): boolean => exists('.user-profile-nav');
 
-export const isUserProfileMainTab = (): boolean =>
-	isUserProfile() && !new URLSearchParams(location.search).get('tab');
+export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
 
 export const isUserProfileRepoTab = (): boolean =>
 	isUserProfile() &&
