@@ -1,6 +1,6 @@
 {
 	"name": "github-url-detection",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"description": "Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.",
 	"keywords": [
 		"github",
