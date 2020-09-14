@@ -249,6 +249,8 @@ collect.set('isRepo', [
 
 export const isEmptyRepoRoot = (): boolean => isRepoRoot() && exists('.blankslate');
 
+export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
+
 export const isRepoTaxonomyConversationList = (url: URL | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
 collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
