@@ -247,7 +247,7 @@ collect.set('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
 
-// On empty repos, there's only isRepoHome
+// On empty repos, there's only isRepoHome; this element is found in `<head>`
 export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
 
 export const isRepoTaxonomyConversationList = (url: URL | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
