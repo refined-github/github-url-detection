@@ -247,7 +247,8 @@ collect.set('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
 
-export const isEmptyRepoRoot = (): boolean => isRepoRoot() && exists('.blankslate');
+// On empty repos, there's only isRepoHome; this element is found in `<head>`
+export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
