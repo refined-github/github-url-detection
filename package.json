@@ -21,6 +21,10 @@
 		"esm/index.js",
 		"esm/index.d.ts"
 	],
+	"exports": {
+		"require": "./index.js",
+		"import": "./esm/index.js"
+	},
 	"scripts": {
 		"ava": "TS_NODE_PROJECT=tsconfig.ava.json ava --timeout 30s",
 		"build": "rollup -c",
