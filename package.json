@@ -13,6 +13,10 @@
 	"repository": "fregante/github-url-detection",
 	"license": "MIT",
 	"author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+	"exports": {
+		"import": "./esm/index.js",
+		"require": "./index.js"
+	},
 	"main": "cjs/index.js",
 	"module": "esm/index.js",
 	"files": [
@@ -21,10 +25,6 @@
 		"esm/index.js",
 		"esm/index.d.ts"
 	],
-	"exports": {
-		"require": "./index.js",
-		"import": "./esm/index.js"
-	},
 	"scripts": {
 		"ava": "TS_NODE_PROJECT=tsconfig.ava.json ava --timeout 30s",
 		"build": "rollup -c",
