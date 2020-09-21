@@ -26,6 +26,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - run: git push --follow-tags
-      - uses: notlmn/release-with-changelog@v2
+      - uses: notlmn/release-with-changelog@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          exclude: '^Meta|^\d\.\d\.\d$|^Readme|readme$|Lint'
