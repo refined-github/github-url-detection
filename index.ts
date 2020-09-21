@@ -106,6 +106,9 @@ collect.set('isIssue', [
 export const isConversationList = (url: URL | Location = location): boolean => isGlobalConversationList(url) || isRepoConversationList(url);
 collect.set('isConversationList', combinedTestOnly);
 
+export const isConversation = (url: URL | Location = location): boolean => isIssue(url) || isPRConversation(url);
+collect.set('isConversation', combinedTestOnly);
+
 export const isLabelList = (url: URL | Location = location): boolean => getRepoPath(url) === 'labels';
 collect.set('isLabelList', [
 	'https://github.com/sindresorhus/refined-github/labels',
@@ -324,9 +327,6 @@ collect.set('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf4',
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
-
-export const isConversation = (url: URL | Location = location): boolean => isIssue(url) || isPRConversation(url);
-collect.set('isConversation', combinedTestOnly);
 
 // This can't use `getRepoPath` to avoid infinite recursion.
 // `getRepoPath` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
