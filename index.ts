@@ -325,6 +325,9 @@ collect.set('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
+export const isConversation = (url: URL | Location = location): boolean => isIssue(url) || isPRConversation(url);
+collect.set('isConversation', combinedTestOnly);
+
 // This can't use `getRepoPath` to avoid infinite recursion.
 // `getRepoPath` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
 export const isRepoSearch = (url: URL | Location = location): boolean => url.pathname.slice(1).split('/')[2] === 'search';
