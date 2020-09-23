@@ -37,6 +37,9 @@
 		"envs": [
 			"browser"
 		],
+		"ignore": [
+			"demo"
+		],
 		"overrides": [
 			{
 				"files": [
