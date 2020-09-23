@@ -4,19 +4,18 @@ on:
     branches:
       - master
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           persist-credentials: false
+      - run: npm install
+      - run: npm run build
       - run: cd demo && npm install
       - run: cd demo && npm run build
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.6.1
+      - run: ls -RF
+      - uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: demo
-          CLEAN: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./demo/public

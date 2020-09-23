@@ -27,7 +27,7 @@
 						return;
 					}
 
-					if (String(detect).startsWith('(url')) {
+					if (!String(detect).startsWith('()')) {
 						return {
 							name,
 							detect,
