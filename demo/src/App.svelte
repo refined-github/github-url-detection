@@ -9,7 +9,7 @@
 			new URL(url || defaultUrl);
 			isUrlValid = true;
 		} catch {
-			isUrlValid = false
+			isUrlValid = false;
 		}
 	}
 	interface Detection {
@@ -21,8 +21,7 @@
 	let detections: Array<Detection | undefined> = [];
 	$: {
 		if (isUrlValid) {
-			detections = Object
-				.entries(urlDetection)
+			detections = Object.entries(urlDetection)
 				.map(([name, detect]) => {
 					if (typeof detect !== 'function') {
 						return;
@@ -51,39 +50,10 @@
 					}
 
 					// DOM-based detections should be in the middle
-				})
+				});
 		}
 	}
 </script>
-
-<label>
-	<span>URL:</span> <input type="text" bind:value={url} placeholder={defaultUrl} autocomplete="off" autocorrect="off" list="url-examples">
-</label>
-
-<datalist id="url-examples">
-	<option value="https://github.big-corp.com/gist/">
-	<option value="https://github.com/marketplace/actions/urlchecker-action">
-	<option value="https://github.com/sindresorhus/refined-github/pull/148">
-	<option value="https://github.com/sindresorhus/refined-github/edit/master/readme.md">
-	<option value="https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f">
-</datalist>
-
-
-{#if isUrlValid}
-	<pre><code>
-		{#each detections as {name, detect, result} (name)}
-			{#if detect}
-				<div class={String(result)}>
-					{name}(url) // <span>{String(result)}</span></div>
-			{:else}
-				<div class="undefined">
-					{name}() // undeterminable via URL</div>
-			{/if}
-		{/each}
-	</code></pre>
-{:else}
-	<p>URL entered isn’t valid</p>
-{/if}
 
 <style>
 	input {
@@ -102,3 +72,38 @@
 		color: gray;
 	}
 </style>
+
+<label>
+	<span>URL:</span>
+	<input
+		type="text"
+		bind:value={url}
+		placeholder={defaultUrl}
+		autocomplete="off"
+		autocorrect="off"
+		list="url-examples" />
+</label>
+
+<datalist id="url-examples">
+	<option value="https://github.big-corp.com/gist/" />
+	<option value="https://github.com/marketplace/actions/urlchecker-action" />
+	<option value="https://github.com/sindresorhus/refined-github/pull/148" />
+	<option value="https://github.com/sindresorhus/refined-github/edit/master/readme.md" />
+	<option value="https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f" />
+</datalist>
+
+{#if isUrlValid}
+	<pre><code>
+		{#each detections as {name, detect, result} (name)}
+				{#if detect}
+					<div class={String(result)}>
+					{name}(url) // <span>{String(result)}</span></div>
+				{:else}
+					<div class="undefined">
+					{name}() // undeterminable via URL</div>
+				{/if}
+			{/each}
+	</code></pre>
+{:else}
+	<p>URL entered isn’t valid</p>
+{/if}

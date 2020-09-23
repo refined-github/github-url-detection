@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       Version:
-        description: "Version, anything accepted by `npm version XXX`"
+        description: 'Version accepted by `npm version *`'
         required: true
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 20 
+          fetch-depth: 20
       - run: npm install
       - uses: fregante/setup-git-token@v1
         with:
