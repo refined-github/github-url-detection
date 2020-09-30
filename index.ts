@@ -453,6 +453,17 @@ collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 ]);
 
+export const isNewAction = (url: URL | Location = location): boolean => String(getRepoPath(url)) === 'actions/new';
+collect.set('isNewAction', [
+	'https://github.com/sindresorhus/refined-github/actions/new',
+]);
+
+export const isRepositoryActions = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('actions');
+collect.set('isRepositoryActions', [
+	'https://github.com/fregante/github-url-detection/actions',
+	'https://github.com/sindresorhus/refined-github/actions/new',
+]);
+
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item="settings-tab"]');
