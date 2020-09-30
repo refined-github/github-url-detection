@@ -445,12 +445,16 @@ export const hasCode = (url: URL | Location = location): boolean => // Static co
 	isCompare(url) ||
 	isBlame(url);
 
-export const isActions = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
-collect.set('isActions', [
+export const isMarketplaceAction = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
+collect.set('isMarketplaceAction', [
 	'https://github.com/marketplace/actions/urlchecker-action',
 	'https://github.com/marketplace/actions/github-action-for-assignee-to-reviewer',
 	'https://github.com/marketplace/actions/hugo-actions',
 ]);
+
+/** @deprecated use isMarketplaceAction instead */
+export const isActions = isMarketplaceAction;
+collect.set('isActions', combinedTestOnly);
 
 /** @deprecated use isActions instead */
 export const isActionPage = isActions;
