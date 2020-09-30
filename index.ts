@@ -468,6 +468,7 @@ collect.set('isRepositoryActions', [
 
 export const isNewAction = (url: URL | Location = location): boolean => String(getRepoPath(url)) === 'actions/new';
 collect.set('isNewAction', [
+	...collect.get('isRepositoryActions') as string[],
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
