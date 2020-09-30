@@ -460,8 +460,8 @@ collect.set('isNewAction', [
 
 export const isRepositoryActions = (url: URL | Location = location): boolean => isRepo() && String(getRepoPath(url)).startsWith('actions');
 collect.set('isRepositoryActions', [
-	...collect.get('isNewAction') as string[],
 	'https://github.com/fregante/github-url-detection/actions',
+	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
