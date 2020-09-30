@@ -1,9 +1,13 @@
-<script lang="ts">
+<script>
 	const defaultUrl = 'https://github.com/fregante/github-url-detection';
 	export let url = '';
-	import * as urlDetection from '../../esm';
+	import * as urlDetection from '../index';
+	import collector from '../collector';
 
-	let isUrlValid: boolean;
+	const allUrls = new Set([...collector.values()].flat().sort());
+	allUrls.delete('combinedTestOnly');
+
+	let isUrlValid;
 	$: {
 		try {
 			new URL(url || defaultUrl);
@@ -12,13 +16,8 @@
 			isUrlValid = false;
 		}
 	}
-	interface Detection {
-		name: string;
-		detect?: (url: URL) => boolean;
-		result?: boolean;
-	}
 
-	let detections: Array<Detection | undefined> = [];
+	let detections = [];
 	$: {
 		if (isUrlValid) {
 			detections = Object.entries(urlDetection)
@@ -27,7 +26,7 @@
 						return;
 					}
 
-					if (!String(detect).startsWith('()')) {
+					if (detect.length > 0) {
 						return {
 							name,
 							detect,
@@ -85,11 +84,9 @@
 </label>
 
 <datalist id="url-examples">
-	<option value="https://github.big-corp.com/gist/" />
-	<option value="https://github.com/marketplace/actions/urlchecker-action" />
-	<option value="https://github.com/sindresorhus/refined-github/pull/148" />
-	<option value="https://github.com/sindresorhus/refined-github/edit/master/readme.md" />
-	<option value="https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f" />
+	{#each [...allUrls] as url}
+		<option value={url} />
+	{/each}
 </datalist>
 
 {#if isUrlValid}
