@@ -11,3 +11,5 @@ logs
 cjs
 esm/*
 !esm/package.json
+dist
+.cache
