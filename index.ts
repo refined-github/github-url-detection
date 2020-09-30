@@ -419,10 +419,6 @@ collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
 
-/** @deprecated use isSingleTag instead */
-export const isSingleTagPage = isSingleTag;
-collect.set('isSingleTagPage', combinedTestOnly);
-
 collect.set('hasComments', combinedTestOnly);
 export const hasComments = (url: URL | Location = location): boolean =>
 	isPR(url) ||
@@ -445,16 +441,12 @@ export const hasCode = (url: URL | Location = location): boolean => // Static co
 	isCompare(url) ||
 	isBlame(url);
 
-export const isActions = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
-collect.set('isActions', [
+export const isMarketplaceAction = (url: URL | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
+collect.set('isMarketplaceAction', [
 	'https://github.com/marketplace/actions/urlchecker-action',
 	'https://github.com/marketplace/actions/github-action-for-assignee-to-reviewer',
 	'https://github.com/marketplace/actions/hugo-actions',
 ]);
-
-/** @deprecated use isActions instead */
-export const isActionPage = isActions;
-collect.set('isActionPage', combinedTestOnly);
 
 export const isActionJobRun = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('runs/');
 collect.set('isActionJobRun', [
