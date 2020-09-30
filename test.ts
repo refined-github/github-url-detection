@@ -24,7 +24,10 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	}
 
 	test(detectName + ' has tests', t => {
-		t.true(Array.isArray(validURLs), `The function \`${detectName}\` doesn’t have any tests. Set them via \`collect.set()\``);
+		t.true(
+			Array.isArray(validURLs),
+			`The function \`${detectName}\` doesn’t have any tests. Set them via \`collect.set()\``,
+		);
 	});
 
 	if (!Array.isArray(validURLs)) {
@@ -33,13 +36,16 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	for (const url of validURLs) {
 		test(`${detectName} ${url.replace('https://github.com', '')}`, t => {
-			t.true(detect(new URL(url)), stripIndent(`
+			t.true(
+				detect(new URL(url)),
+				stripIndent(`
 				Is this URL \`${detectName}\`?
 					${url.replace('https://github.com', '')}
 
 				• Yes? The \`${detectName}\` test is wrong and should be fixed.
 				• No? Remove it from its \`collect.set()\` array.
-			`));
+			`),
+			);
 		});
 	}
 
@@ -51,13 +57,16 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	for (const url of allUrls) {
 		if (!validURLs.includes(url)) {
 			test(`${detectName} NO ${url}`, t => {
-				t.false(detect(new URL(url)), stripIndent(`
+				t.false(
+					detect(new URL(url)),
+					stripIndent(`
 					Is this URL \`${detectName}\`?
 						${url.replace('https://github.com', '')}
 
 					• Yes? Add it to the \`collect.set()\` array.
 					• No? The \`${detectName}\` test is wrong and should be fixed.
-				`));
+				`),
+				);
 			});
 		}
 	}
