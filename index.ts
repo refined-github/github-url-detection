@@ -458,7 +458,7 @@ collect.set('isNewAction', [
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
-export const isRepositoryActions = (url: URL | Location = location): boolean => isRepo() && String(getRepoPath(url)).startsWith('actions');
+export const isRepositoryActions = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('actions');
 collect.set('isRepositoryActions', [
 	'https://github.com/fregante/github-url-detection/actions',
 	'https://github.com/sindresorhus/refined-github/actions/new',
