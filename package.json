@@ -28,7 +28,7 @@
 	"scripts": {
 		"ava": "TS_NODE_COMPILER_OPTIONS='{\"esModuleInterop\": true}' ava --timeout 30s",
 		"build": "rollup -c",
-		"demo:build": "parcel build demo/index.html",
+		"demo:build": "parcel build --public-url ./ demo/index.html",
 		"demo:test": "svelte-check",
 		"demo:watch": "parcel demo/index.html",
 		"prepack": "rollup -c",
