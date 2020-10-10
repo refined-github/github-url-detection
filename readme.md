@@ -1,7 +1,4 @@
-# <img width="438" align="right" src="https://user-images.githubusercontent.com/1402241/81425503-01b4d800-9158-11ea-9406-484a1ff37968.png"> github-url-detection [![][badge-gzip]][link-bundlephobia]
-
-[badge-gzip]: https://img.shields.io/bundlephobia/minzip/github-url-detection.svg?label=gzipped
-[link-bundlephobia]: https://bundlephobia.com/result?p=github-url-detection
+# <img width="438" align="right" src="https://user-images.githubusercontent.com/1402241/81425503-01b4d800-9158-11ea-9406-484a1ff37968.png"> github-url-detection
 
 > Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.
 
