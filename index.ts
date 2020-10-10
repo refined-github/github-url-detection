@@ -451,6 +451,14 @@ collect.set('isMarketplaceAction', [
 export const isActionJobRun = (url: URL | Location = location): boolean => String(getRepoPath(url)).startsWith('runs/');
 collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
+	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
+]);
+
+export const isActionRun = (url: URL | Location = location): boolean => /^(actions\/)?runs/.test(getRepoPath(url)!);
+collect.set('isActionRun', [
+	'https://github.com/sindresorhus/refined-github/runs/639481849',
+	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
+	'https://github.com/fregante/github-url-detection/actions/runs/294962314',
 ]);
 
 export const isNewAction = (url: URL | Location = location): boolean => String(getRepoPath(url)) === 'actions/new';
