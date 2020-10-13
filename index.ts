@@ -300,7 +300,7 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | Location): boolean => {
+export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repoPath = getRepoPath(url ?? location);
 
 	if (repoPath === '') {
