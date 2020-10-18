@@ -255,6 +255,8 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
+export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url).startsWith('settings/replies');
+
 export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
 collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
@@ -430,7 +432,8 @@ collect.set('hasRichTextEditor', combinedTestOnly);
 export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url) ||
 	isNewIssue(url) ||
-	isCompare(url);
+	isCompare(url) ||
+	isRepliesSettings(url);
 
 collect.set('hasCode', combinedTestOnly);
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
