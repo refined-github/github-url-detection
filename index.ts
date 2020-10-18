@@ -255,12 +255,6 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
-export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url).startsWith('settings/replies');
-collect.set('isRepliesSettings', [
-	'https://github.com/settings/replies',
-	'https://github.com/settings/replies/88491/edit',
-]);
-
 export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
 collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
@@ -352,6 +346,12 @@ collect.set('isRepoSettings', [
 export const isRepoMainSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'settings';
 collect.set('isRepoMainSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
+]);
+
+export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url).startsWith('settings/replies');
+collect.set('isRepliesSettings', [
+	'https://github.com/settings/replies',
+	'https://github.com/settings/replies/88491/edit',
 ]);
 
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || String(getRepoPath(url)).startsWith('tree/');
