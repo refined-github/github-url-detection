@@ -348,6 +348,12 @@ collect.set('isRepoMainSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
 ]);
 
+export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url).startsWith('settings/replies');
+collect.set('isRepliesSettings', [
+	'https://github.com/settings/replies',
+	'https://github.com/settings/replies/88491/edit',
+]);
+
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || String(getRepoPath(url)).startsWith('tree/');
 collect.set('isRepoTree', [
 	...collect.get('isRepoRoot') as string[],
@@ -430,7 +436,8 @@ collect.set('hasRichTextEditor', combinedTestOnly);
 export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url) ||
 	isNewIssue(url) ||
-	isCompare(url);
+	isCompare(url) ||
+	isRepliesSettings(url);
 
 collect.set('hasCode', combinedTestOnly);
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
