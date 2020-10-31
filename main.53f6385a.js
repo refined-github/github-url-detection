@@ -12,4 +12,4 @@ module.exports=["400","401","402","403","404","405","406","407","408","409","410
 },{"svelte/internal":"YkLP","../index":"o2OF","../collector":"tRnE"}],"epB2":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e=t(require("./App.svelte"));function t(e){return e&&e.__esModule?e:{default:e}}var r=new e.default({target:document.querySelector("main")}),u=r;exports.default=u;
 },{"./App.svelte":"YJzu"}]},{},["epB2"], null)
-//# sourceMappingURL=main.7cc15cfe.js.map
+//# sourceMappingURL=main.53f6385a.js.map
