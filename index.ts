@@ -330,7 +330,7 @@ collect.set('isRepoRoot', [
 
 // This can't use `getRepoPath` to avoid infinite recursion.
 // `getRepoPath` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
-export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.slice(1).split('/')[2] === 'search';
+export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.split('/')[3] === 'search';
 collect.set('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search?q=diff',
 	'https://github.com/sindresorhus/refined-github/search?q=diff&unscoped_q=diff&type=Issues',
@@ -491,7 +491,7 @@ collect.set('isNewRepo', [
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
 /** Drop leading and trailing slashes */
-const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/^\/|\/$/g, '');
+const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.slice(1, url.pathname.endsWith('/') ? -1 : undefined);
 
 /** Parses a repo's subpage
 @example '/user/repo/issues/' -> 'issues'
@@ -507,7 +507,7 @@ const getRepoPath = (url: URL | HTMLAnchorElement | Location = location): string
 };
 
 /** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL */
-const getRepoURL = (url?: URL | Location): string => {
+const getRepoURL = (url?: URL | HTMLAnchorElement | Location): string => {
 	if (!url) {
 		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
 		url = canonical ? new URL(canonical.content, location.origin) : location;
