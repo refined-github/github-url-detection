@@ -318,7 +318,7 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 	}
 
 	// If we're checking the current page, add support for branches with slashes // #15 #24
-	return repository.path.startsWith('tree/') && document.title.startsWith(repository.url) && !document.title.endsWith(repository.url);
+	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
 
 collect.set('isRepoRoot', [
@@ -527,7 +527,7 @@ export interface RepositoryInfo {
 	name: string;
 
 	/** The 'user/repo' part from an URL */
-	url: string;
+	nameWithOwner: string;
 
 	/** A repo's subpage
 	@example '/user/repo/issues/' -> 'issues'
@@ -554,7 +554,7 @@ const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): R
 	return {
 		owner,
 		name,
-		url: owner + '/' + name,
+		nameWithOwner: owner + '/' + name,
 		path: path.join('/'),
 	};
 };

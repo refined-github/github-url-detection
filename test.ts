@@ -138,43 +138,43 @@ test('getRepositoryInfo', t => {
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: '',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: '',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/blame/master/package.json'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: 'blame/master/package.json',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/commit/57bf4'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: 'commit/57bf4',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/compare/test-branch?quick_pull=0'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: 'compare/test-branch',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/tree/master/distribution'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: 'tree/master/distribution',
 	});
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/tree/master/distribution/'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
-		url: 'fregante/github-url-detection',
+		nameWithOwner: 'fregante/github-url-detection',
 		path: 'tree/master/distribution',
 	});
 });
