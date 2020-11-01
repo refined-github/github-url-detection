@@ -547,7 +547,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 	}
 
 	if (!isRepo(url)) {
-		return undefined;
+		return;
 	}
 
 	const [owner, name, ...path] = getCleanPathname(url).split('/');
