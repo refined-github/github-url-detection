@@ -497,6 +497,7 @@ const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): s
 @example '/user/repo/issues/' -> 'issues'
 @example '/user/repo/' -> ''
 @example '/settings/token/' -> undefined
+@deprecated Use getRepositoryInfo().path
 */
 const getRepoPath = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
 	if (isRepo(url)) {
@@ -506,8 +507,10 @@ const getRepoPath = (url: URL | HTMLAnchorElement | Location = location): string
 	return undefined;
 };
 
-/** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL */
-const getRepoURL = (url?: URL | HTMLAnchorElement | Location): string => {
+/** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL
+@deprecated Use getRepositoryInfo().url
+*/
+const getRepoURL = (url?: URL | Location): string => {
 	if (!url) {
 		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
 		url = canonical ? new URL(canonical.content, location.origin) : location;
@@ -516,9 +519,40 @@ const getRepoURL = (url?: URL | HTMLAnchorElement | Location): string => {
 	return url.pathname.slice(1).split('/', 2).join('/');
 };
 
+export interface RepositoryInfo {
+	owner: string;
+	name: string;
+	url: string;
+	path: string;
+}
+
+const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): Partial<RepositoryInfo> => {
+	if (!url) {
+		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
+		url = canonical ? canonical.content : location;
+	}
+
+	if (typeof url === 'string') {
+		url = new URL(url, location.origin);
+	}
+
+	if (!isRepo(url)) {
+		return {};
+	}
+
+	const [, owner, name, ...path] = url.pathname.split('/');
+	return {
+		owner,
+		name,
+		url: owner + '/' + name,
+		path: path.join('/'),
+	};
+};
+
 export const utils = {
 	getUsername,
 	getCleanPathname,
+	getRepositoryInfo,
 	getRepoPath,
 	getRepoURL,
 };
