@@ -540,7 +540,7 @@ const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): P
 		return {};
 	}
 
-	const [, owner, name, ...path] = url.pathname.split('/');
+	const [owner, name, ...path] = getCleanPathname(url).split('/');
 	return {
 		owner,
 		name,

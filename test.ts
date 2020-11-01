@@ -171,4 +171,10 @@ test('getRepositoryInfo', t => {
 		url: 'fregante/github-url-detection',
 		path: 'tree/master/distribution',
 	});
+	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection/tree/master/distribution/'), {
+		owner: 'fregante',
+		name: 'github-url-detection',
+		url: 'fregante/github-url-detection',
+		path: 'tree/master/distribution',
+	});
 });
