@@ -526,7 +526,7 @@ export interface RepositoryInfo {
 	path: string;
 }
 
-const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): Partial<RepositoryInfo> => {
+const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
 	if (!url) {
 		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
 		url = canonical ? canonical.content : location;
@@ -537,7 +537,7 @@ const getRepositoryInfo = (url?: URL | HTMLAnchorElement | Location | string): P
 	}
 
 	if (!isRepo(url)) {
-		return {};
+		return undefined;
 	}
 
 	const [owner, name, ...path] = getCleanPathname(url).split('/');

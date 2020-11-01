@@ -132,9 +132,9 @@ test('isPRFile404', t => {
 
 const getRepositoryInfo = pageDetect.utils.getRepositoryInfo;
 test('getRepositoryInfo', t => {
-	t.deepEqual(getRepositoryInfo('https://github.com'), {});
-	t.deepEqual(getRepositoryInfo('https://gist.github.com/'), {});
-	t.deepEqual(getRepositoryInfo('https://github.com/settings/developers'), {});
+	t.is(getRepositoryInfo('https://github.com'), undefined);
+	t.is(getRepositoryInfo('https://gist.github.com/'), undefined);
+	t.is(getRepositoryInfo('https://github.com/settings/developers'), undefined);
 	t.deepEqual(getRepositoryInfo('https://github.com/fregante/github-url-detection'), {
 		owner: 'fregante',
 		name: 'github-url-detection',
