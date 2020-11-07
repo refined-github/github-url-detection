@@ -9,7 +9,7 @@ export const is404 = (): boolean => document.title === 'Page not found · GitHub
 
 export const is500 = (): boolean => document.title === 'Server Error · GitHub' || document.title === 'Unicorn! · GitHub' || document.title === '504 Gateway Time-out';
 
-export const isBlame = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('blame/');
+export const isBlame = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blame/'));
 collect.set('isBlame', [
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
 ]);
@@ -25,7 +25,7 @@ collect.set('isCommit', [
 export const isCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoCommitList(url) || isPRCommitList(url);
 collect.set('isCommitList', combinedTestOnly);
 
-export const isRepoCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('commits');
+export const isRepoCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('commits'));
 collect.set('isRepoCommitList', [
 	'https://github.com/sindresorhus/refined-github/commits/master?page=2',
 	'https://github.com/sindresorhus/refined-github/commits/test-branch',
@@ -36,7 +36,7 @@ collect.set('isRepoCommitList', [
 	'https://github.com/sindresorhus/runs/commits/',
 ]);
 
-export const isCompare = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('compare');
+export const isCompare = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('compare'));
 collect.set('isCompare', [
 	'https://github.com/sindresorhus/refined-github/compare',
 	'https://github.com/sindresorhus/refined-github/compare/',
@@ -98,7 +98,7 @@ collect.set('isGlobalSearchResults', [
 	'https://github.com/search?q=refined-github&ref=opensearch',
 ]);
 
-export const isIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues\/\d+/.test(getRepoPath(url)!) && document.title !== 'GitHub · Where software is built'; // The title check excludes deleted issues
+export const isIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues\/\d+/.test(getRepo(url)?.path!) && document.title !== 'GitHub · Where software is built'; // The title check excludes deleted issues
 collect.set('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
@@ -109,27 +109,27 @@ collect.set('isConversationList', combinedTestOnly);
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
 collect.set('isConversation', combinedTestOnly);
 
-export const isLabelList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'labels';
+export const isLabelList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'labels';
 collect.set('isLabelList', [
 	'https://github.com/sindresorhus/refined-github/labels',
 ]);
 
-export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepoPath(url)!);
+export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path!);
 collect.set('isMilestone', [
 	'https://github.com/sindresorhus/refined-github/milestone/12',
 ]);
 
-export const isMilestoneList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'milestones';
+export const isMilestoneList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'milestones';
 collect.set('isMilestoneList', [
 	'https://github.com/sindresorhus/refined-github/milestones',
 ]);
 
-export const isNewIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'issues/new';
+export const isNewIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'issues/new';
 collect.set('isNewIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 ]);
 
-export const isNewRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'releases/new';
+export const isNewRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases/new';
 collect.set('isNewRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/new',
 ]);
@@ -153,12 +153,12 @@ export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsernam
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
 
-export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepoPath(url)!);
+export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path!);
 collect.set('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
-export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepoPath(url)!) && !isPRConflicts(url);
+export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
 collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
@@ -167,13 +167,13 @@ collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
 
-export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepoPath(url)!);
+export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path!);
 collect.set('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
 
 /** Any `isConversationList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
-export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/pulls' || getRepoPath(url) === 'pulls';
+export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/pulls' || getRepo(url)?.path === 'pulls';
 collect.set('isPRList', [
 	'https://github.com/pulls',
 	'https://github.com/pulls?q=issues',
@@ -183,7 +183,7 @@ collect.set('isPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}/.test(getRepoPath(url)!);
+export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
 collect.set('isPRCommit', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
@@ -192,17 +192,17 @@ collect.set('isPRCommit', [
 export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
 export const isPRFile404 = (): boolean => isPRFiles() && document.title.startsWith('Commit range not found · Pull Request');
 
-export const isPRConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+$/.test(getRepoPath(url)!);
+export const isPRConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+$/.test(getRepo(url)?.path!);
 collect.set('isPRConversation', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
 ]);
 
-export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits$/.test(getRepoPath(url)!);
+export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits$/.test(getRepo(url)?.path!);
 collect.set('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepoPath(url)!);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!);
 collect.set('isPRFiles', [
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
 ]);
@@ -214,7 +214,7 @@ collect.set('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => /^tags$|^releases($|\/tag)/.test(getRepoPath(url)!);
+export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => /^tags$|^releases($|\/tag)/.test(getRepo(url)?.path!);
 collect.set('isReleasesOrTags', [
 	'https://github.com/sindresorhus/refined-github/releases',
 	'https://github.com/sindresorhus/refined-github/tags',
@@ -222,13 +222,13 @@ collect.set('isReleasesOrTags', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
 
-export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('edit');
+export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
-export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('releases/edit');
+export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
@@ -255,7 +255,7 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
-export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepoPath(url)!);
+export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
 collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
 	'https://github.com/sindresorhus/refined-github/milestones/1',
@@ -267,7 +267,7 @@ export const isRepoConversationList = (url: URL | HTMLAnchorElement | Location =
 	isRepoTaxonomyConversationList(url);
 collect.set('isRepoConversationList', combinedTestOnly);
 
-export const isRepoPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('pulls');
+export const isRepoPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('pulls'));
 collect.set('isRepoPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls',
 	'https://github.com/sindresorhus/refined-github/pulls/',
@@ -277,8 +277,8 @@ collect.set('isRepoPRList', [
 
 // `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
 export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	String(getRepoPath(url)).startsWith('issues') &&
-	!/^issues\/(\d+|new|templates)($|\/)/.test(getRepoPath(url)!);
+	Boolean(getRepo(url)?.path.startsWith('issues')) &&
+	!/^issues\/(\d+|new|templates)($|\/)/.test(getRepo(url)?.path!);
 collect.set('isRepoIssueList', [
 	'http://github.com/sindresorhus/ava/issues',
 	'https://github.com/sindresorhus/refined-github/issues',
@@ -288,7 +288,7 @@ collect.set('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
 ]);
 
-export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === '';
+export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '';
 collect.set('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	'https://github.com/sindresorhus/refined-github',
@@ -301,21 +301,24 @@ collect.set('isRepoHome', [
 ]);
 
 export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
-	const repoPath = getRepoPath(url ?? location);
+	const repository = getRepo(url ?? location);
 
-	if (repoPath === '') {
+	if (!repository) {
+		return false;
+	}
+
+	if (!repository.path) {
 		// Absolute repo root: `isRepoHome`
 		return true;
 	}
 
 	if (url) {
 		// Root of a branch/commit/tag
-		return /^tree\/[^/]+$/.test(repoPath!);
+		return /^tree\/[^/]+$/.test(repository.path);
 	}
 
 	// If we're checking the current page, add support for branches with slashes // #15 #24
-	const repoURL = getRepoURL();
-	return String(repoPath).startsWith('tree/') && document.title.startsWith(repoURL) && !document.title.endsWith(repoURL);
+	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
 
 collect.set('isRepoRoot', [
@@ -328,8 +331,8 @@ collect.set('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
-// This can't use `getRepoPath` to avoid infinite recursion.
-// `getRepoPath` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
+// This can't use `getRepositoryInfo().path` to avoid infinite recursion:
+// `getRepositoryInfo` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
 export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.split('/')[3] === 'search';
 collect.set('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search?q=diff',
@@ -337,24 +340,24 @@ collect.set('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search',
 ]);
 
-export const isRepoSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('settings');
+export const isRepoSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('settings'));
 collect.set('isRepoSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
 	'https://github.com/sindresorhus/refined-github/settings/branches',
 ]);
 
-export const isRepoMainSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'settings';
+export const isRepoMainSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'settings';
 collect.set('isRepoMainSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
 ]);
 
-export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url).startsWith('settings/replies');
+export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/replies');
 collect.set('isRepliesSettings', [
 	'https://github.com/settings/replies',
 	'https://github.com/settings/replies/88491/edit',
 ]);
 
-export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || String(getRepoPath(url)).startsWith('tree/');
+export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
 collect.set('isRepoTree', [
 	...collect.get('isRepoRoot') as string[],
 	'https://github.com/sindresorhus/refined-github/tree/master/distribution',
@@ -362,20 +365,20 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
-export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepoPath(url)!);
+export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
 collect.set('isSingleCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
 	'https://github.com/sindresorhus/refined-github/commit/5b614',
 ]);
 
-export const isSingleFile = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('blob/');
+export const isSingleFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blob/'));
 collect.set('isSingleFile', [
 	'https://github.com/sindresorhus/refined-github/blob/master/.gitattributes',
 	'https://github.com/sindresorhus/refined-github/blob/fix-narrow-diff/distribution/content.css',
 	'https://github.com/sindresorhus/refined-github/blob/master/edit.txt',
 ]);
 
-export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('find/');
+export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('find/'));
 collect.set('isFileFinder', [
 	'https://github.com/sindresorhus/refined-github/find/master',
 ]);
@@ -394,7 +397,7 @@ collect.set('isTrending', [
 	'https://github.com/trending/unknown',
 ]);
 
-export const isBranches = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('branches');
+export const isBranches = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('branches'));
 collect.set('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
@@ -419,7 +422,7 @@ export const isUserProfileFollowingTab = (): boolean =>
 	isUserProfile() &&
 	new URLSearchParams(location.search).get('tab') === 'following';
 
-export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepoPath(url)!);
+export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
 collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
@@ -455,25 +458,25 @@ collect.set('isMarketplaceAction', [
 	'https://github.com/marketplace/actions/hugo-actions',
 ]);
 
-export const isActionJobRun = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)).startsWith('runs/');
+export const isActionJobRun = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('runs/'));
 collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
 ]);
 
-export const isActionRun = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(actions\/)?runs/.test(getRepoPath(url)!);
+export const isActionRun = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(actions\/)?runs/.test(getRepo(url)?.path!);
 collect.set('isActionRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
 	'https://github.com/fregante/github-url-detection/actions/runs/294962314',
 ]);
 
-export const isNewAction = (url: URL | HTMLAnchorElement | Location = location): boolean => String(getRepoPath(url)) === 'actions/new';
+export const isNewAction = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path === 'actions/new');
 collect.set('isNewAction', [
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
-export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepoPath(url) === 'actions';
+export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'actions';
 collect.set('isRepositoryActions', [
 	'https://github.com/fregante/github-url-detection/actions',
 ]);
@@ -497,6 +500,7 @@ const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): s
 @example '/user/repo/issues/' -> 'issues'
 @example '/user/repo/' -> ''
 @example '/settings/token/' -> undefined
+@deprecated Use getRepositoryInfo().path
 */
 const getRepoPath = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
 	if (isRepo(url)) {
@@ -506,8 +510,10 @@ const getRepoPath = (url: URL | HTMLAnchorElement | Location = location): string
 	return undefined;
 };
 
-/** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL */
-const getRepoURL = (url?: URL | HTMLAnchorElement | Location): string => {
+/** Get the 'user/repo' part from an URL. Tries using the canonical URL to avoid capitalization errors in the `location` URL
+@deprecated Use getRepositoryInfo().url
+*/
+const getRepoURL = (url?: URL | Location): string => {
 	if (!url) {
 		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
 		url = canonical ? new URL(canonical.content, location.origin) : location;
@@ -516,9 +522,47 @@ const getRepoURL = (url?: URL | HTMLAnchorElement | Location): string => {
 	return url.pathname.slice(1).split('/', 2).join('/');
 };
 
+export interface RepositoryInfo {
+	owner: string;
+	name: string;
+
+	/** The 'user/repo' part from an URL */
+	nameWithOwner: string;
+
+	/** A repo's subpage
+	@example '/user/repo/issues/' -> 'issues'
+	@example '/user/repo/' -> ''
+	@example '/settings/token/' -> undefined */
+	path: string;
+}
+
+const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
+	if (!url) {
+		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
+		url = canonical ? canonical.content : location;
+	}
+
+	if (typeof url === 'string') {
+		url = new URL(url, location.origin);
+	}
+
+	if (!isRepo(url)) {
+		return;
+	}
+
+	const [owner, name, ...path] = getCleanPathname(url).split('/');
+	return {
+		owner,
+		name,
+		nameWithOwner: owner + '/' + name,
+		path: path.join('/'),
+	};
+};
+
 export const utils = {
 	getUsername,
 	getCleanPathname,
+	getRepositoryInfo: getRepo,
 	getRepoPath,
 	getRepoURL,
 };

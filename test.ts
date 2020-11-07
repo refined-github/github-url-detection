@@ -130,47 +130,58 @@ test('isPRFile404', t => {
 	t.false(pageDetect.isPRFile404());
 });
 
-test('getRepoPath', t => {
-	const pairs = new Map<string, string | undefined>([
-		[
-			'https://github.com',
-			undefined,
-		],
-		[
-			'https://gist.github.com/',
-			undefined,
-		],
-		[
-			'https://github.com/settings/developers',
-			undefined,
-		],
-		[
-			'https://github.com/sindresorhus/refined-github',
-			'',
-		],
-		[
-			'https://github.com/sindresorhus/refined-github/',
-			'',
-		],
-		[
-			'https://github.com/sindresorhus/refined-github/blame/master/package.json',
-			'blame/master/package.json',
-		],
-		[
-			'https://github.com/sindresorhus/refined-github/commit/57bf4',
-			'commit/57bf4',
-		],
-		[
-			'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=0',
-			'compare/test-branch',
-		],
-		[
-			'https://github.com/sindresorhus/refined-github/tree/master/distribution',
-			'tree/master/distribution',
-		],
-	]);
-
-	for (const [url, result] of pairs) {
-		t.is(result, pageDetect.utils.getRepoPath(new URL(url)));
+const getRepositoryInfo = pageDetect.utils.getRepositoryInfo;
+test('getRepositoryInfo', t => {
+	const inputTypes = [
+		getRepositoryInfo, // Full URL
+		(url: string) => getRepositoryInfo(new URL(url).pathname), // Pathname only
+		(url: string) => getRepositoryInfo(new URL(url)), // URL object
+	];
+	for (const getRepositoryInfoAdapter of inputTypes) {
+		t.is(getRepositoryInfoAdapter('https://github.com'), undefined);
+		t.is(getRepositoryInfoAdapter('https://gist.github.com/'), undefined);
+		t.is(getRepositoryInfoAdapter('https://github.com/settings/developers'), undefined);
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: '',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: '',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/blame/master/package.json'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: 'blame/master/package.json',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/commit/57bf4'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: 'commit/57bf4',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/compare/test-branch?quick_pull=0'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: 'compare/test-branch',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/tree/master/distribution'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: 'tree/master/distribution',
+		});
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/tree/master/distribution/'), {
+			owner: 'fregante',
+			name: 'github-url-detection',
+			nameWithOwner: 'fregante/github-url-detection',
+			path: 'tree/master/distribution',
+		});
 	}
 });
