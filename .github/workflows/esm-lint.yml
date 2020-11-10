@@ -2,7 +2,7 @@ env:
   IMPORT_TEXT: import * as pageDetect from
   NPM_MODULE_NAME: github-url-detection
 
-# DO NOT EDIT BELOW - use `npx ghat fregante/ghatemplates/esm-lint`
+# DO NOT EDIT BELOW - use `npx ghat fregante/ghatemplates/esm-lint --exclude jobs.Snowpack`
 
 name: ESM
 on:
@@ -50,16 +50,6 @@ jobs:
       - run: npm install ./artifact rollup@2 @rollup/plugin-node-resolve
       - run: 'echo "${{ env.IMPORT_TEXT }} ''${{ env.NPM_MODULE_NAME }}''" > index.js'
       - run: npx rollup -p node-resolve index.js
-  Snowpack:
-    runs-on: ubuntu-latest
-    needs: Pack
-    steps:
-      - uses: actions/download-artifact@v2
-      - run: 'echo ''{}'' > package.json'
-      - run: 'echo "${{ env.IMPORT_TEXT }} ''${{ env.NPM_MODULE_NAME }}''" > index.js'
-      - run: npm install ./artifact
-      - run: npx snowpack@2 build
-      - run: cat build/web_modules/$NPM_MODULE_NAME.js
   TypeScript:
     runs-on: ubuntu-latest
     needs: Pack
