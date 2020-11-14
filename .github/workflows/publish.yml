@@ -17,16 +17,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 20
-      - run: npm install
-      - uses: fregante/setup-git-token@v1
+      - uses: actions/setup-node@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci || npm install
+      - uses: fregante/setup-git-user@v1
       - run: npm version ${{ github.event.inputs.Version }}
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git push --follow-tags
       - uses: notlmn/release-with-changelog@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          exclude: '^Meta|^\d\.\d\.\d$|^Readme|readme$|Lint|dependencies'
+          exclude: true
