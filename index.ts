@@ -440,7 +440,8 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	hasComments(url) ||
 	isNewIssue(url) ||
 	isCompare(url) ||
-	isRepliesSettings(url);
+	isRepliesSettings(url) ||
+	isSingleGist(url);
 
 collect.set('hasCode', combinedTestOnly);
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
