@@ -542,8 +542,16 @@ export interface RepositoryInfo {
 
 const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
 	if (!url) {
-		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]'); // `rel=canonical` doesn't appear on every page
-		url = canonical ? canonical.content : location;
+		// We use `canonical` here to use the correct capitalization
+		// `rel=canonical` doesn't appear on every page
+		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]');
+		if (canonical) {
+			const canonicalUrl = new URL(canonical.content, location.origin);
+			// Sometimes GitHub sets the canonical to an incomplete URL, so it can't be used
+			if (getCleanPathname(canonicalUrl).toLowerCase() === getCleanPathname(location).toLowerCase()) {
+				url = canonicalUrl;
+			}
+		}
 	}
 
 	if (typeof url === 'string') {
