@@ -103,7 +103,10 @@ collect.set('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalConversationList(url) || isRepoConversationList(url);
+export const isConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isGlobalConversationList(url) ||
+	isRepoConversationList(url) ||
+	isMilestone(url);
 collect.set('isConversationList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
