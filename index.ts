@@ -80,7 +80,7 @@ collect.set('isGist', [
 	'https://my-little-hub.com/gist',
 ]);
 
-export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]);
+export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
 collect.set('isGlobalConversationList', [
 	'https://github.com/issues',
 	'https://github.com/issues?q=is%3Apr+is%3Aopen',
@@ -237,7 +237,7 @@ collect.set('isEditingRelease', [
 ]);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
-	!reservedNames.includes(url.pathname.split('/', 2)[1]) &&
+	!reservedNames.includes(url.pathname.split('/', 2)[1]!) &&
 	!isDashboard(url) &&
 	!isGist(url) &&
 	!isRepoSearch(url);
@@ -562,7 +562,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 		return;
 	}
 
-	const [owner, name, ...path] = getCleanPathname(url).split('/');
+	const [owner, name, ...path] = getCleanPathname(url).split('/') as [string, string, string];
 	return {
 		owner,
 		name,
