@@ -487,7 +487,7 @@ collect.set('isRepositoryActions', [
 
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
 
-export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item="settings-tab"]');
+export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new';
 collect.set('isNewRepo', [
