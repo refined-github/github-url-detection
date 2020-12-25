@@ -489,7 +489,7 @@ export const canUserEditOrganization = (): boolean => isOrganizationProfile() &&
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
-export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new' || /organizations\/\S+\b\/repositories\/new/.test(getCleanPathname());
+export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new' || /organizations\/\S+\b\/repositories\/new/.test(getCleanPathname(url));
 collect.set('isNewRepo', [
 	'https://github.com/new',
 	'https://github.com/organizations/npmhub/repositories/new',
