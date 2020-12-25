@@ -492,6 +492,7 @@ export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new' || /organizations\/\S+\b\/repositories\/new/.test(getCleanPathname());
 collect.set('isNewRepo', [
 	'https://github.com/new',
+	'https://github.com/organizations/npmhub/repositories/new',
 ]);
 
 /** Get the logged-in user’s username */
