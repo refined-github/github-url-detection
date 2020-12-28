@@ -475,7 +475,7 @@ collect.set('isActionRun', [
 	'https://github.com/fregante/github-url-detection/actions/runs/294962314',
 ]);
 
-export const isNewAction = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path === 'actions/new');
+export const isNewAction = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'actions/new';
 collect.set('isNewAction', [
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
