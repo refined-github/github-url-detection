@@ -386,6 +386,16 @@ collect.set('isFileFinder', [
 	'https://github.com/sindresorhus/refined-github/find/master',
 ]);
 
+export const isForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
+collect.set('isForksList', [
+	'https://github.com/sindresorhus/refined-github/network/members',
+]);
+
+export const isNetwork = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network';
+collect.set('isNetwork', [
+	'https://github.com/sindresorhus/refined-github/network',
+]);
+
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
 export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}$/.test(url.pathname);
