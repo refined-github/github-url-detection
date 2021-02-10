@@ -1,6 +1,7 @@
 env: {}
 
-# DO NOT EDIT BELOW, USE: npx ghat fregante/ghatemplates/npm-publish
+# FILE GENERATED WITH: npx ghat fregante/ghatemplates/npm-publish
+# SOURCE: https://github.com/fregante/ghatemplates
 
 # Collaborators can publish a new version of what's on master via "workflow_dispatch"
 # https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
