@@ -386,13 +386,13 @@ collect.set('isFileFinder', [
 	'https://github.com/sindresorhus/refined-github/find/master',
 ]);
 
-export const isForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
-collect.set('isForksList', [
+export const isRepoForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
+collect.set('isRepoForksList', [
 	'https://github.com/sindresorhus/refined-github/network/members',
 ]);
 
-export const isNetwork = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network';
-collect.set('isNetwork', [
+export const isRepoNetworkGraph = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network';
+collect.set('isRepoNetworkGraph', [
 	'https://github.com/sindresorhus/refined-github/network',
 ]);
 
