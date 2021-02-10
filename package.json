@@ -26,7 +26,7 @@
 		"esm/index.d.ts"
 	],
 	"scripts": {
-		"ava": "TS_NODE_COMPILER_OPTIONS='{\"esModuleInterop\": true}' ava --timeout 30s",
+		"ava": "ava --timeout 30s",
 		"build": "rollup -c",
 		"demo:build": "parcel build --public-url ./ demo/index.html",
 		"demo:test": "svelte-check",
@@ -75,7 +75,10 @@
 		"require": [
 			"esm",
 			"ts-node/register"
-		]
+		],
+		"environmentVariables": {
+			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
+		}
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",
