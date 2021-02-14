@@ -457,8 +457,7 @@ export const hasComments = (url: URL | HTMLAnchorElement | Location = location):
 	isIssue(url) ||
 	isCommit(url) ||
 	isOrganizationDiscussion(url) ||
-	isSingleGist(url) ||
-	isDiscussion(url);
+	isSingleGist(url);
 
 collect.set('hasRichTextEditor', combinedTestOnly);
 export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = location): boolean =>
