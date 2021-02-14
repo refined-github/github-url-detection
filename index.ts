@@ -160,7 +160,7 @@ export const isProject = (url: URL | HTMLAnchorElement | Location = location): b
 collect.set('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
-														
+
 export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path!);
 collect.set('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
