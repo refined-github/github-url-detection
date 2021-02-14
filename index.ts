@@ -161,6 +161,16 @@ collect.set('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
+export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path!);
+collect.set('isDiscussion', [
+	'https://github.com/tophf/mpiv/discussions/50',
+]);
+
+export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions';
+collect.set('isDiscussionList', [
+	'https://github.com/tophf/mpiv/discussions',
+]);
+
 export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
 collect.set('isPR', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
