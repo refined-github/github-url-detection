@@ -165,7 +165,7 @@ export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location)
 collect.set('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
 ]);
-														      
+
 export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions';
 collect.set('isDiscussionList', [
 	'https://github.com/tophf/mpiv/discussions',
