@@ -144,7 +144,7 @@ collect.set('isNotifications', [
 
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
-export const isOrganizationRepo = (): boolean => document.querySelector<HTMLFormElement>('[data-owner-scoped-search-url]')!.dataset.ownerScopedSearchUrl!.startsWith('/org');
+export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset.ownerScopedSearchUrl!.startsWith('/org'));
 
 export const isOrganizationDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
 collect.set('isOrganizationDiscussion', [
