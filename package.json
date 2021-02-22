@@ -12,7 +12,8 @@
 	],
 	"repository": "fregante/github-url-detection",
 	"license": "MIT",
-	"author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
+	"sideEffects": false,
 	"exports": {
 		"import": "./esm/index.js",
 		"require": "./index.js"
@@ -69,16 +70,16 @@
 		}
 	},
 	"ava": {
+		"environmentVariables": {
+			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
+		},
 		"extensions": [
 			"ts"
 		],
 		"require": [
 			"esm",
 			"ts-node/register"
-		],
-		"environmentVariables": {
-			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
-		}
+		]
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",
