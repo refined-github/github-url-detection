@@ -229,6 +229,11 @@ collect.set('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
+export const isDraftPR = (): boolean => exists('#partial-discussion-header [title="Status: Draft"]');
+export const isOpenPR = (): boolean => exists('#partial-discussion-header [title="Status: Open"], #partial-discussion-header [title="Status: Draft"]');
+export const isMergedPR = (): boolean => exists('#partial-discussion-header [title="Status: Merged"]');
+export const isClosedPR = (): boolean => exists('#partial-discussion-header [title="Status: Closed"], #partial-discussion-header [title="Status: Merged"]');
+
 export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => /^tags$|^releases($|\/tag)/.test(getRepo(url)?.path!);
 collect.set('isReleasesOrTags', [
 	'https://github.com/sindresorhus/refined-github/releases',
