@@ -517,6 +517,11 @@ collect.set('isNewRepo', [
 	'https://github.com/organizations/npmhub/repositories/new',
 ]);
 
+export const isDraftPR = (): boolean => exists('#partial-discussion-header [title="Status: Draft"]');
+export const isOpenPR = (): boolean => exists('#partial-discussion-header [title="Status: Open"], #partial-discussion-header [title="Status: Draft"]');
+export const isMergedPR = (): boolean => exists('#partial-discussion-header [title="Status: Merged"]');
+export const isClosedPR = (): boolean => exists('#partial-discussion-header [title="Status: Closed"], #partial-discussion-header [title="Status: Merged"]');
+
 /** Get the logged-in user’s username */
 const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
 
