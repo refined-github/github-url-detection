@@ -507,9 +507,11 @@ collect.set('isNewAction', [
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
-export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'actions';
+export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => /^actions(\/workflows\/.+\.ya?ml)?$/.test(getRepo(url)?.path!);
 collect.set('isRepositoryActions', [
 	'https://github.com/fregante/github-url-detection/actions',
+	'https://github.com/fregante/github-url-detection/actions/workflows/demo.yml',
+	'https://github.com/fregante/github-url-detection/actions/workflows/esm-lint.yml',
 ]);
 
 export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
