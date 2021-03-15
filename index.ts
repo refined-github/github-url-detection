@@ -385,6 +385,11 @@ collect.set('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
 
+export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
+collect.set('isRepoWiki', [
+	'https://github.com/lukesampson/scoop/wiki',
+]);
+
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
 collect.set('isSingleCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
