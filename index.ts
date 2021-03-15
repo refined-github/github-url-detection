@@ -452,6 +452,11 @@ export const isUserProfileFollowingTab = (): boolean =>
 	isUserProfile() &&
 	new URLSearchParams(location.search).get('tab') === 'following';
 
+export const isWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
+collect.set('isWiki', [
+	'https://github.com/lukesampson/scoop/wiki',
+]);
+
 export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
 collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
