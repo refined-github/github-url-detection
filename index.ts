@@ -127,6 +127,11 @@ collect.set('isMilestoneList', [
 	'https://github.com/sindresorhus/refined-github/milestones',
 ]);
 
+export const isNewFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('new'));
+collect.set('isNewFile ', [
+	'https://github.com/sindresorhus/refined-github/new/main',
+]);
+
 export const isNewIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'issues/new';
 collect.set('isNewIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
