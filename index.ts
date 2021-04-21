@@ -128,7 +128,7 @@ collect.set('isMilestoneList', [
 ]);
 
 export const isNewFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('new'));
-collect.set('isNewFile ', [
+collect.set('isNewFile', [
 	'https://github.com/sindresorhus/refined-github/new/main',
 ]);
 
