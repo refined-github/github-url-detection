@@ -535,7 +535,8 @@ collect.set('isNewRepo', [
 	'https://github.com/organizations/npmhub/repositories/new',
 ]);
 
-export const isNewRepoTemplate = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path === 'generate');
+// This can't use `getRepo().path` to avoid infinite recursion:
+export const isNewRepoTemplate = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(url.pathname.split('/')[3] === 'generate');
 collect.set('isNewRepoTemplate', [
 	'https://github.com/fregante/browser-extension-template/generate',
 ]);
