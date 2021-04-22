@@ -262,7 +262,8 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 	!reservedNames.includes(url.pathname.split('/', 2)[1]!) &&
 	!isDashboard(url) &&
 	!isGist(url) &&
-	!isRepoSearch(url);
+	!isRepoSearch(url) &&
+	!isNewRepoTemplate(url);
 collect.set('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
@@ -532,6 +533,12 @@ export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): b
 collect.set('isNewRepo', [
 	'https://github.com/new',
 	'https://github.com/organizations/npmhub/repositories/new',
+]);
+
+// This can't use `getRepo().path` to avoid infinite recursion:
+export const isNewRepoTemplate = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(url.pathname.split('/')[3] === 'generate');
+collect.set('isNewRepoTemplate', [
+	'https://github.com/fregante/browser-extension-template/generate',
 ]);
 
 /** Get the logged-in user’s username */
