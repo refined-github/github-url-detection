@@ -27,7 +27,7 @@
 		"esm/index.d.ts"
 	],
 	"scripts": {
-		"ava": "ava --timeout 30s",
+		"ava": "ava",
 		"build": "rollup -c",
 		"demo:build": "parcel build --public-url ./ demo/index.html",
 		"demo:test": "svelte-check",
@@ -79,7 +79,8 @@
 		"require": [
 			"esm",
 			"ts-node/register"
-		]
+		],
+		"timeout:": "30s"
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",
