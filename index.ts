@@ -377,6 +377,11 @@ collect.set('isRepoMainSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
 ]);
 
+export const isUserSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'settings';
+collect.set('isUserSettings', [
+	'https://github.com/settings',
+]);
+
 export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/replies');
 collect.set('isRepliesSettings', [
 	'https://github.com/settings/replies',
