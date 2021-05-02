@@ -1,11 +1,8 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
-import { createRequire } from 'module';
-import * as pageDetect from './index';
+import stripIndent from 'strip-indent';
+import * as pageDetect from './index'; // `index` ensures that it loads the source, not what's specified in `package.json`
 import collector from './collector';
-
-const require = createRequire(import.meta.url);
-const stripIndent = require('strip-indent');
 
 const {window} = new JSDOM('…');
 
@@ -19,8 +16,6 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
 		continue;
 	}
-
-	console.log(collector);
 
 	const validURLs = collector.get(detectName);
 

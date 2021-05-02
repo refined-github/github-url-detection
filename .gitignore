@@ -8,8 +8,8 @@ Thumbs.db
 *.log
 logs
 *.map
+cjs
+esm/*
+!esm/package.json
 dist
 .cache
-index.js
-index.d.ts
-collector.d.ts

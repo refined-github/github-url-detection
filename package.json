@@ -14,12 +14,11 @@
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
-	"type": "module",
-	"main": "index.js",
-	"module": "index.js",
+	"main": "esm/index.js",
+	"module": "esm/index.js",
 	"files": [
-		"index.js",
-		"index.d.ts"
+		"esm/index.js",
+		"esm/index.d.ts"
 	],
 	"scripts": {
 		"ava": "ava --timeout 30s",
@@ -65,20 +64,16 @@
 		}
 	},
 	"ava": {
-		"extensions": {
-			"ts": "module"
-		},
-		"nodeArguments": [
-			"--loader=ts-node/esm",
-			"--experimental-specifier-resolution=node"
-		],
-		"nonSemVerExperiments": {
-			"configurableModuleFormat": true
-		},
 		"environmentVariables": {
-			"TS_NODE_FILES": "true",
-			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\"}"
-		}
+			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
+		},
+		"extensions": [
+			"ts"
+		],
+		"require": [
+			"esm",
+			"ts-node/register"
+		]
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",

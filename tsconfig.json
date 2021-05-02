@@ -1,7 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": ".",
+		"outDir": "esm",
 		"lib": [
 			"dom",
 			"es2019"
@@ -9,8 +9,6 @@
 		"rootDir": "."
 	},
 	"include": [
-		"index.ts",
-		"globals.d.ts"
-	],
-	"exclude": []
+		"source", "index.ts", "globals.d.ts", "collector.ts"
+	]
 }
