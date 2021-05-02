@@ -1,11 +1,8 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
-import {createRequire} from 'module';
+import stripIndent from 'strip-indent';
 import * as pageDetect from '.';
 import collector from './collector';
-
-const require = createRequire(import.meta.url);
-const stripIndent = require('strip-indent');
 
 const {window} = new JSDOM('…');
 
