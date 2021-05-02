@@ -47,10 +47,8 @@
 				"rules": {
 					"ava/assertion-arguments": "off",
 					"@typescript-eslint/dot-notation": "off",
-					"@typescript-eslint/no-var-requires": "off",
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-					"@typescript-eslint/no-unnecessary-condition": "error",
 					"@typescript-eslint/comma-dangle": [
 						"error",
 						"always-multiline"
