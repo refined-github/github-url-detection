@@ -10,10 +10,6 @@
 		"test",
 		"extension"
 	],
-	"browserslist": [
-		"last 2 versions",
-		"not IE <= 11"
-	],
 	"repository": "fregante/github-url-detection",
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
@@ -36,6 +32,10 @@
 		"watch": "rollup -c --watch",
 		"xo": "xo"
 	},
+	"browserslist": [
+		"last 2 versions",
+		"not IE <= 11"
+	],
 	"xo": {
 		"envs": [
 			"browser"
