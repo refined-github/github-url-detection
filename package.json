@@ -14,15 +14,9 @@
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
-	"exports": {
-		"import": "./esm/index.js",
-		"require": "./index.js"
-	},
-	"main": "cjs/index.js",
+	"main": "esm/index.js",
 	"module": "esm/index.js",
 	"files": [
-		"cjs/index.js",
-		"cjs/index.d.ts",
 		"esm/index.js",
 		"esm/index.d.ts"
 	],

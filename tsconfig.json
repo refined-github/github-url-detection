@@ -1,7 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": "cjs",
+		"outDir": "esm",
 		"lib": [
 			"dom",
 			"es2019"

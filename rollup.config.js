@@ -2,15 +2,15 @@ import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 
-export default ['cjs', 'esm'].map(format => ({
+export default {
 	input: 'index.ts',
 	output: {
-		format,
-		dir: format,
+		'esm',
+		dir: 'esm',
 	},
 	plugins: [
 		typescript({
-			outDir: format,
+			outDir: 'esm',
 		}),
 		json(),
 		terser({
@@ -34,4 +34,4 @@ export default ['cjs', 'esm'].map(format => ({
 		},
 		),
 	],
-}));
+};
