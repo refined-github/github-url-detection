@@ -130,7 +130,7 @@ test('isPRFile404', t => {
 	t.false(pageDetect.isPRFile404());
 });
 
-const getRepositoryInfo = pageDetect.utils.getRepositoryInfo;
+const {getRepositoryInfo} = pageDetect.utils;
 test('getRepositoryInfo', t => {
 	const inputTypes = [
 		getRepositoryInfo, // Full URL
