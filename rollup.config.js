@@ -6,12 +6,10 @@ const config = {
 	input: 'index.ts',
 	output: {
 		format: 'esm',
-		dir: 'esm',
+		dir: '.',
 	},
 	plugins: [
-		typescript({
-			outDir: 'esm',
-		}),
+		typescript(),
 		json(),
 		terser({
 			toplevel: true,
