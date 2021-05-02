@@ -24,9 +24,9 @@
 	"scripts": {
 		"ava": "ava --timeout 30s",
 		"build": "rollup -c",
-		"demo:build": "parcel build --public-url ./ demo/index.html",
+		"demo:build": "parcel build --public-url ./ --out-dir demo/dist demo/index.html",
 		"demo:test": "svelte-check",
-		"demo:watch": "parcel demo/index.html",
+		"demo:watch": "parcel --out-dir demo/dist demo/index.html",
 		"prepack": "rollup -c",
 		"test": "run-p build ava xo",
 		"watch": "rollup -c --watch",
