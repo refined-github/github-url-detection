@@ -1,7 +1,7 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import {createRequire} from 'module';
-import * as pageDetect from './index'; // `index` ensures that it loads the source, not what's specified in `package.json`
+import * as pageDetect from '.';
 import collector from './collector';
 
 const require = createRequire(import.meta.url);

@@ -15,11 +15,11 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
 	"type": "module",
-	"main": "esm/index.js",
-	"module": "esm/index.js",
+	"main": "distribution/index.js",
+	"module": "distribution/index.js",
 	"files": [
-		"esm/index.js",
-		"esm/index.d.ts"
+		"distribution/index.js",
+		"distribution/index.d.ts"
 	],
 	"scripts": {
 		"ava": "ava --timeout 30s",
@@ -67,8 +67,7 @@
 	},
 	"ava": {
 		"environmentVariables": {
-			"TS_NODE_FILES": "true",
-			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\"}"
+			"TS_NODE_FILES": "true"
 		},
 		"extensions": {
 			"ts": "module"

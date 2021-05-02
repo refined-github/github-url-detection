@@ -8,6 +8,5 @@ Thumbs.db
 *.log
 logs
 *.map
-esm/*
-dist
+distribution
 .cache
