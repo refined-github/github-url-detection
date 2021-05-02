@@ -8,8 +8,6 @@ Thumbs.db
 *.log
 logs
 *.map
-cjs
 esm/*
-!esm/package.json
 dist
 .cache

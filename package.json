@@ -14,6 +14,7 @@
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
+	"type": "module",
 	"main": "esm/index.js",
 	"module": "esm/index.js",
 	"files": [
@@ -44,6 +45,7 @@
 					"*.ts"
 				],
 				"rules": {
+					"@typescript-eslint/no-var-requires": "off",
 					"@typescript-eslint/no-unnecessary-condition": "error",
 					"@typescript-eslint/comma-dangle": [
 						"error",
@@ -65,15 +67,19 @@
 	},
 	"ava": {
 		"environmentVariables": {
-			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
+			"TS_NODE_FILES": "true",
+			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\"}"
 		},
-		"extensions": [
-			"ts"
+		"extensions": {
+			"ts": "module"
+		},
+		"nodeArguments": [
+			"--loader=ts-node/esm",
+			"--experimental-specifier-resolution=node"
 		],
-		"require": [
-			"esm",
-			"ts-node/register"
-		]
+		"nonSemVerExperiments": {
+			"configurableModuleFormat": true
+		}
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",
@@ -82,7 +88,6 @@
 		"@sindresorhus/tsconfig": "^0.8.0",
 		"@types/jsdom": "^16.2.6",
 		"ava": "^3.15.0",
-		"esm": "^3.2.25",
 		"github-reserved-names": "^2.0.4",
 		"jsdom": "^16.4.0",
 		"npm-run-all": "^4.1.5",
