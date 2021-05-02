@@ -379,8 +379,9 @@ collect.set('isRepoMainSettings', [
 
 export const isUserSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/');
 collect.set('isUserSettings', [
-	'https://github.com/settings/',
 	'https://github.com/settings/profile',
+	'https://github.com/settings/replies',
+	'https://github.com/settings/replies/88491/edit',
 ]);
 
 export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/replies');
