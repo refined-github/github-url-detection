@@ -88,6 +88,7 @@
 	"devDependencies": {
 		"@babel/polyfill": "^7.12.1",
 		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^11.2.1",
 		"@rollup/plugin-typescript": "^8.2.1",
 		"@sindresorhus/tsconfig": "^1.0.2",
 		"@types/jsdom": "^16.2.10",
