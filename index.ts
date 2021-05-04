@@ -5,6 +5,12 @@ const exists = (selector: string) => Boolean(document.querySelector(selector));
 
 const combinedTestOnly = 'combinedTestOnly'; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
+collect.set('__urls_that_dont_match__', [
+	'https://github.com/sindresorhus/refined-github/issues/new',
+	'https://github.com/sindresorhus/refined-github/issues/new/choose',
+	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+]);
+
 export const is404 = (): boolean => document.title === 'Page not found · GitHub';
 
 export const is500 = (): boolean => document.title === 'Server Error · GitHub' || document.title === 'Unicorn! · GitHub' || document.title === '504 Gateway Time-out';
@@ -115,6 +121,7 @@ collect.set('isConversation', combinedTestOnly);
 export const isLabelList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'labels';
 collect.set('isLabelList', [
 	'https://github.com/sindresorhus/refined-github/labels',
+	'https://github.com/sindresorhus/refined-github/labels/',
 ]);
 
 export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path!);
