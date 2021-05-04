@@ -312,8 +312,7 @@ collect.set('isRepoPRList', [
 
 export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	// `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
-	/^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path!) ||
-	Boolean(getRepo(url)?.path.startsWith('labels/'));
+	/^labels\/|^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path!);
 collect.set('isRepoIssueList', [
 	'http://github.com/sindresorhus/ava/issues',
 	'https://github.com/sindresorhus/refined-github/issues',
