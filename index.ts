@@ -5,6 +5,12 @@ const exists = (selector: string) => Boolean(document.querySelector(selector));
 
 const combinedTestOnly = 'combinedTestOnly'; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
+collect.set('__urls_that_dont_match__', [
+	'https://github.com/sindresorhus/refined-github/issues/new',
+	'https://github.com/sindresorhus/refined-github/issues/new/choose',
+	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+]);
+
 export const is404 = (): boolean => document.title === 'Page not found · GitHub';
 
 export const is500 = (): boolean => document.title === 'Server Error · GitHub' || document.title === 'Unicorn! · GitHub' || document.title === '504 Gateway Time-out';
@@ -115,6 +121,7 @@ collect.set('isConversation', combinedTestOnly);
 export const isLabelList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'labels';
 collect.set('isLabelList', [
 	'https://github.com/sindresorhus/refined-github/labels',
+	'https://github.com/sindresorhus/refined-github/labels/',
 ]);
 
 export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path!);
@@ -283,7 +290,9 @@ export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork becau
 
 export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
 collect.set('isRepoTaxonomyConversationList', [
-	'https://github.com/sindresorhus/refined-github/labels/Priority%3A%20critical',
+	'https://github.com/sindresorhus/refined-github/labels/bug',
+	'https://github.com/sindresorhus/refined-github/labels/implemented%20by%20github',
+	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 	'https://github.com/sindresorhus/refined-github/milestones/1',
 ]);
 
@@ -301,10 +310,9 @@ collect.set('isRepoPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-// `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
 export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	Boolean(getRepo(url)?.path.startsWith('issues')) &&
-	!/^issues\/(\d+|new|templates)($|\/)/.test(getRepo(url)?.path!);
+	// `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
+	/^labels\/|^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path!);
 collect.set('isRepoIssueList', [
 	'http://github.com/sindresorhus/ava/issues',
 	'https://github.com/sindresorhus/refined-github/issues',
@@ -312,6 +320,9 @@ collect.set('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues/newton',
 	'https://github.com/sindresorhus/refined-github/issues/wptemplates',
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
+	'https://github.com/sindresorhus/refined-github/labels/bug',
+	'https://github.com/sindresorhus/refined-github/labels/implemented%20by%20github',
+	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
 export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '';
