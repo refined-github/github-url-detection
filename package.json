@@ -14,29 +14,28 @@
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
-	"exports": {
-		"import": "./esm/index.js",
-		"require": "./index.js"
-	},
-	"main": "cjs/index.js",
-	"module": "esm/index.js",
+	"type": "module",
+	"main": "distribution/index.js",
+	"module": "distribution/index.js",
 	"files": [
-		"cjs/index.js",
-		"cjs/index.d.ts",
-		"esm/index.js",
-		"esm/index.d.ts"
+		"distribution/index.js",
+		"distribution/index.d.ts"
 	],
 	"scripts": {
 		"ava": "ava --timeout 30s",
 		"build": "rollup -c",
-		"demo:build": "parcel build --public-url ./ demo/index.html",
+		"demo:build": "parcel build --public-url ./ --out-dir demo/dist demo/index.html",
 		"demo:test": "svelte-check",
-		"demo:watch": "parcel demo/index.html",
+		"demo:watch": "parcel --out-dir demo/dist demo/index.html",
 		"prepack": "rollup -c",
 		"test": "run-p build ava xo",
 		"watch": "rollup -c --watch",
 		"xo": "xo"
 	},
+	"browserslist": [
+		"last 2 versions",
+		"not IE <= 11"
+	],
 	"xo": {
 		"envs": [
 			"browser"
@@ -50,7 +49,10 @@
 					"*.ts"
 				],
 				"rules": {
-					"@typescript-eslint/no-unnecessary-condition": "error",
+					"ava/assertion-arguments": "off",
+					"@typescript-eslint/dot-notation": "off",
+					"@typescript-eslint/no-non-null-assertion": "off",
+					"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
 					"@typescript-eslint/comma-dangle": [
 						"error",
 						"always-multiline"
@@ -71,37 +73,43 @@
 	},
 	"ava": {
 		"environmentVariables": {
-			"TS_NODE_COMPILER_OPTIONS": "{\"esModuleInterop\": true}"
+			"TS_NODE_FILES": "true",
+			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\", \"allowSyntheticDefaultImports\": true}"
 		},
-		"extensions": [
-			"ts"
+		"extensions": {
+			"ts": "module"
+		},
+		"nodeArguments": [
+			"--loader=ts-node/esm",
+			"--experimental-specifier-resolution=node"
 		],
-		"require": [
-			"esm",
-			"ts-node/register"
-		]
+		"nonSemVerExperiments": {
+			"configurableModuleFormat": true
+		}
 	},
 	"devDependencies": {
-		"@babel/polyfill": "^7.12.1",
 		"@rollup/plugin-json": "^4.1.0",
-		"@rollup/plugin-typescript": "^8.1.1",
-		"@sindresorhus/tsconfig": "^0.8.0",
-		"@types/jsdom": "^16.2.6",
+		"@rollup/plugin-node-resolve": "^11.2.1",
+		"@rollup/plugin-typescript": "^8.2.1",
+		"@sindresorhus/tsconfig": "^1.0.2",
+		"@types/jsdom": "^16.2.10",
 		"ava": "^3.15.0",
-		"esm": "^3.2.25",
 		"github-reserved-names": "^2.0.4",
-		"jsdom": "^16.4.0",
+		"jsdom": "^16.5.3",
 		"npm-run-all": "^4.1.5",
 		"parcel-bundler": "^1.12.4",
 		"parcel-plugin-svelte": "^4.0.8",
-		"rollup": "^2.38.5",
+		"rollup": "^2.46.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"strip-indent": "^3.0.0",
-		"svelte": "^3.32.2",
-		"svelte-check": "^1.1.34",
+		"svelte": "^3.38.1",
+		"svelte-check": "^1.5.2",
 		"ts-node": "^9.1.1",
-		"tslib": "^2.1.0",
-		"typescript": "^4.1.4",
-		"xo": "^0.37.1"
+		"tslib": "^2.2.0",
+		"typescript": "^4.2.4",
+		"xo": "^0.39.1"
+	},
+	"engines": {
+		"node": ">=12"
 	}
 }

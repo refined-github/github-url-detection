@@ -14,11 +14,8 @@ npm install github-url-detection
 ```
 
 ```js
+// This package is pure ESM
 import * as pageDetect from 'github-url-detection';
-```
-
-```js
-const pageDetect = require('github-url-detection');
 ```
 
 ## Usage

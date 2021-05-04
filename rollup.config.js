@@ -1,17 +1,19 @@
+import {nodeResolve} from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 
-export default ['cjs', 'esm'].map(format => ({
+const config = {
 	input: 'index.ts',
 	output: {
-		format,
-		dir: format,
+		format: 'esm',
+		dir: 'distribution',
 	},
 	plugins: [
 		typescript({
-			outDir: format,
+			outDir: 'distribution',
 		}),
+		nodeResolve(),
 		json(),
 		terser({
 			toplevel: true,
@@ -34,4 +36,6 @@ export default ['cjs', 'esm'].map(format => ({
 		},
 		),
 	],
-}));
+};
+
+export default config;

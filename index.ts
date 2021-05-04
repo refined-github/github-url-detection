@@ -156,7 +156,7 @@ collect.set('isNotifications', [
 
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
-export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset.ownerScopedSearchUrl!.startsWith('/org'));
+export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
 
 export const isOrganizationDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
 collect.set('isOrganizationDiscussion', [
@@ -388,17 +388,16 @@ collect.set('isRepoMainSettings', [
 	'https://github.com/sindresorhus/refined-github/settings',
 ]);
 
-export const isUserSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/');
-collect.set('isUserSettings', [
-	'https://github.com/settings/profile',
-	'https://github.com/settings/replies',
-	'https://github.com/settings/replies/88491/edit',
-]);
-
 export const isRepliesSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/replies');
 collect.set('isRepliesSettings', [
 	'https://github.com/settings/replies',
 	'https://github.com/settings/replies/88491/edit',
+]);
+
+export const isUserSettings = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/settings/');
+collect.set('isUserSettings', [
+	'https://github.com/settings/profile',
+	...collect.get('isRepliesSettings') as string[],
 ]);
 
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));

@@ -1,7 +1,7 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
-import * as pageDetect from './index'; // `index` ensures that it loads the source, not what's specified in `package.json`
+import * as pageDetect from '.';
 import collector from './collector';
 
 const {window} = new JSDOM('…');
@@ -130,7 +130,7 @@ test('isPRFile404', t => {
 	t.false(pageDetect.isPRFile404());
 });
 
-const getRepositoryInfo = pageDetect.utils.getRepositoryInfo;
+const {getRepositoryInfo} = pageDetect.utils;
 test('getRepositoryInfo', t => {
 	const inputTypes = [
 		getRepositoryInfo, // Full URL
