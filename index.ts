@@ -151,7 +151,7 @@ collect.set('isNewRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/new',
 ]);
 
-export const isNewWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && url.href.endsWith('/_new');
+export const isNewWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_new');
 collect.set('isNewWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/_new',
 ]);
@@ -272,7 +272,7 @@ collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
-export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && url.href.endsWith('/_edit');
+export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 collect.set('isEditingWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
