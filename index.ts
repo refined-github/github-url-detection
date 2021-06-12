@@ -419,6 +419,8 @@ collect.set('isRepoTree', [
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
 collect.set('isRepoWiki', [
 	'https://github.com/lukesampson/scoop/wiki',
+	'https://github.com/tooomm/wikitest/wiki/_new',
+	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
