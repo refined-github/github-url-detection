@@ -267,7 +267,7 @@ collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
-export const isEditingWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki() && /\/_(edit|new)$/.test(url);
+export const isEditingWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki() && /\/_(edit|new)$/.test(url.href);
 collect.set('isEditingWiki', [
 	'https://github.com/tooomm/wikitest/wiki/_new',
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
