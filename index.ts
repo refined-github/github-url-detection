@@ -267,6 +267,12 @@ collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
+export const isEditingWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki() && /\/_(edit|new)$/.test(url);
+collect.set('isEditingWiki', [
+	'https://github.com/tooomm/wikitest/wiki/_new',
+	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
+]);
+
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
 	!reservedNames.includes(url.pathname.split('/', 2)[1]!) &&
 	!isDashboard(url) &&
