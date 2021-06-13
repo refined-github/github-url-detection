@@ -151,6 +151,11 @@ collect.set('isNewRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/new',
 ]);
 
+export const isNewWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_new');
+collect.set('isNewWikiPage', [
+	'https://github.com/tooomm/wikitest/wiki/_new',
+]);
+
 export const isNotifications = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'notifications';
 collect.set('isNotifications', [
 	'https://github.com/notifications',
@@ -265,6 +270,11 @@ collect.set('isEditingFile', [
 export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
+]);
+
+export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
+collect.set('isEditingWikiPage', [
+	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
@@ -413,6 +423,8 @@ collect.set('isRepoTree', [
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
 collect.set('isRepoWiki', [
 	'https://github.com/lukesampson/scoop/wiki',
+	'https://github.com/tooomm/wikitest/wiki/_new',
+	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
