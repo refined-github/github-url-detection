@@ -574,7 +574,7 @@ collect.set('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getUsername = () => document.querySelector('meta[name="user-login"]')!.getAttribute('content')!;
+const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
 
 /** Drop leading and trailing slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.slice(1, url.pathname.endsWith('/') ? -1 : undefined);
