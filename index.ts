@@ -474,7 +474,7 @@ collect.set('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
 
-export const isUserProfile = (): boolean => exists('.user-profile-nav');
+export const isUserProfile = (): boolean => exists('meta[property="og:type"][content="profile"]') && !isOrganizationProfile();
 
 export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
 
