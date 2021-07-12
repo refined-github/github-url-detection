@@ -557,7 +557,7 @@ collect.set('isRepositoryActions', [
 	'https://github.com/fregante/github-url-detection/actions/workflows/esm-lint.yml',
 ]);
 
-export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('.pagehead-tabs-item[href$="/settings/profile"]');
+export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
