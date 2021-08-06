@@ -557,7 +557,9 @@ collect.set('isRepositoryActions', [
 	'https://github.com/fregante/github-url-detection/actions/workflows/esm-lint.yml',
 ]);
 
-export const canUserEditOrganization = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
+export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
+/** @deprecated use isUserTheOrganizationOwner instead */
+export const canUserEditOrganization = isUserTheOrganizationOwner;
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
