@@ -163,7 +163,39 @@ collect.set('isNotifications', [
 
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
+export const isOrganizationRepoList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/repositories$/.test(getCleanPathname(url));
+collect.set('isOrganizationRepoList', [
+	'https://github.com/orgs/github/repositories',
+	'https://github.com/orgs/github/repositories?page=2',
+]);
+
 export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
+
+export const isOrganizationPackagesList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/packages$/.test(getCleanPathname(url));
+collect.set('isOrganizationPackagesList', [
+	'https://github.com/orgs/github/packages',
+]);
+
+export const isOrganizationPeopleList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/people$/.test(getCleanPathname(url));
+collect.set('isOrganizationPeopleList', [
+	'https://github.com/orgs/github/people',
+	'https://github.com/orgs/github/people?page=2',
+]);
+
+export const isOrganizationProjectsList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/projects$/.test(getCleanPathname(url));
+collect.set('isOrganizationProjectsList', [
+	'https://github.com/orgs/github/projects',
+]);
+
+export const isOrganizationProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/projects\/[^/]+$/.test(getCleanPathname(url));
+collect.set('isOrganizationProject', [
+	'https://github.com/orgs/cncf/projects/1',
+]);
+
+export const isOrganizationDiscussionsList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/discussions$/.test(getCleanPathname(url));
+collect.set('isOrganizationDiscussionsList', [
+	'https://github.com/orgs/github/discussions',
+]);
 
 export const isOrganizationDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
 collect.set('isOrganizationDiscussion', [
