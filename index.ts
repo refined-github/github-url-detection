@@ -197,12 +197,14 @@ collect.set('isOrganizationDiscussionsList', [
 	'https://github.com/orgs/github/discussions',
 ]);
 
-export const isOrganizationDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
-collect.set('isOrganizationDiscussion', [
+export const isOrganizationTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
+collect.set('isOrganizationTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team/discussions?pinned=1',
 	'https://github.com/orgs/refined-github/teams/core-team/discussions/1',
 	'https://github.com/orgs/refined-github/teams/core-team',
 ]);
+/** @deprecated use isOrganizationTeamDiscussion instead */
+export const isOrganizationDiscussion = isOrganizationTeamDiscussion;
 
 export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsername();
 
