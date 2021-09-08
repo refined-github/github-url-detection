@@ -172,29 +172,32 @@ collect.set('isOrganizationRepoList', [
 export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
 
 export const isOrganizationPackageList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/packages$/.test(getCleanPathname(url));
-collect.set('isOrganizationPackagesList', [
+collect.set('isOrganizationPackageList', [
 	'https://github.com/orgs/github/packages',
+	'https://github.com/orgs/microsoft/packages',
+	'https://github.com/orgs/npm/packages',
 ]);
 
 export const isOrganizationMembers = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/people$/.test(getCleanPathname(url));
-collect.set('isOrganizationPeopleList', [
+collect.set('isOrganizationMembers', [
 	'https://github.com/orgs/github/people',
 	'https://github.com/orgs/github/people?page=2',
 ]);
 
-export const isOrganizationProjectsList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/projects$/.test(getCleanPathname(url));
-collect.set('isOrganizationProjectsList', [
+export const isOrganizationProjectList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/projects$/.test(getCleanPathname(url));
+collect.set('isOrganizationProjectList', [
 	'https://github.com/orgs/github/projects',
+	'https://github.com/orgs/cncf/projects',
+	'https://github.com/orgs/microsoft/projects',
+	'https://github.com/orgs/python/projects?query=is%3Aclosed',
+	'https://github.com/orgs/npm/projects?query=is%3Aclosed',
 ]);
 
 export const isOrganizationProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/projects\/[^/]+$/.test(getCleanPathname(url));
 collect.set('isOrganizationProject', [
 	'https://github.com/orgs/cncf/projects/1',
-]);
-
-export const isOrganizationDiscussionsList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/discussions$/.test(getCleanPathname(url));
-collect.set('isOrganizationDiscussionsList', [
-	'https://github.com/orgs/github/discussions',
+	'https://github.com/orgs/python/projects/1'
+	'https://github.com/orgs/microsoft/projects/30',
 ]);
 
 export const isOrganizationTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
@@ -203,8 +206,14 @@ collect.set('isOrganizationTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team/discussions/1',
 	'https://github.com/orgs/refined-github/teams/core-team',
 ]);
+
 /** @deprecated use isOrganizationTeamDiscussion instead */
 export const isOrganizationDiscussion = isOrganizationTeamDiscussion;
+collect.set('isOrganizationDiscussion', [
+	'https://github.com/orgs/refined-github/teams/core-team/discussions?pinned=1',
+	'https://github.com/orgs/refined-github/teams/core-team/discussions/1',
+	'https://github.com/orgs/refined-github/teams/core-team',
+]);
 
 export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsername();
 
