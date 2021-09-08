@@ -171,12 +171,12 @@ collect.set('isOrganizationRepoList', [
 
 export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
 
-export const isOrganizationPackagesList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/packages$/.test(getCleanPathname(url));
+export const isOrganizationPackageList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/packages$/.test(getCleanPathname(url));
 collect.set('isOrganizationPackagesList', [
 	'https://github.com/orgs/github/packages',
 ]);
 
-export const isOrganizationPeopleList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/people$/.test(getCleanPathname(url));
+export const isOrganizationMembers = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/people$/.test(getCleanPathname(url));
 collect.set('isOrganizationPeopleList', [
 	'https://github.com/orgs/github/people',
 	'https://github.com/orgs/github/people?page=2',
