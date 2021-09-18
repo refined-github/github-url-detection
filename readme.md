@@ -37,7 +37,7 @@ if (pageDetect.isConversationList()) {
 
 ## API
 
-In the source you can see the [full list of detections](https://www.unpkg.com/browse/github-url-detection@latest/esm/index.d.ts) and [their matching URLs.](https://github.com/fregante/github-url-detection/blob/master/index.ts)
+In the source you can see the [full list of detections](https://www.unpkg.com/browse/github-url-detection@latest/distribution/index.d.ts) and [their matching URLs.](https://github.com/fregante/github-url-detection/blob/master/index.ts)
 
 Most detections are URL-based while others need access to the current `document`. You can determine which ones are URL-based by looking at their signature: URL-based functions have a `url` parameter.
 
