@@ -5,7 +5,7 @@
 Battle-tested by and extracted from the [Refined GitHub](https://github.com/sindresorhus/refined-github) extension.
 
 - Try the live [demo](https://fregante.github.io/github-url-detection/)
-- See the code and expected URLs for [every detection](https://github.com/fregante/github-url-detection/blob/master/index.ts)
+- See the code and expected URLs for [every detection](https://github.com/fregante/github-url-detection/blob/main/index.ts)
 
 ## Install
 
