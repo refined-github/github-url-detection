@@ -61,7 +61,6 @@ Notice that the `url` parameter is not a plain string but it has to be a proper 
 
 By default, `document`-based detections use the `document` global, which means they can only be used if you have the whole page, you can't just test any random URL string.
 
-
 ```js
 if (pageDetect.isOrganizationProfile()) {
 	alert('You’re on an organization profile, like https://github.com/babel')

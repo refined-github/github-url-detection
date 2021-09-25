@@ -27,14 +27,9 @@ const config = {
 				booleans: false,
 				expression: false,
 				sequences: false,
-				pure_funcs: [
-					'collect.set',
-					'collect.get',
-					'Map',
-				],
+				pure_funcs: ['collect.set', 'collect.get', 'Map'],
 			},
-		},
-		),
+		}),
 	],
 };
 
