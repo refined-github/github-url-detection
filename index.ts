@@ -112,9 +112,9 @@ collect.set('isIssue', [
 ]);
 
 export const isConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isGlobalConversationList(url) ||
-	isRepoConversationList(url) ||
-	isMilestone(url);
+	isGlobalConversationList(url)
+	|| isRepoConversationList(url)
+	|| isMilestone(url);
 collect.set('isConversationList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
@@ -277,12 +277,12 @@ collect.set('isEditingWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
-export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url)) &&
-	!reservedNames.includes(url.pathname.split('/', 2)[1]!) &&
-	!isDashboard(url) &&
-	!isGist(url) &&
-	!isRepoSearch(url) &&
-	!isNewRepoTemplate(url);
+export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url))
+	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
+	&& !isDashboard(url)
+	&& !isGist(url)
+	&& !isRepoSearch(url)
+	&& !isNewRepoTemplate(url);
 collect.set('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
@@ -309,9 +309,9 @@ collect.set('isRepoTaxonomyConversationList', [
 ]);
 
 export const isRepoConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isRepoPRList(url) ||
-	isRepoIssueList(url) ||
-	isRepoTaxonomyConversationList(url);
+	isRepoPRList(url)
+	|| isRepoIssueList(url)
+	|| isRepoTaxonomyConversationList(url);
 collect.set('isRepoConversationList', combinedTestOnly);
 
 export const isRepoPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('pulls'));
@@ -479,20 +479,20 @@ export const isUserProfile = (): boolean => exists('.user-profile-nav');
 export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
 
 export const isUserProfileRepoTab = (): boolean =>
-	isUserProfile() &&
-	new URLSearchParams(location.search).get('tab') === 'repositories';
+	isUserProfile()
+	&& new URLSearchParams(location.search).get('tab') === 'repositories';
 
 export const isUserProfileStarsTab = (): boolean =>
-	isUserProfile() &&
-	new URLSearchParams(location.search).get('tab') === 'stars';
+	isUserProfile()
+	&& new URLSearchParams(location.search).get('tab') === 'stars';
 
 export const isUserProfileFollowersTab = (): boolean =>
-	isUserProfile() &&
-	new URLSearchParams(location.search).get('tab') === 'followers';
+	isUserProfile()
+	&& new URLSearchParams(location.search).get('tab') === 'followers';
 
 export const isUserProfileFollowingTab = (): boolean =>
-	isUserProfile() &&
-	new URLSearchParams(location.search).get('tab') === 'following';
+	isUserProfile()
+	&& new URLSearchParams(location.search).get('tab') === 'following';
 
 export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
 collect.set('isSingleTag', [
@@ -502,29 +502,29 @@ collect.set('isSingleTag', [
 
 collect.set('hasComments', combinedTestOnly);
 export const hasComments = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isPR(url) ||
-	isIssue(url) ||
-	isCommit(url) ||
-	isOrganizationDiscussion(url) ||
-	isSingleGist(url);
+	isPR(url)
+	|| isIssue(url)
+	|| isCommit(url)
+	|| isOrganizationDiscussion(url)
+	|| isSingleGist(url);
 
 collect.set('hasRichTextEditor', combinedTestOnly);
 export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	hasComments(url) ||
-	isNewIssue(url) ||
-	isCompare(url) ||
-	isRepliesSettings(url) ||
-	isNewRelease(url) ||
-	isDiscussion(url);
+	hasComments(url)
+	|| isNewIssue(url)
+	|| isCompare(url)
+	|| isRepliesSettings(url)
+	|| isNewRelease(url)
+	|| isDiscussion(url);
 
 collect.set('hasCode', combinedTestOnly);
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
-	hasComments(url) ||
-	isRepoTree(url) || // Readme files
-	isSingleFile(url) ||
-	isGist(url) ||
-	isCompare(url) ||
-	isBlame(url);
+	hasComments(url)
+	|| isRepoTree(url) // Readme files
+	|| isSingleFile(url)
+	|| isGist(url)
+	|| isCompare(url)
+	|| isBlame(url);
 
 export const isMarketplaceAction = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
 collect.set('isMarketplaceAction', [
