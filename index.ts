@@ -474,6 +474,26 @@ collect.set('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
 
+export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	const pathname = getCleanPathname(url);
+	return pathname.length > 0 && !pathname.includes('/') && !reservedNames.includes(pathname);
+};
+
+collect.set('isProfile', [
+	'https://github.com/fregante',
+	'https://github.com/github',
+	'https://github.com/babel',
+	'https://github.com/fregante?tab=repositories',
+	'https://github.com/fregante?tab=repositories&type=source',
+	'https://github.com/fregante?tab=repositories&q=&type=source&language=css&sort=',
+	'https://github.com/fregante?tab=stars',
+	'https://github.com/fregante?direction=desc&sort=updated&tab=stars',
+	'https://github.com/fregante?tab=followers',
+	'https://github.com/sindresorhus?tab=followers',
+	'https://github.com/fregante?tab=following',
+	'https://github.com/sindresorhus?tab=following',
+]);
+
 export const isUserProfile = (): boolean => exists('.user-profile-nav');
 
 export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
