@@ -474,7 +474,18 @@ collect.set('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
 
-export const isUserProfile = (): boolean => exists('meta[property="og:type"][content="profile"]') && !isOrganizationProfile();
+export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	const pathname = getCleanPathname(url);
+	return pathname.length > 0 && !pathname.includes('/') && !reservedNames.includes(pathname);
+};
+
+collect.set('isProfile', [
+	'https://github.com/fregante',
+	'https://github.com/github',
+	'https://github.com/babel',
+]);
+
+export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
 export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
 
