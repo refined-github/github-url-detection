@@ -483,27 +483,56 @@ collect.set('isProfile', [
 	'https://github.com/fregante',
 	'https://github.com/github',
 	'https://github.com/babel',
+	'https://github.com/fregante?tab=repositories',
+	'https://github.com/fregante?tab=repositories&type=source',
+	'https://github.com/fregante?tab=repositories&q=&type=source&language=css&sort=',
+	'https://github.com/fregante?tab=stars',
+	'https://github.com/fregante?direction=desc&sort=updated&tab=stars',
+	'https://github.com/fregante?tab=followers',
+	'https://github.com/sindresorhus?tab=followers',
+	'https://github.com/fregante?tab=following',
+	'https://github.com/sindresorhus?tab=following',
 ]);
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
-export const isUserProfileMainTab = (): boolean => exists('[aria-label="User profile"] > .selected:first-child');
-
-export const isUserProfileRepoTab = (): boolean =>
+export const isUserProfileMainTab = (): boolean =>
 	isUserProfile()
-	&& new URLSearchParams(location.search).get('tab') === 'repositories';
+	&& !new URLSearchParams(location.search).has('tab');
 
-export const isUserProfileStarsTab = (): boolean =>
-	isUserProfile()
-	&& new URLSearchParams(location.search).get('tab') === 'stars';
+// The following can be URL-based because they have a `tab` parameter, unlike the organizations
+export const isUserProfileRepoTab = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isProfile(url)
+	&& new URLSearchParams(url.search).get('tab') === 'repositories';
+collect.set('isUserProfileRepoTab', [
+	'https://github.com/fregante?tab=repositories',
+	'https://github.com/fregante?tab=repositories&type=source',
+	'https://github.com/fregante?tab=repositories&q=&type=source&language=css&sort=',
+]);
 
-export const isUserProfileFollowersTab = (): boolean =>
-	isUserProfile()
-	&& new URLSearchParams(location.search).get('tab') === 'followers';
+export const isUserProfileStarsTab = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isProfile(url)
+	&& new URLSearchParams(url.search).get('tab') === 'stars';
+collect.set('isUserProfileStarsTab', [
+	'https://github.com/fregante?tab=stars',
+	'https://github.com/fregante?direction=desc&sort=updated&tab=stars',
+]);
 
-export const isUserProfileFollowingTab = (): boolean =>
-	isUserProfile()
-	&& new URLSearchParams(location.search).get('tab') === 'following';
+export const isUserProfileFollowersTab = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isProfile(url)
+	&& new URLSearchParams(url.search).get('tab') === 'followers';
+collect.set('isUserProfileFollowersTab', [
+	'https://github.com/fregante?tab=followers',
+	'https://github.com/sindresorhus?tab=followers',
+]);
+
+export const isUserProfileFollowingTab = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isProfile(url)
+	&& new URLSearchParams(url.search).get('tab') === 'following';
+collect.set('isUserProfileFollowingTab', [
+	'https://github.com/fregante?tab=following',
+	'https://github.com/sindresorhus?tab=following',
+]);
 
 export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
 collect.set('isSingleTag', [
