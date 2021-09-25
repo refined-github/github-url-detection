@@ -514,6 +514,7 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	isNewIssue(url) ||
 	isCompare(url) ||
 	isRepliesSettings(url) ||
+	isNewRelease(url) ||
 	isDiscussion(url);
 
 collect.set('hasCode', combinedTestOnly);
