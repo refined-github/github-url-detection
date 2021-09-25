@@ -1,8 +1,8 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
-import * as pageDetect from '.';
 import collector from './collector';
+import * as pageDetect from '.';
 
 const {window} = new JSDOM('…');
 
