@@ -261,6 +261,12 @@ collect.set('isReleasesOrTags', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
 
+export const isDeletingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('delete'));
+collect.set('isDeletingFile', [
+	'https://github.com/sindresorhus/refined-github/delete/master/readme.md',
+	'https://github.com/sindresorhus/refined-github/delete/ghe-injection/source/background.ts',
+]);
+
 export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
