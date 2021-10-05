@@ -107,16 +107,16 @@ test('is500', t => {
 });
 
 test('isPRCommit404', t => {
-	document.title = 'Commit range not found · Pull Request #3227 · sindresorhus/refined-github';
-	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/32c8a88360a85739f151566eae0225d530ce6a15';
+	document.title = 'Commit range not found · Pull Request #3227 · refined-github/refined-github';
+	location.href = 'https://github.com/refined-github/refined-github/pull/3227/commits/32c8a88360a85739f151566eae0225d530ce6a15';
 	t.true(pageDetect.isPRCommit404());
 
-	document.title = 'Experiment with `@primer/octicons-react` icons by FloEdelmann · Pull Request #3227 · sindresorhus/refined-github';
-	location.href = 'https://github.com/sindresorhus/refined-github/pull/3227/commits/edbdcdd5559a2a8da78abdc7cb0814155713974c';
+	document.title = 'Experiment with `@primer/octicons-react` icons by FloEdelmann · Pull Request #3227 · refined-github/refined-github';
+	location.href = 'https://github.com/refined-github/refined-github/pull/3227/commits/edbdcdd5559a2a8da78abdc7cb0814155713974c';
 	t.false(pageDetect.isPRCommit404());
 
-	document.title = 'Commit range not found by SomeContributor · Pull Request #999999 · sindresorhus/refined-github';
-	location.href = 'https://github.com/sindresorhus/refined-github/pull/999999/commits/32c8a88360a85739f151566eae0225d530ce6a15';
+	document.title = 'Commit range not found by SomeContributor · Pull Request #999999 · refined-github/refined-github';
+	location.href = 'https://github.com/refined-github/refined-github/pull/999999/commits/32c8a88360a85739f151566eae0225d530ce6a15';
 	t.false(pageDetect.isPRCommit404());
 });
 
@@ -125,8 +125,8 @@ test('isPRFile404', t => {
 	location.href = 'https://github.com/sindresorhus/eslint-plugin-unicorn/pull/789/files/a58b37845f1b2660221de019e4ae6c736feedc26..eed168224d7994652b1d1ff69a5c8cebee223faf';
 	t.true(pageDetect.isPRFile404());
 
-	document.title = 'Add `align-repository-header` feature by fregante · Pull Request #3313 · sindresorhus/refined-github';
-	location.href = 'https://github.com/sindresorhus/refined-github/pull/3313/files/a14fb2c94eae3ca83a3a97688a171fcc3405524f..fbeeba9825f12b5ded9cd4bb04d5df4b0cf2f2a8';
+	document.title = 'Add `align-repository-header` feature by fregante · Pull Request #3313 · refined-github/refined-github';
+	location.href = 'https://github.com/refined-github/refined-github/pull/3313/files/a14fb2c94eae3ca83a3a97688a171fcc3405524f..fbeeba9825f12b5ded9cd4bb04d5df4b0cf2f2a8';
 	t.false(pageDetect.isPRFile404());
 });
 

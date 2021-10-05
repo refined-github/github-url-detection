@@ -2,7 +2,7 @@
 
 > Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.
 
-Battle-tested by and extracted from the [Refined GitHub](https://github.com/sindresorhus/refined-github) extension.
+Battle-tested by and extracted from the [Refined GitHub](https://github.com/refined-github/refined-github) extension.
 
 - Try the live [demo](https://fregante.github.io/github-url-detection/)
 - See the code and expected URLs for [every detection](https://github.com/fregante/github-url-detection/blob/main/index.ts)
