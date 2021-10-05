@@ -19,7 +19,7 @@ export const isPasswordConfirmation = (): boolean => document.title === 'Confirm
 
 export const isBlame = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blame/'));
 collect.set('isBlame', [
-	'https://github.com/refined-github/refined-github/blame/master/package.json',
+	'https://github.com/refined-github/refined-github/blame/main/package.json',
 ]);
 
 export const isCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => isSingleCommit(url) || isPRCommit(url);
@@ -35,7 +35,7 @@ collect.set('isCommitList', combinedTestOnly);
 
 export const isRepoCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('commits'));
 collect.set('isRepoCommitList', [
-	'https://github.com/refined-github/refined-github/commits/master?page=2',
+	'https://github.com/refined-github/refined-github/commits/main?page=2',
 	'https://github.com/refined-github/refined-github/commits/test-branch',
 	'https://github.com/refined-github/refined-github/commits/0.13.0',
 	'https://github.com/refined-github/refined-github/commits/230c2',
@@ -48,8 +48,8 @@ export const isCompare = (url: URL | HTMLAnchorElement | Location = location): b
 collect.set('isCompare', [
 	'https://github.com/refined-github/refined-github/compare',
 	'https://github.com/refined-github/refined-github/compare/',
-	'https://github.com/refined-github/refined-github/compare/master...branch-name',
-	'https://github.com/refined-github/refined-github/compare/master...branch-name?quick_pull=1',
+	'https://github.com/refined-github/refined-github/compare/main...branch-name',
+	'https://github.com/refined-github/refined-github/compare/main...branch-name?quick_pull=1',
 	'https://github.com/refined-github/refined-github/compare/branch-1...branch-2?quick_pull=1',
 	'https://github.com/refined-github/refined-github/compare/test-branch?quick_pull=1',
 ]);
@@ -243,7 +243,7 @@ collect.set('isPRFiles', [
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
 collect.set('isQuickPR', [
-	'https://github.com/refined-github/refined-github/compare/master...branch-name?quick_pull=1',
+	'https://github.com/refined-github/refined-github/compare/main...branch-name?quick_pull=1',
 	'https://github.com/refined-github/refined-github/compare/branch-1...branch-2?quick_pull=1',
 	'https://github.com/refined-github/refined-github/compare/test-branch?quick_pull=1',
 ]);
@@ -263,13 +263,13 @@ collect.set('isReleasesOrTags', [
 
 export const isDeletingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('delete'));
 collect.set('isDeletingFile', [
-	'https://github.com/refined-github/refined-github/delete/master/readme.md',
+	'https://github.com/refined-github/refined-github/delete/main/readme.md',
 	'https://github.com/refined-github/refined-github/delete/ghe-injection/source/background.ts',
 ]);
 
 export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
-	'https://github.com/refined-github/refined-github/edit/master/readme.md',
+	'https://github.com/refined-github/refined-github/edit/main/readme.md',
 	'https://github.com/refined-github/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
@@ -291,7 +291,7 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 	&& !isNewRepoTemplate(url);
 collect.set('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
-	'https://github.com/refined-github/refined-github/blame/master/package.json',
+	'https://github.com/refined-github/refined-github/blame/main/package.json',
 	'https://github.com/refined-github/refined-github/issues/146',
 	'https://github.com/sindresorhus/notifications/',
 	'https://github.com/refined-github/refined-github/pull/148',
@@ -383,7 +383,7 @@ collect.set('isRepoRoot', [
 	'https://github.com/refined-github/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6',
 	'https://github.com/refined-github/refined-github/tree/03fa6b8b4d6e68dea9dc9bee1d197ef5d992fbd6/',
 	'https://github.com/refined-github/refined-github/tree/57bf4',
-	'https://github.com/refined-github/refined-github/tree/master?files=1',
+	'https://github.com/refined-github/refined-github/tree/main?files=1',
 ]);
 
 // This can't use `getRepositoryInfo().path` to avoid infinite recursion:
@@ -421,7 +421,7 @@ collect.set('isUserSettings', [
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
 collect.set('isRepoTree', [
 	...collect.get('isRepoRoot') as string[],
-	'https://github.com/refined-github/refined-github/tree/master/distribution',
+	'https://github.com/refined-github/refined-github/tree/main/distribution',
 	'https://github.com/refined-github/refined-github/tree/0.13.0/distribution',
 	'https://github.com/refined-github/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
 ]);
@@ -441,14 +441,14 @@ collect.set('isSingleCommit', [
 
 export const isSingleFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blob/'));
 collect.set('isSingleFile', [
-	'https://github.com/refined-github/refined-github/blob/master/.gitattributes',
+	'https://github.com/refined-github/refined-github/blob/main/.gitattributes',
 	'https://github.com/refined-github/refined-github/blob/fix-narrow-diff/distribution/content.css',
-	'https://github.com/refined-github/refined-github/blob/master/edit.txt',
+	'https://github.com/refined-github/refined-github/blob/main/edit.txt',
 ]);
 
 export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('find/'));
 collect.set('isFileFinder', [
-	'https://github.com/refined-github/refined-github/find/master',
+	'https://github.com/refined-github/refined-github/find/main',
 ]);
 
 export const isRepoForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
