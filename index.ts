@@ -265,14 +265,17 @@ collect.set('isTags', [
 	'https://github.com/sindresorhus/refined-github/tags?after=21.8.1',
 ]);
 
-export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleTag(url);
-collect.set('isReleasesOrTags', [
-	'https://github.com/sindresorhus/refined-github/releases',
-	'https://github.com/sindresorhus/refined-github/releases?page=2',
-	'https://github.com/sindresorhus/refined-github/tags',
-	'https://github.com/sindresorhus/refined-github/tags?after=21.8.1',
+export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
+collect.set('isSingleTag', [
 	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
 	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
+]);
+
+export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleTag(url);
+collect.set('isReleasesOrTags', [
+	...collect.get('isReleases') as string[],
+	...collect.get('isTags') as string[],
+	...collect.get('isSingleTag') as string[],
 ]);
 
 export const isDeletingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('delete'));
@@ -552,12 +555,6 @@ export const isUserProfileFollowingTab = (url: URL | HTMLAnchorElement | Locatio
 collect.set('isUserProfileFollowingTab', [
 	'https://github.com/fregante?tab=following',
 	'https://github.com/sindresorhus?tab=following',
-]);
-
-export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
-collect.set('isSingleTag', [
-	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
-	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
 ]);
 
 collect.set('hasComments', combinedTestOnly);
