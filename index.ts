@@ -253,7 +253,17 @@ export const isOpenPR = (): boolean => exists('#partial-discussion-header [title
 export const isMergedPR = (): boolean => exists('#partial-discussion-header [title="Status: Merged"]');
 export const isClosedPR = (): boolean => exists('#partial-discussion-header [title="Status: Closed"], #partial-discussion-header [title="Status: Merged"]');
 
-export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => /^tags$|^releases($|\/tag)/.test(getRepo(url)?.path!);
+export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
+collect.set('isReleases', [
+	'https://github.com/sindresorhus/refined-github/releases',
+]);
+
+export const isTags = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'tags';
+collect.set('isTags', [
+	'https://github.com/sindresorhus/refined-github/tags',
+]);
+
+export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleTag(url);
 collect.set('isReleasesOrTags', [
 	'https://github.com/sindresorhus/refined-github/releases',
 	'https://github.com/sindresorhus/refined-github/tags',
