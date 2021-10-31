@@ -255,12 +255,14 @@ export const isClosedPR = (): boolean => exists('#partial-discussion-header [tit
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
 collect.set('isReleases', [
-	'https://github.com/sindresorhus/refined-github/releases',
+	'https://github.com/refined-github/refined-github/releases',
+	'https://github.com/refined-github/refined-github/releases?page=2',
 ]);
 
 export const isTags = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'tags';
 collect.set('isTags', [
-	'https://github.com/sindresorhus/refined-github/tags',
+	'https://github.com/refined-github/refined-github/tags',
+	'https://github.com/refined-github/refined-github/tags?after=21.8.1',
 ]);
 
 export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleTag(url);
