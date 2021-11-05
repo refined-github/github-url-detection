@@ -182,6 +182,11 @@ collect.set('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
+export const isProjects = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'projects';
+collect.set('isProjects', [
+	'https://github.com/sindresorhus/refined-github/projects',
+]);
+
 export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path!);
 collect.set('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
