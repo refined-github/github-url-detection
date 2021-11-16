@@ -56,6 +56,8 @@ collect.set('isCompare', [
 
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(\/|$)/.test(getCleanPathname(url));
 collect.set('isDashboard', [
+	'https://github.com///',
+	'https://github.com//',
 	'https://github.com/',
 	'https://github.com',
 	'https://github.com/orgs/test/dashboard',
@@ -642,7 +644,7 @@ collect.set('isNewRepoTemplate', [
 const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
 
 /** Drop leading and trailing slashes */
-const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.slice(1, url.pathname.endsWith('/') ? -1 : undefined);
+const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/^\/(.*?)\/*$/, '$1');
 
 export interface RepositoryInfo {
 	owner: string;
