@@ -62,6 +62,7 @@ collect.set('isDashboard', [
 	'https://github.com',
 	'https://github.com/orgs/test/dashboard',
 	'https://github.com/dashboard/index/2',
+	'https://github.com//dashboard',
 	'https://github.com/dashboard',
 	'https://github.com/orgs/edit/dashboard',
 	'https://github.big-corp.com/',
@@ -644,7 +645,7 @@ collect.set('isNewRepoTemplate', [
 const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
 
 /** Drop leading and trailing slashes */
-const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/^\/(.*?)\/*$/, '$1');
+const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/^\/+(.*?)\/*$/, '$1');
 
 export interface RepositoryInfo {
 	owner: string;
