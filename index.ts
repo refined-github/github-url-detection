@@ -644,7 +644,7 @@ collect.set('isNewRepoTemplate', [
 /** Get the logged-in user’s username */
 const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
 
-/** Drop all leading and trailing slashes */
+/** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
 
 export interface RepositoryInfo {
