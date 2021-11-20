@@ -4,7 +4,8 @@
 		"module": "esnext",
 		"lib": [
 			"dom",
-			"es2019"
+			"es2019",
+			"ES2021.String"
 		],
 	},
 	"include": [
