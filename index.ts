@@ -375,6 +375,7 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github/',
 	'https://github.com/sindresorhus/notifications/',
 	'https://github.com/sindresorhus/edit',
+	'https://github.com/sindresorhus///edit',
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
