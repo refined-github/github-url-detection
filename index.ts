@@ -56,10 +56,13 @@ collect.set('isCompare', [
 
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(\/|$)/.test(getCleanPathname(url));
 collect.set('isDashboard', [
+	'https://github.com///',
+	'https://github.com//',
 	'https://github.com/',
 	'https://github.com',
 	'https://github.com/orgs/test/dashboard',
 	'https://github.com/dashboard/index/2',
+	'https://github.com//dashboard',
 	'https://github.com/dashboard',
 	'https://github.com/orgs/edit/dashboard',
 	'https://github.big-corp.com/',
@@ -372,6 +375,7 @@ collect.set('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github/',
 	'https://github.com/sindresorhus/notifications/',
 	'https://github.com/sindresorhus/edit',
+	'https://github.com/sindresorhus///edit',
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
@@ -641,8 +645,8 @@ collect.set('isNewRepoTemplate', [
 /** Get the logged-in user’s username */
 const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
 
-/** Drop leading and trailing slashes */
-const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.slice(1, url.pathname.endsWith('/') ? -1 : undefined);
+/** Drop all duplicate slashes */
+const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
 
 export interface RepositoryInfo {
 	owner: string;
