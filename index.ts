@@ -307,7 +307,7 @@ collect.set('isEditingRelease', [
 
 export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewWikiPage(url) || (isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit'));
 collect.set('isEditingWikiPage', [
-	'https://github.com/tooomm/wikitest/wiki/_new'
+	'https://github.com/tooomm/wikitest/wiki/_new',
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
