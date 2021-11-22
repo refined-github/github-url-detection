@@ -295,6 +295,8 @@ collect.set('isDeletingFile', [
 export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewFile(url) || isDeletingFile(url) || Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/new/main',
+	'https://github.com/sindresorhus/refined-github/delete/master/readme.md',
+	'https://github.com/sindresorhus/refined-github/delete/ghe-injection/source/background.ts',
 	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
