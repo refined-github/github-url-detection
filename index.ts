@@ -292,14 +292,16 @@ collect.set('isDeletingFile', [
 	'https://github.com/sindresorhus/refined-github/delete/ghe-injection/source/background.ts',
 ]);
 
-export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('edit'));
+export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewFile(url) || Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
+	'https://github.com/sindresorhus/refined-github/new/main',
 	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
-export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
+export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewRelease(url) || Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
+	'https://github.com/sindresorhus/refined-github/releases/new',
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
@@ -580,7 +582,7 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isNewIssue(url)
 	|| isCompare(url)
 	|| isRepliesSettings(url)
-	|| isNewRelease(url)
+	|| isEditingRelease(url)
 	|| isDiscussion(url);
 
 collect.set('hasCode', combinedTestOnly);
