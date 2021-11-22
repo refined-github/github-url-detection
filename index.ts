@@ -292,7 +292,7 @@ collect.set('isDeletingFile', [
 	'https://github.com/sindresorhus/refined-github/delete/ghe-injection/source/background.ts',
 ]);
 
-export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewFile(url) || Boolean(getRepo(url)?.path.startsWith('edit'));
+export const isEditingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewFile(url) || isDeletingFile(url) || Boolean(getRepo(url)?.path.startsWith('edit'));
 collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/new/main',
 	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
