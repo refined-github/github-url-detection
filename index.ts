@@ -299,13 +299,7 @@ collect.set('isEditingFile', [
 ]);
 
 export const hasFileEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingFile(url) || isNewFile(url) || isDeletingFile(url);
-collect.set('hasFileEditor', [
-	'https://github.com/sindresorhus/refined-github/new/main',
-	'https://github.com/sindresorhus/refined-github/delete/master/readme.md',
-	'https://github.com/sindresorhus/refined-github/delete/ghe-injection/source/background.ts',
-	'https://github.com/sindresorhus/refined-github/edit/master/readme.md',
-	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
-]);
+collect.set('hasFileEditor', combinedTestOnly);
 
 export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
@@ -313,10 +307,7 @@ collect.set('isEditingRelease', [
 ]);
 
 export const hasReleaseEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingRelease(url) || isNewRelease(url);
-collect.set('hasReleaseEditor', [
-	'https://github.com/sindresorhus/refined-github/releases/new',
-	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
-]);
+collect.set('hasReleaseEditor', combinedTestOnly);
 
 export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 collect.set('isEditingWikiPage', [
@@ -324,10 +315,7 @@ collect.set('isEditingWikiPage', [
 ]);
 
 export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
-collect.set('hasWikiPageEditor', [
-	'https://github.com/tooomm/wikitest/wiki/_new',
-	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
-]);
+collect.set('hasWikiPageEditor', combinedTestOnly);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url))
 	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
