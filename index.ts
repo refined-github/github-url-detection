@@ -601,7 +601,7 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isNewIssue(url)
 	|| isCompare(url)
 	|| isRepliesSettings(url)
-	|| isEditingRelease(url)
+	|| hasReleaseEditor(url)
 	|| isDiscussion(url);
 
 collect.set('hasCode', combinedTestOnly);
