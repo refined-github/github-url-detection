@@ -307,14 +307,24 @@ collect.set('hasFileEditor', [
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
-export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewRelease(url) || Boolean(getRepo(url)?.path.startsWith('releases/edit'));
+export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
+	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
+]);
+
+export const hasReleaseEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingRelease(url) || isNewRelease(url);
+collect.set('hasReleaseEditor', [
 	'https://github.com/sindresorhus/refined-github/releases/new',
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
-export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isNewWikiPage(url) || (isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit'));
+export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 collect.set('isEditingWikiPage', [
+	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
+]);
+
+export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
+collect.set('hasWikiPageEditor', [
 	'https://github.com/tooomm/wikitest/wiki/_new',
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
