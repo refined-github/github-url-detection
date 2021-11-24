@@ -298,15 +298,24 @@ collect.set('isEditingFile', [
 	'https://github.com/sindresorhus/refined-github/edit/ghe-injection/source/background.ts',
 ]);
 
+export const hasFileEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingFile(url) || isNewFile(url) || isDeletingFile(url);
+collect.set('hasFileEditor', combinedTestOnly);
+
 export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 collect.set('isEditingRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/edit/v1.2.3',
 ]);
 
+export const hasReleaseEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingRelease(url) || isNewRelease(url);
+collect.set('hasReleaseEditor', combinedTestOnly);
+
 export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 collect.set('isEditingWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
+
+export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
+collect.set('hasWikiPageEditor', combinedTestOnly);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url))
 	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
@@ -580,7 +589,7 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isNewIssue(url)
 	|| isCompare(url)
 	|| isRepliesSettings(url)
-	|| isNewRelease(url)
+	|| hasReleaseEditor(url)
 	|| isDiscussion(url);
 
 collect.set('hasCode', combinedTestOnly);
