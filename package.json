@@ -94,6 +94,7 @@
 		"@rollup/plugin-node-resolve": "^13.0.5",
 		"@rollup/plugin-typescript": "^8.2.5",
 		"@sindresorhus/tsconfig": "^2.0.0",
+		"@types/estree": "^0.0.50",
 		"@types/jsdom": "^16.2.13",
 		"ava": "^3.15.0",
 		"github-reserved-names": "^2.0.4",
