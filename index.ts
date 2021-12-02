@@ -517,7 +517,7 @@ collect.set('isBranches', [
 
 export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
 	const pathname = getCleanPathname(url);
-	return pathname.length > 0 && !pathname.includes('/') && !reservedNames.includes(pathname);
+	return pathname.length > 0 && !pathname.includes('/') && !pathname.includes('.') && !reservedNames.includes(pathname);
 };
 
 collect.set('isProfile', [
