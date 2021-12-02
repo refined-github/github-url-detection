@@ -104,12 +104,10 @@ collect.set('isGlobalConversationList', [
 	'https://github.com/pulls/review-requested',
 ]);
 
-export const isGlobalSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
-collect.set('isGlobalSearch', [
+export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
+collect.set('isGlobalSearchResults', [
 	'https://github.com/search?q=refined-github&ref=opensearch',
 ]);
-/** @deprecated use isGlobalSearch instead */
-export const isGlobalSearchResults = isGlobalSearch;
 
 export const isIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues\/\d+/.test(getRepo(url)?.path!) && document.title !== 'GitHub · Where software is built'; // The title check excludes deleted issues
 collect.set('isIssue', [
