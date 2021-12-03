@@ -22,6 +22,10 @@
 		"distribution/index.js",
 		"distribution/index.d.ts"
 	],
+	"alias": {
+		"./this-stuff-is-just-for-local-parcel-tests": "./package.json",
+		"./collector.js": "./collector.ts"
+	},
 	"scripts": {
 		"ava": "ava --timeout 30s",
 		"build": "rollup -c",
