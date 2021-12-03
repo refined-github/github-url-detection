@@ -1,7 +1,7 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
-import collector from './collector';
+import collector from './collector.js';
 import * as pageDetect from '.';
 
 const {window} = new JSDOM('…');
@@ -39,12 +39,12 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 			t.true(
 				detect(new URL(url)),
 				stripIndent(`
-				Is this URL \`${detectName}\`?
-					${url.replace('https://github.com', '')}
+					Is this URL \`${detectName}\`?
+						${url.replace('https://github.com', '')}
 
-				• Yes? The \`${detectName}\` test is wrong and should be fixed.
-				• No? Remove it from its \`collect.set()\` array.
-			`),
+					• Yes? The \`${detectName}\` test is wrong and should be fixed.
+					• No? Remove it from its \`collect.set()\` array.
+				`),
 			);
 		});
 	}
@@ -60,12 +60,12 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 				t.false(
 					detect(new URL(url)),
 					stripIndent(`
-					Is this URL \`${detectName}\`?
-						${url.replace('https://github.com', '')}
+						Is this URL \`${detectName}\`?
+							${url.replace('https://github.com', '')}
 
-					• Yes? Add it to the \`collect.set()\` array.
-					• No? The \`${detectName}\` test is wrong and should be fixed.
-				`),
+						• Yes? Add it to the \`collect.set()\` array.
+						• No? The \`${detectName}\` test is wrong and should be fixed.
+					`),
 				);
 			});
 		}

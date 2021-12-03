@@ -1,5 +1,5 @@
 import reservedNames from 'github-reserved-names/reserved-names.json';
-import collect from './collector';
+import collect from './collector.js';
 
 const exists = (selector: string) => Boolean(document.querySelector(selector));
 

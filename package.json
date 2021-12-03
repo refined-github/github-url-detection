@@ -22,6 +22,10 @@
 		"distribution/index.js",
 		"distribution/index.d.ts"
 	],
+	"alias": {
+		"./this-stuff-is-just-for-local-parcel-tests": "./package.json",
+		"./collector.js": "./collector.ts"
+	},
 	"scripts": {
 		"ava": "ava --timeout 30s",
 		"build": "rollup -c",
@@ -55,28 +59,17 @@
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-unsafe-member-access": "off",
 					"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-					"@typescript-eslint/comma-dangle": [
-						"error",
-						"always-multiline"
-					]
+					"@typescript-eslint/naming-convention": "off"
 				}
 			}
 		],
 		"rules": {
-			"camelcase": "off",
-			"comma-dangle": [
-				"error",
-				"always-multiline"
-			],
-			"import/extensions": "off",
-			"import/no-useless-path-segments": "off",
-			"unicorn/import-index": "off"
+			"camelcase": "off"
 		}
 	},
 	"ava": {
 		"environmentVariables": {
-			"TS_NODE_FILES": "true",
-			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\", \"allowSyntheticDefaultImports\": true}"
+			"TS_NODE_FILES": "true"
 		},
 		"extensions": {
 			"ts": "module"
@@ -91,25 +84,25 @@
 	},
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",
-		"@rollup/plugin-node-resolve": "^13.0.5",
-		"@rollup/plugin-typescript": "^8.2.5",
+		"@rollup/plugin-node-resolve": "^13.0.6",
+		"@rollup/plugin-typescript": "^8.3.0",
 		"@sindresorhus/tsconfig": "^2.0.0",
+		"@types/estree": "^0.0.50",
 		"@types/jsdom": "^16.2.13",
 		"ava": "^3.15.0",
 		"github-reserved-names": "^2.0.4",
-		"jsdom": "^17.0.0",
+		"jsdom": "^19.0.0",
 		"npm-run-all": "^4.1.5",
 		"parcel-bundler": "^1.12.4",
 		"parcel-plugin-svelte": "^4.0.9",
-		"rollup": "^2.57.0",
+		"rollup": "^2.60.2",
 		"rollup-plugin-terser": "^7.0.2",
 		"strip-indent": "^4.0.0",
-		"svelte": "^3.43.0",
-		"svelte-check": "^2.2.6",
-		"ts-node": "^10.2.1",
-		"tslib": "^2.3.1",
-		"typescript": "^4.4.3",
-		"xo": "^0.44.0"
+		"svelte": "^3.44.2",
+		"svelte-check": "^2.2.10",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.2",
+		"xo": "^0.47.0"
 	},
 	"engines": {
 		"node": ">=12"
