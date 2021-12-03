@@ -54,30 +54,17 @@
 					"@typescript-eslint/dot-notation": "off",
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-unsafe-member-access": "off",
-					"@typescript-eslint/no-non-null-asserted-optional-chain": "off",
-					"@typescript-eslint/naming-convention": "off",
-					"@typescript-eslint/comma-dangle": [
-						"error",
-						"always-multiline"
-					]
+					"@typescript-eslint/naming-convention": "off"
 				}
 			}
 		],
 		"rules": {
-			"camelcase": "off",
-			"comma-dangle": [
-				"error",
-				"always-multiline"
-			],
-			"import/extensions": "off",
-			"import/no-useless-path-segments": "off",
-			"unicorn/import-index": "off"
+			"camelcase": "off"
 		}
 	},
 	"ava": {
 		"environmentVariables": {
-			"TS_NODE_FILES": "true",
-			"TS_NODE_COMPILER_OPTIONS": "{\"module\": \"esnext\", \"allowSyntheticDefaultImports\": true}"
+			"TS_NODE_FILES": "true"
 		},
 		"extensions": {
 			"ts": "module"
@@ -108,7 +95,6 @@
 		"svelte": "^3.44.2",
 		"svelte-check": "^2.2.10",
 		"ts-node": "^10.4.0",
-		"tslib": "^2.3.1",
 		"typescript": "^4.5.2",
 		"xo": "^0.47.0"
 	},
