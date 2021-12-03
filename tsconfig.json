@@ -1,12 +1,5 @@
 {
-	"extends": "@sindresorhus/tsconfig",
-	"compilerOptions": {
-		"module": "esnext",
-		"lib": [
-			"dom",
-			"es2019"
-		],
-	},
+	"extends": "@sindresorhus/tsconfig/tsconfig.json",
 	"include": [
 		"index.ts",
 		"globals.d.ts",
