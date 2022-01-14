@@ -225,7 +225,7 @@ collect.set('isPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
+export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}$/.test(getRepo(url)?.path!);
 collect.set('isPRCommit', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
@@ -468,7 +468,7 @@ collect.set('isRepoWiki', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
 
-export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}/.test(getRepo(url)?.path!);
+export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path!);
 collect.set('isSingleCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
 	'https://github.com/sindresorhus/refined-github/commit/5b614',
