@@ -601,6 +601,12 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isCompare(url)
 	|| isBlame(url);
 
+collect.set('hasFiles', combinedTestOnly);
+export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => // Has a list of files
+	isCommit(url)
+	|| isCompare(url)
+	|| isPRFiles(url);
+
 export const isMarketplaceAction = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/marketplace/actions/');
 collect.set('isMarketplaceAction', [
 	'https://github.com/marketplace/actions/urlchecker-action',
