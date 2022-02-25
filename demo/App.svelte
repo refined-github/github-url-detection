@@ -1,5 +1,5 @@
 <script>
-	const defaultUrl = 'https://github.com/fregante/github-url-detection';
+	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	export let url = '';
 	import * as urlDetection from '../index';
 	import collector from '../collector';
