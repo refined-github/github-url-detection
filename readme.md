@@ -4,8 +4,8 @@
 
 Battle-tested by and extracted from the [Refined GitHub](https://github.com/sindresorhus/refined-github) extension.
 
-- Try the live [demo](https://fregante.github.io/github-url-detection/)
-- See the code and expected URLs for [every detection](https://github.com/fregante/github-url-detection/blob/main/index.ts)
+- Try the live [demo](https://refined-github.github.io/github-url-detection/)
+- See the code and expected URLs for [every detection](https://github.com/refined-github/github-url-detection/blob/main/index.ts)
 
 ## Install
 
@@ -21,7 +21,7 @@ import * as pageDetect from 'github-url-detection';
 ## Usage
 
 ```js
-const href = 'https://github.com/fregante/github-url-detection/issues/1';
+const href = 'https://github.com/refined-github/github-url-detection/issues/1';
 if (pageDetect.isIssue(new URL(href))) { // Pass the URL as an `URL` object
 	alert('The passed URL is of an issue!')
 }
@@ -50,7 +50,7 @@ if (pageDetect.isConversationList()) {
 ```
 
 ```js
-if (pageDetect.isConversationList(new URL('https://github.com/fregante/github-url-detection/pulls'))) {
+if (pageDetect.isConversationList(new URL('https://github.com/refined-github/github-url-detection/pulls'))) {
 	alert('You’re looking at a issues or PRs list!')
 }
 ```

@@ -617,14 +617,14 @@ collect.set('isMarketplaceAction', [
 export const isActionJobRun = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('runs/'));
 collect.set('isActionJobRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
-	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
+	'https://github.com/refined-github/github-url-detection/runs/1224552520?check_suite_focus=true',
 ]);
 
 export const isActionRun = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(actions\/)?runs/.test(getRepo(url)?.path!);
 collect.set('isActionRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
-	'https://github.com/fregante/github-url-detection/runs/1224552520?check_suite_focus=true',
-	'https://github.com/fregante/github-url-detection/actions/runs/294962314',
+	'https://github.com/refined-github/github-url-detection/runs/1224552520?check_suite_focus=true',
+	'https://github.com/refined-github/github-url-detection/actions/runs/294962314',
 ]);
 
 export const isNewAction = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'actions/new';
@@ -634,9 +634,9 @@ collect.set('isNewAction', [
 
 export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => /^actions(\/workflows\/.+\.ya?ml)?$/.test(getRepo(url)?.path!);
 collect.set('isRepositoryActions', [
-	'https://github.com/fregante/github-url-detection/actions',
-	'https://github.com/fregante/github-url-detection/actions/workflows/demo.yml',
-	'https://github.com/fregante/github-url-detection/actions/workflows/esm-lint.yml',
+	'https://github.com/refined-github/github-url-detection/actions',
+	'https://github.com/refined-github/github-url-detection/actions/workflows/demo.yml',
+	'https://github.com/refined-github/github-url-detection/actions/workflows/esm-lint.yml',
 ]);
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');

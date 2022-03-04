@@ -141,46 +141,46 @@ test('getRepositoryInfo', t => {
 		t.is(getRepositoryInfoAdapter('https://github.com'), undefined);
 		t.is(getRepositoryInfoAdapter('https://gist.github.com/'), undefined);
 		t.is(getRepositoryInfoAdapter('https://github.com/settings/developers'), undefined);
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: '',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: '',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/blame/master/package.json'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/blame/master/package.json'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'blame/master/package.json',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/commit/57bf4'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/commit/57bf4'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'commit/57bf4',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/compare/test-branch?quick_pull=0'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/compare/test-branch?quick_pull=0'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'compare/test-branch',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/tree/master/distribution'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'tree/master/distribution',
 		});
-		t.deepEqual(getRepositoryInfoAdapter('https://github.com/fregante/github-url-detection/tree/master/distribution/'), {
-			owner: 'fregante',
+		t.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/'), {
+			owner: 'refined-github',
 			name: 'github-url-detection',
-			nameWithOwner: 'fregante/github-url-detection',
+			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'tree/master/distribution',
 		});
 	}
