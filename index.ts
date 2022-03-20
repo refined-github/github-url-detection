@@ -596,6 +596,8 @@ collect.set('hasCode', combinedTestOnly);
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
 	hasComments(url)
 	|| isRepoTree(url) // Readme files
+	|| isRepoSearch(url)
+	|| isGlobalSearchResults(url)
 	|| isSingleFile(url)
 	|| isGist(url)
 	|| isCompare(url)
