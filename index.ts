@@ -102,6 +102,7 @@ collect.set('isGlobalConversationList', [
 	'https://github.com/pulls/assigned',
 	'https://github.com/pulls/mentioned',
 	'https://github.com/pulls/review-requested',
+	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
 
 export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
