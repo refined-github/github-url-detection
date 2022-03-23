@@ -503,6 +503,11 @@ collect.set('isSingleGist', [
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
 ]);
 
+export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}\/revisions$/.test(url.pathname);
+collect.set('isGistRevision', [
+	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
+]);
+
 export const isTrending = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/trending' || url.pathname.startsWith('/trending/');
 collect.set('isTrending', [
 	'https://github.com/trending',
