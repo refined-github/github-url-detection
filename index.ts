@@ -340,6 +340,8 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
+export const isBlank = (): boolean => exists('main .blankslate');
+
 export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
 collect.set('isRepoTaxonomyConversationList', [
 	'https://github.com/sindresorhus/refined-github/labels/bug',
