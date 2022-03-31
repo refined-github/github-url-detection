@@ -89,6 +89,7 @@ collect.set('isGist', [
 	'http://gist.github.com',
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
 	'https://my-little-hub.com/gist',
+	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
 
 export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
@@ -503,6 +504,11 @@ export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimensi
 export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}$/.test(url.pathname);
 collect.set('isSingleGist', [
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
+]);
+
+export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}\/revisions$/.test(url.pathname);
+collect.set('isGistRevision', [
+	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
 
 export const isTrending = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/trending' || url.pathname.startsWith('/trending/');
