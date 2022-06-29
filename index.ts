@@ -54,6 +54,12 @@ collect.set('isCompare', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
+export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).split('/').slice(3, 5).includes('_compare');
+collect.set('isCompareWikiPage', [
+	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
+	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
+]);
+
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(\/|$)/.test(getCleanPathname(url));
 collect.set('isDashboard', [
 	'https://github.com///',
@@ -469,6 +475,8 @@ collect.set('isRepoWiki', [
 	'https://github.com/lukesampson/scoop/wiki',
 	'https://github.com/tooomm/wikitest/wiki/_new',
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
+	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
+	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 ]);
 
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path!);
@@ -609,6 +617,7 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isSingleFile(url)
 	|| isGist(url)
 	|| isCompare(url)
+	|| isCompareWikiPage(url)
 	|| isBlame(url);
 
 collect.set('hasFiles', combinedTestOnly);
