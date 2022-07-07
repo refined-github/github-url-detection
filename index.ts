@@ -266,7 +266,7 @@ collect.set('isQuickPR', [
 export const isDraftPR = (): boolean => exists('#partial-discussion-header [title="Status: Draft"]');
 export const isOpenPR = (): boolean => exists('#partial-discussion-header [title="Status: Open"], #partial-discussion-header [title="Status: Draft"]');
 export const isMergedPR = (): boolean => exists('#partial-discussion-header [title="Status: Merged"]');
-export const isClosedPR = (): boolean => exists('#partial-discussion-header [title="Status: Closed"], #partial-discussion-header [title="Status: Merged"]');
+export const isClosedPR = (): boolean => exists('#partial-discussion-header :is([title="Status: Closed"], [title="Status: Merged"], [title="Status: Closed as not planned]")');
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
 collect.set('isReleases', [
