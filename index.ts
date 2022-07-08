@@ -264,7 +264,7 @@ collect.set('isQuickPR', [
 ]);
 
 export const isDraftPR = (): boolean => exists('#partial-discussion-header [title="Status: Draft"]');
-export const isOpenPR = (): boolean => exists('#partial-discussion-header [title="Status: Open"], #partial-discussion-header [title="Status: Draft"]');
+export const isOpenPR = (): boolean => exists('#partial-discussion-header :is([title="Status: Open"], [title="Status: Draft"])');
 export const isMergedPR = (): boolean => exists('#partial-discussion-header [title="Status: Merged"]');
 export const isClosedConversation = (): boolean => exists('#partial-discussion-header :is([title="Status: Closed"], [title="Status: Merged"], [title="Status: Closed as not planned"])');
 /** @deprecated Use isClosedConversation */
