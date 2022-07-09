@@ -350,7 +350,6 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
-
 export const isArchivedRepo = (): boolean => isRepo() && $('#repository-container-header .Label')?.textContent!.endsWith('archive');
 
 export const isBlank = (): boolean => exists('main .blankslate');
