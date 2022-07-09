@@ -1,4 +1,4 @@
-import reservedNames from 'github-reserved-names/reserved-names.json';
+import reservedNames from 'github-reserved-names/reserved-names.json' assert {type: "json"};
 import collect from './collector.js';
 
 const exists = (selector: string) => Boolean(document.querySelector(selector));
