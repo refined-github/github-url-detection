@@ -1,7 +1,8 @@
 import reservedNames from 'github-reserved-names/reserved-names.json';
 import collect from './collector.js';
 
-const exists = (selector: string) => Boolean(document.querySelector(selector));
+const $ = (selector: string) => document.querySelector(selector);
+const exists = (selector: string) => Boolean($(selector));
 
 const combinedTestOnly = 'combinedTestOnly'; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
@@ -348,6 +349,9 @@ collect.set('isRepo', [
 export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
+
+
+export const isArchivedRepo = (): boolean => isRepo() && $('#repository-container-header .Label')?.textContent!.endsWith('archive');
 
 export const isBlank = (): boolean => exists('main .blankslate');
 
