@@ -555,6 +555,8 @@ collect.set('isProfile', [
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
+export const isPrivateUserProfile = (): boolean => isUserProfile() && !exists('.user-following-container');
+
 export const isUserProfileMainTab = (): boolean =>
 	isUserProfile()
 	&& !new URLSearchParams(location.search).has('tab');
