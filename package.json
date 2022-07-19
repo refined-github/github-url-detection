@@ -97,7 +97,7 @@
 		"strip-indent": "^4.0.0",
 		"svelte": "^3.49.0",
 		"svelte-check": "^2.8.0",
-		"ts-node": "^10.4.0",
+		"ts-node": "^10.9.1",
 		"tslib": "^2.4.0",
 		"typescript": "^4.5.2",
 		"xo": "^0.49.0"
