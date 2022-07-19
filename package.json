@@ -27,13 +27,13 @@
 		"./collector.js": "./collector.ts"
 	},
 	"scripts": {
-		"ava": "ava --timeout 30s",
+		"vitest": "vitest run",
 		"build": "rollup -c",
 		"demo:build": "parcel build --public-url ./ --out-dir demo/dist demo/index.html",
 		"demo:test": "svelte-check",
 		"demo:watch": "parcel --out-dir demo/dist demo/index.html",
 		"prepack": "rollup -c",
-		"test": "run-p build ava xo",
+		"test": "run-p build vitest xo",
 		"watch": "rollup -c --watch",
 		"xo": "xo"
 	},
@@ -54,7 +54,6 @@
 					"*.ts"
 				],
 				"rules": {
-					"ava/assertion-arguments": "off",
 					"@typescript-eslint/dot-notation": "off",
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-unsafe-member-access": "off",
@@ -67,21 +66,6 @@
 			"camelcase": "off"
 		}
 	},
-	"ava": {
-		"environmentVariables": {
-			"TS_NODE_FILES": "true"
-		},
-		"extensions": {
-			"ts": "module"
-		},
-		"nodeArguments": [
-			"--loader=ts-node/esm",
-			"--experimental-specifier-resolution=node"
-		],
-		"nonSemVerExperiments": {
-			"configurableModuleFormat": true
-		}
-	},
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^13.0.6",
@@ -89,7 +73,6 @@
 		"@sindresorhus/tsconfig": "^2.0.0",
 		"@types/estree": "^0.0.50",
 		"@types/jsdom": "^16.2.13",
-		"ava": "^3.15.0",
 		"github-reserved-names": "^2.0.4",
 		"jsdom": "^19.0.0",
 		"npm-run-all": "^4.1.5",
@@ -100,9 +83,10 @@
 		"strip-indent": "^4.0.0",
 		"svelte": "^3.44.2",
 		"svelte-check": "^2.2.10",
-		"ts-node": "^10.4.0",
 		"tslib": "^2.3.1",
 		"typescript": "^4.5.2",
+		"vite": "^3.0.2",
+		"vitest": "^0.18.1",
 		"xo": "^0.47.0"
 	},
 	"engines": {

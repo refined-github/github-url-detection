@@ -30,8 +30,8 @@ jobs:
         run: npm ci || npm install
       - name: build
         run: npm run build --if-present
-      - name: AVA
-        run: npx ava
+      - name: Vitest
+        run: npm run vitest
 
   Build:
     runs-on: ubuntu-latest
