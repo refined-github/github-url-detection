@@ -75,7 +75,7 @@
 <label>
 	<span>URL:</span>
 	<input
-		type="text"
+		type="search"
 		bind:value={url}
 		placeholder={defaultUrl}
 		autocomplete="off"
