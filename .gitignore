@@ -11,3 +11,4 @@ logs
 distribution
 dist
 .cache
+.parcel-cache

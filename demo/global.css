@@ -35,3 +35,7 @@ label span {
 	font-size: 1.7em;
 	font-weight: bold;
 }
+
+pre, code {
+	white-space: normal;
+}

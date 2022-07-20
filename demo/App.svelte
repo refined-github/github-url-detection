@@ -26,7 +26,7 @@
 						return;
 					}
 
-					if (detect.length > 0) {
+					if (!String(detect).startsWith('()')) {
 						return {
 							name,
 							detect,
