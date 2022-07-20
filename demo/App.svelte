@@ -26,7 +26,7 @@
 						return;
 					}
 
-					if (detect.length > 0) {
+					if (!String(detect).startsWith('()')) {
 						return {
 							name,
 							detect,
@@ -75,7 +75,7 @@
 <label>
 	<span>URL:</span>
 	<input
-		type="text"
+		type="search"
 		bind:value={url}
 		placeholder={defaultUrl}
 		autocomplete="off"
