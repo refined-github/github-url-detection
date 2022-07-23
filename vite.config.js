@@ -1,9 +1,16 @@
 import {defineConfig} from 'vite';
-import {svelte} from '@sveltejs/vite-plugin-svelte';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-	base: '',
-	entry: 'demo',
-	plugins: [svelte()],
+	build: {
+		lib: {
+			formats: ['es'],
+			entry: 'index.ts',
+			fileName: 'index',
+		},
+		outDir: 'distribution',
+		minify: false,
+	},
+	define: {
+		'process.env.NODE_ENV': '"production"',
+	},
 });

@@ -2,10 +2,9 @@
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	export let url = '';
 	import * as urlDetection from '../index';
-	import collector from '../collector';
+	import { getAllUrls } from '../collector';
 
-	const allUrls = new Set([...collector.values()].flat().sort());
-	allUrls.delete('combinedTestOnly');
+	const allUrls = [...getAllUrls()].sort();
 
 	let isUrlValid;
 	$: {

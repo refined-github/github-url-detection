@@ -44,3 +44,5 @@ jobs:
         run: npm ci || npm install
       - name: build
         run: npm run build
+      - name: Ensure that test URLs aren't included in the built file
+        run: ! grep http distribution/index.js
