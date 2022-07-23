@@ -1,12 +1,9 @@
 import test from 'ava';
-import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
-import * as pageDetect from '.';
+import * as pageDetect from './index.js';
 
-const {window} = new JSDOM('…');
-
-(global as any).document = window.document;
+(global as any).document = {title: ''};
 (global as any).location = new URL('https://github.com/');
 
 const allUrls = getAllUrls();
