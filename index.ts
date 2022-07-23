@@ -768,5 +768,6 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 export const utils = {
 	getUsername,
 	getCleanPathname,
+	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
 };
