@@ -331,7 +331,6 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
 	&& !isDashboard(url)
 	&& !isGist(url)
-	&& !isRepoSearch(url)
 	&& !isNewRepoTemplate(url);
 addTests('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
@@ -344,6 +343,9 @@ addTests('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
+
+export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
+addTests('hasRepoHeader', combinedTestOnly);
 
 // On empty repos, there's only isRepoHome; this element is found in `<head>`
 export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
