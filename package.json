@@ -27,10 +27,10 @@
 		"build": "vite build",
 		"demo:build": "vite build demo --config demo/vite.config.js",
 		"demo:test": "svelte-check",
-		"demo:watch": "vite demo --config demo/vite.config.js",
+		"demo:watch": "vite serve demo --config demo/vite.config.js",
 		"prepack": "vite build",
 		"test": "run-p build ava xo",
-		"watch": "vite",
+		"watch": "npm run demo:watch # vite watch doesn’t generate the lib, so just use the demo",
 		"xo": "xo"
 	},
 	"xo": {
