@@ -1,17 +1,26 @@
-import {test, assert} from 'vitest';
-import {JSDOM} from 'jsdom';
+import {test, expect} from 'bun:test';
 import stripIndent from 'strip-indent';
 import collector from './collector.js';
 import * as pageDetect from './index.js';
 
-const {window} = new JSDOM('…');
-
-(global as any).document = window.document;
+(global as any).document = {title: ''};
 (global as any).location = new URL('https://github.com/');
 
 const allUrls = new Set<string>([...collector.values()].flat());
 
 allUrls.delete('combinedTestOnly');
+
+const assert = {
+	isTrue(a) {
+		expect(a).toBe(true);
+	},
+	isFalse(a) {
+		expect(a).toBe(false);
+	},
+	equal(a, b) {
+		expect(a).toBe(b);
+	},
+};
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
@@ -142,43 +151,43 @@ test('getRepositoryInfo', () => {
 		assert.equal(getRepositoryInfoAdapter('https://github.com'), undefined);
 		assert.equal(getRepositoryInfoAdapter('https://gist.github.com/'), undefined);
 		assert.equal(getRepositoryInfoAdapter('https://github.com/settings/developers'), undefined);
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: '',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: '',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/blame/master/package.json'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/blame/master/package.json'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'blame/master/package.json',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/commit/57bf4'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/commit/57bf4'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'commit/57bf4',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/compare/test-branch?quick_pull=0'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/compare/test-branch?quick_pull=0'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'compare/test-branch',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
 			path: 'tree/master/distribution',
 		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/'), {
+		assert.equal(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/'), {
 			owner: 'refined-github',
 			name: 'github-url-detection',
 			nameWithOwner: 'refined-github/github-url-detection',
