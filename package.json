@@ -24,13 +24,16 @@
 	],
 	"scripts": {
 		"ava": "ava --timeout 30s",
-		"build": "vite build",
+		"build": "run-p build:*",
+		"build:vite": "vite build",
+		"build:typescript": "tsc --declaration --emitDeclarationOnly",
 		"demo:build": "vite build demo --config demo/vite.config.js",
 		"demo:test": "svelte-check",
 		"demo:watch": "vite serve demo --config demo/vite.config.js",
 		"prepack": "vite build",
 		"test": "run-p build ava xo",
-		"watch": "npm run demo:watch # vite watch doesn’t generate the lib, so just use the demo",
+		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
+		"watch:typescript": "tsc --watch --noEmit",
 		"xo": "xo"
 	},
 	"xo": {

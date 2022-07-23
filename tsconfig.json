@@ -1,5 +1,8 @@
 {
 	"extends": "@sindresorhus/tsconfig",
+	"compilerOptions": {
+		"outDir": "distribution",
+	},
 	"include": [
 		"index.ts",
 		"globals.d.ts",
