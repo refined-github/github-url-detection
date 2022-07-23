@@ -1,7 +1,7 @@
 import test from 'ava';
 import {JSDOM} from 'jsdom';
 import stripIndent from 'strip-indent';
-import collector from './collector.js';
+import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from '.';
 
 const {window} = new JSDOM('…');
@@ -9,17 +9,16 @@ const {window} = new JSDOM('…');
 (global as any).document = window.document;
 (global as any).location = new URL('https://github.com/');
 
-const allUrls = new Set<string>([...collector.values()].flat());
-allUrls.delete('combinedTestOnly');
+const allUrls = getAllUrls();
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
 		continue;
 	}
 
-	const validURLs = collector.get(detectName);
+	const validURLs = getTests(detectName);
 
-	if (validURLs === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
+	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
 		continue;
 	}
 
