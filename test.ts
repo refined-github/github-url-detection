@@ -3,8 +3,8 @@ import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
 
-(global as any).document = {title: ''};
-(global as any).location = new URL('https://github.com/');
+(globalThis as any).document = {title: ''};
+(globalThis as any).location = new URL('https://github.com/');
 
 const allUrls = getAllUrls();
 
