@@ -7,6 +7,7 @@ export default defineConfig({
 			entry: 'index.ts',
 			fileName: 'index',
 		},
+		target: 'es2021',
 		outDir: 'distribution',
 		minify: false,
 	},
