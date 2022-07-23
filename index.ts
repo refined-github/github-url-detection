@@ -88,15 +88,20 @@ addTests('isEnterprise', [
 	'https://not-github.com/',
 	'https://my-little-hub.com/',
 	'https://my-little-hub.com/gist',
+	'https://my-little-hub.com/gist/in-fragrante',
 ]);
 
-export const isGist = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname.startsWith('gist.') || url.pathname.split('/', 2)[1] === 'gist';
+export const isGist = (url: URL | HTMLAnchorElement | Location = location): boolean => typeof getCleanGistPathname(url) === 'string';
 addTests('isGist', [
 	'https://gist.github.com',
 	'http://gist.github.com',
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
 	'https://my-little-hub.com/gist',
 	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
+	'https://gist.github.com/fregante',
+	'https://gist.github.com/github',
+	'https://gist.github.com/babel',
+	'https://my-little-hub.com/gist/in-fragrante',
 ]);
 
 export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
@@ -514,12 +519,12 @@ addTests('isRepoNetworkGraph', [
 
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
-export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}$/.test(url.pathname);
+export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^[^/]+\/[\da-f]{32}$/.test(getCleanGistPathname(url)!);
 addTests('isSingleGist', [
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
 ]);
 
-export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^\/(gist\/)?[^/]+\/[\da-f]{32}\/revisions$/.test(url.pathname);
+export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => isGist(url) && /^[^/]+\/[\da-f]{32}\/revisions$/.test(getCleanGistPathname(url)!);
 addTests('isGistRevision', [
 	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
@@ -537,6 +542,10 @@ addTests('isBranches', [
 ]);
 
 export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	if (isGist(url)) {
+		return false;
+	}
+
 	const pathname = getCleanPathname(url);
 	return pathname.length > 0 && !pathname.includes('/') && !pathname.includes('.') && !reservedNames.includes(pathname);
 };
@@ -554,6 +563,18 @@ addTests('isProfile', [
 	'https://github.com/sindresorhus?tab=followers',
 	'https://github.com/fregante?tab=following',
 	'https://github.com/sindresorhus?tab=following',
+]);
+
+export const isGistProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	const path = getCleanGistPathname(url);
+	return typeof path === 'string' && path.length > 0 && !path.includes('/');
+};
+
+addTests('isGistProfile', [
+	'https://gist.github.com/fregante',
+	'https://gist.github.com/github',
+	'https://gist.github.com/babel',
+	'https://my-little-hub.com/gist/in-fragrante',
 ]);
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
@@ -688,6 +709,16 @@ const getUsername = (): string | undefined => document.querySelector('meta[name=
 
 /** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
+
+const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
+	const pathname = getCleanPathname(url);
+	if (url.hostname === 'gist.github.com') {
+		return pathname;
+	}
+
+	const [gist, ...parts] = pathname.split('/');
+	return gist === 'gist' ? parts.join('/') : undefined;
+};
 
 export interface RepositoryInfo {
 	owner: string;
