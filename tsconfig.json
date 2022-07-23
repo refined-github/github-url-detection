@@ -1,8 +1,11 @@
 {
 	"extends": "@sindresorhus/tsconfig",
+	"compilerOptions": {
+		"outDir": "distribution",
+		"resolveJsonModule": true
+	},
 	"include": [
 		"index.ts",
-		"globals.d.ts",
 		"collector.ts"
 	]
 }
