@@ -11,6 +11,6 @@ export default defineConfig({
 		minify: false,
 	},
 	define: {
-		'process.env.NODE_ENV': '"production"',
+		'process.env.NODE_ENV': '"bundling"',
 	},
 });

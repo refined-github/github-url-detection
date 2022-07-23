@@ -4,7 +4,7 @@ const testableUrls = new Map<string, string[]>();
 
 export function addTests(test: string, urls: string[]): void {
 	// @ts-expect-error idcare
-	if (process.env.NODE_ENV !== 'production') {
+	if (process.env.NODE_ENV !== 'bundling') {
 		testableUrls.set(test, urls);
 	}
 }
