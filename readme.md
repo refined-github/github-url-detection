@@ -30,7 +30,7 @@ if (pageDetect.isRepo()) { // Uses `window.location.href` by default
 	alert('You’re looking at a repo!')
 }
 
-if (pageDetect.isConversationList()) {
+if (pageDetect.isIssueOrPRList()) {
 	alert('You’re looking at a issues and PRs list!')
 }
 ```
@@ -44,13 +44,13 @@ Most detections are URL-based while others need access to the current `document`
 By default, URL-based detections use the `location` global if you don't pass a `url` argument.
 
 ```js
-if (pageDetect.isConversationList()) {
+if (pageDetect.isIssueOrPRList()) {
 	alert('You’re looking at a issues or PRs list!')
 }
 ```
 
 ```js
-if (pageDetect.isConversationList(new URL('https://github.com/refined-github/github-url-detection/pulls'))) {
+if (pageDetect.isIssueOrPRList(new URL('https://github.com/refined-github/github-url-detection/pulls'))) {
 	alert('You’re looking at a issues or PRs list!')
 }
 ```

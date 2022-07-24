@@ -99,8 +99,8 @@ addTests('isGist', [
 	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
 
-export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
-addTests('isGlobalConversationList', [
+export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
+addTests('isGlobalIssueOrPRList', [
 	'https://github.com/issues',
 	'https://github.com/issues?q=is%3Apr+is%3Aopen',
 	'https://github.com/issues/assigned',
@@ -122,11 +122,11 @@ addTests('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isGlobalConversationList(url)
-	|| isRepoConversationList(url)
+export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isGlobalIssueOrPRList(url)
+	|| isRepoIssueOrPRList(url)
 	|| isMilestone(url);
-addTests('isConversationList', combinedTestOnly);
+addTests('isIssueOrPRList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
 addTests('isConversation', combinedTestOnly);
@@ -222,7 +222,7 @@ addTests('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
 
-/** Any `isConversationList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
+/** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/pulls' || getRepo(url)?.path === 'pulls';
 addTests('isPRList', [
 	'https://github.com/pulls',
@@ -339,8 +339,8 @@ addTests('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 	'https://github.com/sindresorhus/notifications/',
 	'https://github.com/sindresorhus/refined-github/pull/148',
-	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyConversationList
-	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyConversationList
+	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyIssueOrPRList
+	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
@@ -354,19 +354,19 @@ export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('#repository-
 
 export const isBlank = (): boolean => exists('main .blankslate');
 
-export const isRepoTaxonomyConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
-addTests('isRepoTaxonomyConversationList', [
+export const isRepoTaxonomyIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
+addTests('isRepoTaxonomyIssueOrPRList', [
 	'https://github.com/sindresorhus/refined-github/labels/bug',
 	'https://github.com/sindresorhus/refined-github/labels/implemented%20by%20github',
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 	'https://github.com/sindresorhus/refined-github/milestones/1',
 ]);
 
-export const isRepoConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+export const isRepoIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isRepoPRList(url)
 	|| isRepoIssueList(url)
-	|| isRepoTaxonomyConversationList(url);
-addTests('isRepoConversationList', combinedTestOnly);
+	|| isRepoTaxonomyIssueOrPRList(url);
+addTests('isRepoIssueOrPRList', combinedTestOnly);
 
 export const isRepoPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('pulls'));
 addTests('isRepoPRList', [
