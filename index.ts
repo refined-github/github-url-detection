@@ -547,14 +547,17 @@ addTests('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
 
-export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
-	if (isGist(url)) {
-		return false;
-	}
+// Use this with a clean pathname, without starting `gist`
+const doesLookLikeAProfile = (string: string | undefined): boolean =>
+	typeof string === 'string'
+	&& string.length > 0
+	&& !string.includes('/')
+	&& !string.includes('.')
+	&& !reservedNames.includes(string);
 
-	const pathname = getCleanPathname(url);
-	return pathname.length > 0 && !pathname.includes('/') && !pathname.includes('.') && !reservedNames.includes(pathname);
-};
+export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	!isGist(url)
+	&& doesLookLikeAProfile(getCleanPathname(url));
 
 addTests('isProfile', [
 	'https://github.com/fregante',
@@ -571,10 +574,7 @@ addTests('isProfile', [
 	'https://github.com/sindresorhus?tab=following',
 ]);
 
-export const isGistProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
-	const path = getCleanGistPathname(url);
-	return typeof path === 'string' && path.length > 0 && !path.includes('/');
-};
+export const isGistProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => doesLookLikeAProfile(getCleanGistPathname(url));
 
 addTests('isGistProfile', [
 	'https://gist.github.com/fregante',
