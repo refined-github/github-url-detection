@@ -616,7 +616,8 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isDiscussion(url);
 
 addTests('hasCode', combinedTestOnly);
-export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
+/** Static code, not the code editor */
+export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url)
 	|| isRepoTree(url) // Readme files
 	|| isRepoSearch(url)
@@ -628,7 +629,8 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isBlame(url);
 
 addTests('hasFiles', combinedTestOnly);
-export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => // Has a list of files
+/** Has a list of files */
+export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isCommit(url)
 	|| isCompare(url)
 	|| isPRFiles(url);
