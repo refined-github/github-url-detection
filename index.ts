@@ -550,9 +550,9 @@ addTests('isBranches', [
 // Use this with a clean pathname, without leading `/gist/`
 const doesLookLikeAProfile = (string: string | undefined): boolean =>
 	typeof string === 'string'
-	&& string.length > 0
-	&& !string.includes('/')
-	&& !string.includes('.')
+	&& string.length > 0 // Isn't root (http://github.com/)
+	&& !string.includes('/') // Single-level
+	&& !string.includes('.') // No extensions
 	&& !reservedNames.includes(string);
 
 export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean =>
