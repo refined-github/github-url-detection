@@ -89,6 +89,7 @@ addTests('isEnterprise', [
 	'https://my-little-hub.com/',
 	'https://my-little-hub.com/gist',
 	'https://my-little-hub.com/gist/in-fragrante',
+	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
 export const isGist = (url: URL | HTMLAnchorElement | Location = location): boolean => typeof getCleanGistPathname(url) === 'string';
@@ -104,6 +105,7 @@ addTests('isGist', [
 	'https://gist.github.com/github',
 	'https://gist.github.com/babel',
 	'https://my-little-hub.com/gist/in-fragrante',
+	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
 export const isGlobalConversationList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
@@ -579,6 +581,7 @@ addTests('isGistProfile', [
 	'https://gist.github.com/github',
 	'https://gist.github.com/babel',
 	'https://my-little-hub.com/gist/in-fragrante',
+	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
@@ -716,7 +719,7 @@ const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): s
 
 const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
 	const pathname = getCleanPathname(url);
-	if (url.hostname === 'gist.github.com') {
+	if (url.hostname.startsWith('gist.')) {
 		return pathname;
 	}
 
