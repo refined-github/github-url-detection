@@ -547,7 +547,7 @@ addTests('isBranches', [
 	'https://github.com/sindresorhus/refined-github/branches',
 ]);
 
-// Use this with a clean pathname, without starting `gist`
+// Use this with a clean pathname, without leading `/gist/`
 const doesLookLikeAProfile = (string: string | undefined): boolean =>
 	typeof string === 'string'
 	&& string.length > 0
