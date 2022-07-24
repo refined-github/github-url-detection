@@ -437,9 +437,7 @@ addTests('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
-// This can't use `getRepositoryInfo().path` to avoid infinite recursion:
-// `getRepositoryInfo` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
-export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.split('/')[3] === 'search';
+export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'search';;
 addTests('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search?q=diff',
 	'https://github.com/sindresorhus/refined-github/search?q=diff&unscoped_q=diff&type=Issues',
