@@ -666,8 +666,6 @@ addTests('isRepositoryActions', [
 ]);
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
-/** @deprecated use isUserTheOrganizationOwner instead */
-export const canUserEditOrganization = isUserTheOrganizationOwner;
 
 export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
