@@ -351,6 +351,8 @@ export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork becau
 
 export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('#repository-container-header .Label')!.textContent!.endsWith('archive'));
 
+export const isTemplateRepo = (): boolean => exists('#repository-container-header .octicon-repo-template');
+
 export const isBlank = (): boolean => exists('main .blankslate');
 
 export const isRepoTaxonomyIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
