@@ -13,7 +13,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -26,6 +26,8 @@ jobs:
       - run: npm run demo:test
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+        with:
+          path: demo/dist/
 
   deploy:
     environment:
