@@ -34,6 +34,7 @@
 		"test": "run-p build ava xo",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
 		"watch:typescript": "tsc --watch --noEmit",
+		"watch:ava": "run-p 'ava -- --watch' 'watch:typescript -- --watch'",
 		"xo": "xo"
 	},
 	"xo": {
