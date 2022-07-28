@@ -445,7 +445,7 @@ addTests('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
-export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'search';;
+export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'search';
 addTests('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search?q=diff',
 	'https://github.com/sindresorhus/refined-github/search?q=diff&unscoped_q=diff&type=Issues',

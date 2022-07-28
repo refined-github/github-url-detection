@@ -11,11 +11,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,6 +25,11 @@ jobs:
           path: demo/dist/
 
   deploy:
+    # Allow one concurrent deployment
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
