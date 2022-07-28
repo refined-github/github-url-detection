@@ -185,8 +185,8 @@ export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard
 
 export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
 
-export const isOrganizationDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
-addTests('isOrganizationDiscussion', [
+export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
+addTests('isTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team/discussions?pinned=1',
 	'https://github.com/orgs/refined-github/teams/core-team/discussions/1',
 	'https://github.com/orgs/refined-github/teams/core-team',
@@ -630,7 +630,7 @@ export const hasComments = (url: URL | HTMLAnchorElement | Location = location):
 	isPR(url)
 	|| isIssue(url)
 	|| isCommit(url)
-	|| isOrganizationDiscussion(url)
+	|| isTeamDiscussion(url)
 	|| isSingleGist(url);
 
 addTests('hasRichTextEditor', combinedTestOnly);
