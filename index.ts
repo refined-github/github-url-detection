@@ -339,7 +339,6 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
 	&& !isDashboard(url)
 	&& !isGist(url)
-	&& !isRepoSearch(url)
 	&& !isNewRepoTemplate(url);
 addTests('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
@@ -352,6 +351,9 @@ addTests('isRepo', [
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
 ]);
+
+export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
+addTests('hasRepoHeader', combinedTestOnly);
 
 // On empty repos, there's only isRepoHome; this element is found in `<head>`
 export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
@@ -443,9 +445,7 @@ addTests('isRepoRoot', [
 	'https://github.com/sindresorhus/refined-github/tree/master?files=1',
 ]);
 
-// This can't use `getRepositoryInfo().path` to avoid infinite recursion:
-// `getRepositoryInfo` depends on `isRepo` and `isRepo` depends on `isRepoSearch`
-export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.split('/')[3] === 'search';
+export const isRepoSearch = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'search';;
 addTests('isRepoSearch', [
 	'https://github.com/sindresorhus/refined-github/search?q=diff',
 	'https://github.com/sindresorhus/refined-github/search?q=diff&unscoped_q=diff&type=Issues',
@@ -643,7 +643,8 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isDiscussion(url);
 
 addTests('hasCode', combinedTestOnly);
-export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean => // Static code, not the editor
+/** Static code, not the code editor */
+export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url)
 	|| isRepoTree(url) // Readme files
 	|| isRepoSearch(url)
@@ -655,7 +656,8 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isBlame(url);
 
 addTests('hasFiles', combinedTestOnly);
-export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => // Has a list of files
+/** Has a list of files */
+export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isCommit(url)
 	|| isCompare(url)
 	|| isPRFiles(url);
