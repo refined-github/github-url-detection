@@ -30,7 +30,7 @@
 		"demo:build": "vite build demo --config demo/vite.config.js",
 		"demo:test": "svelte-check",
 		"demo:watch": "vite serve demo --config demo/vite.config.js",
-		"prepack": "vite build",
+		"prepack": "npm run build",
 		"test": "run-p build ava xo",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
 		"watch:typescript": "tsc --watch --noEmit",
