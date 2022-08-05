@@ -585,7 +585,7 @@ addTests('isGistProfile', [
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
-export const isPrivateUserProfile = (): boolean => isUserProfile() && !exists('.user-following-container');
+export const isPrivateUserProfile = (): boolean => isUserProfile() && !exists('.UnderlineNav-item[href$="tab=stars"]');
 
 export const isUserProfileMainTab = (): boolean =>
 	isUserProfile()
