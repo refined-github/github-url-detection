@@ -202,6 +202,11 @@ addTests('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
+export const isProjectView = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+\/view/.test(getRepo(url)?.path!);
+addTests('isProjectView', [
+	'https://github.com/users/janpio/projects/3/views/1',
+]);
+
 export const isProjects = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'projects';
 addTests('isProjects', [
 	'https://github.com/sindresorhus/refined-github/projects',
