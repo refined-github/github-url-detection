@@ -202,7 +202,7 @@ addTests('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
 
-export const isProjectView = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+\/view/.test(getRepo(url)?.path!);
+export const isProjectView = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+\/views/.test(getRepo(url)?.path!);
 addTests('isProjectView', [
 	'https://github.com/users/janpio/projects/3/views/1',
 ]);
