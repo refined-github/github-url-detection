@@ -4,7 +4,7 @@
 
 Battle-tested by and extracted from the [Refined GitHub](https://github.com/sindresorhus/refined-github) extension.
 
-- Try the live [demo](https://refined-github.github.io/github-url-detection/)
+- Try the live [demo](https://refined-github.github.io/github-url-detection/?url=https://github.com/refined-github)
 - See the code and expected URLs for [every detection](https://github.com/refined-github/github-url-detection/blob/main/index.ts)
 
 ## Install
