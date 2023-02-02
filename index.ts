@@ -416,6 +416,7 @@ addTests('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
+// Partial needed because they're inter-dependent due to `_isFileFinderPartial`
 const _isRepoRootPartial = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
@@ -478,6 +479,7 @@ addTests('isUserSettings', [
 	'isRepliesSettings',
 ]);
 
+// Partials needed because they're inter-dependent due to `_isFileFinderPartial`
 const _isRepoTreePartial = (url: URL | HTMLAnchorElement | Location): boolean => _isRepoRootPartial(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
 const _isFileFinderPartial = (url: URL | HTMLAnchorElement | Location): boolean => new URLSearchParams(url.search).get('search') === '1';
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => _isRepoTreePartial(url) && !_isFileFinderPartial(url);
