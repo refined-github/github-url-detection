@@ -66,11 +66,12 @@
 			"ts": "module"
 		},
 		"nodeArguments": [
-			"--loader=esbuild-node-loader",
+			"--loader=@esbuild-kit/esm-loader",
 			"--experimental-specifier-resolution=node"
 		]
 	},
 	"devDependencies": {
+		"@esbuild-kit/esm-loader": "^2.5.4",
 		"@sindresorhus/tsconfig": "^3.0.1",
 		"@sveltejs/vite-plugin-svelte": "^1.0.1",
 		"ava": "^4.3.1",
