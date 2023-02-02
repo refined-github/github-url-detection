@@ -15,7 +15,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = getTests(detectName);
 
-	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
+	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('()=>')) {
 		continue;
 	}
 
