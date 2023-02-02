@@ -403,7 +403,7 @@ addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
-export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '';
+export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '' && !_isFileFinderPartial(url);
 addTests('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	'https://github.com/sindresorhus/refined-github',
@@ -416,7 +416,7 @@ addTests('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
+const _isRepoRootPartial = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
@@ -437,6 +437,7 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
 
+export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => _isRepoRootPartial(url) && !_isFileFinderPartial(url ?? location);
 addTests('isRepoRoot', [
 	'isRepoHome',
 	'https://github.com/sindresorhus/refined-github/tree/native-copy-buttons',
@@ -477,7 +478,9 @@ addTests('isUserSettings', [
 	'isRepliesSettings',
 ]);
 
-export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
+const _isRepoTreePartial = (url: URL | HTMLAnchorElement | Location): boolean => _isRepoRootPartial(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
+const _isFileFinderPartial = (url: URL | HTMLAnchorElement | Location): boolean => new URLSearchParams(url.search).get('search') === '1';
+export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => _isRepoTreePartial(url) && !_isFileFinderPartial(url);
 addTests('isRepoTree', [
 	'isRepoRoot',
 	'https://github.com/sindresorhus/refined-github/tree/master/distribution',
@@ -507,9 +510,13 @@ addTests('isSingleFile', [
 	'https://github.com/sindresorhus/refined-github/blob/master/edit.txt',
 ]);
 
-export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('find/'));
+export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	Boolean(getRepo(url)?.path.startsWith('find/'))
+	|| (_isRepoTreePartial(url) && _isFileFinderPartial(url));
 addTests('isFileFinder', [
 	'https://github.com/sindresorhus/refined-github/find/master',
+	'https://github.com/sindresorhus/refined-github?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/main?search=1',
 ]);
 
 export const isRepoForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
@@ -728,7 +735,7 @@ const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location
 	return gist === 'gist' ? parts.join('/') : undefined;
 };
 
-export interface RepositoryInfo {
+export type RepositoryInfo = {
 	owner: string;
 	name: string;
 
@@ -740,7 +747,7 @@ export interface RepositoryInfo {
 	@example '/user/repo/' -> ''
 	@example '/settings/token/' -> undefined */
 	path: string;
-}
+};
 
 const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
 	if (!url) {
