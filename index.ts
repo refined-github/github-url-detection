@@ -728,7 +728,7 @@ const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location
 	return gist === 'gist' ? parts.join('/') : undefined;
 };
 
-export interface RepositoryInfo {
+export type RepositoryInfo = {
 	owner: string;
 	name: string;
 
@@ -740,7 +740,7 @@ export interface RepositoryInfo {
 	@example '/user/repo/' -> ''
 	@example '/settings/token/' -> undefined */
 	path: string;
-}
+};
 
 const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
 	if (!url) {
