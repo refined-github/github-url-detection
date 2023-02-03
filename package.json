@@ -28,9 +28,9 @@
 		"build": "run-p build:*",
 		"build:vite": "vite build",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
-		"demo:build": "vite build --config demo/vite.config.js",
+		"demo:build": "vite build demo",
 		"demo:test": "svelte-check",
-		"demo:watch": "vite serve --config demo/vite.config.js",
+		"demo:watch": "vite preview demo & vite build demo --watch # vite serve isn't real",
 		"prepack": "npm run build",
 		"test": "run-p build ava xo",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
@@ -71,19 +71,19 @@
 		]
 	},
 	"devDependencies": {
-		"@esbuild-kit/esm-loader": "^2.5.4",
+		"@esbuild-kit/esm-loader": "^2.5.0",
 		"@sindresorhus/tsconfig": "^3.0.1",
-		"@sveltejs/vite-plugin-svelte": "^2.0.2",
-		"ava": "^5.1.1",
+		"@sveltejs/vite-plugin-svelte": "^1.1.0",
+		"ava": "^5.0.1",
 		"github-reserved-names": "^2.0.4",
 		"npm-run-all": "^4.1.5",
 		"strip-indent": "^4.0.0",
-		"svelte": "^3.55.1",
-		"svelte-check": "^3.0.3",
-		"tslib": "^2.5.0",
-		"typescript": "^4.9.5",
-		"vite": "^4.1.1",
-		"xo": "^0.53.1"
+		"svelte": "^3.52.0",
+		"svelte-check": "^2.9.2",
+		"tslib": "^2.4.0",
+		"typescript": "^4.8.4",
+		"vite": "^3.1.8",
+		"xo": "^0.52.4"
 	},
 	"engines": {
 		"node": ">=18"
