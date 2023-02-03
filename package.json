@@ -16,8 +16,7 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
 	"type": "module",
-	"main": "distribution/index.js",
-	"module": "distribution/index.js",
+	"exports": "./distribution/index.js",
 	"files": [
 		"distribution/index.js",
 		"distribution/index.d.ts"
@@ -27,9 +26,9 @@
 		"build": "run-p build:*",
 		"build:vite": "vite build",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
-		"demo:build": "vite build demo --config demo/vite.config.js",
+		"demo:build": "vite build --config demo/vite.config.js",
 		"demo:test": "svelte-check",
-		"demo:watch": "vite serve demo --config demo/vite.config.js",
+		"demo:watch": "vite serve --config demo/vite.config.js",
 		"prepack": "npm run build",
 		"test": "run-p build ava xo",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
@@ -66,8 +65,7 @@
 			"ts": "module"
 		},
 		"nodeArguments": [
-			"--loader=@esbuild-kit/esm-loader",
-			"--experimental-specifier-resolution=node"
+			"--loader=@esbuild-kit/esm-loader"
 		]
 	},
 	"devDependencies": {
@@ -86,6 +84,6 @@
 		"xo": "^0.53.1"
 	},
 	"engines": {
-		"node": ">=14"
+		"node": ">=18"
 	}
 }
