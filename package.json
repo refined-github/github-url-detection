@@ -17,6 +17,8 @@
 	"sideEffects": false,
 	"type": "module",
 	"exports": "./distribution/index.js",
+	"main": "./distribution/index.js",
+	"types": "./distribution/index.d.ts",
 	"files": [
 		"distribution/index.js",
 		"distribution/index.d.ts"
