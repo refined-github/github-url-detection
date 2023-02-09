@@ -185,7 +185,7 @@ export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard
 
 export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
 
-export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^orgs\/[^/]+\/teams\/[^/]+($|\/discussions)/.test(getCleanPathname(url));
+export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getOrg(url)?.path.startsWith('teams'));
 addTests('isTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team/discussions?pinned=1',
 	'https://github.com/orgs/refined-github/teams/core-team/discussions/1',
@@ -207,14 +207,16 @@ addTests('isProjects', [
 	'https://github.com/sindresorhus/refined-github/projects',
 ]);
 
-export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path!);
+export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path ?? getOrg(url)?.path!);
 addTests('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
+	'https://github.com/orgs/community/discussions/11202',
 ]);
 
-export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions';
+export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions' || getOrg(url)?.path === 'discussions';
 addTests('isDiscussionList', [
 	'https://github.com/tophf/mpiv/discussions',
+	'https://github.com/orgs/community/discussions',
 ]);
 
 export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
@@ -726,6 +728,15 @@ const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location
 
 	const [gist, ...parts] = pathname.split('/');
 	return gist === 'gist' ? parts.join('/') : undefined;
+};
+
+const getOrg = (url: URL | HTMLAnchorElement | Location = location): {name: string; path: string} | undefined => {
+	const [, orgs, name, ...path] = url.pathname.split('/');
+	if (orgs === 'orgs' && name) {
+		return {name, path: path.join('/')};
+	}
+
+	return undefined;
 };
 
 export type RepositoryInfo = {
