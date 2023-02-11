@@ -362,7 +362,7 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel=
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
-export const isPublicRepo = (): boolean => Boolean(isRepo() && $('#repository-container-header .Label')!.textContent!.startsWith('Public'));
+export const isPublicRepo = (): boolean => Boolean(isRepo() && exists('meta[name="octolytics-dimension-repository_public"][content="true"]'));
 
 export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('#repository-container-header .Label')!.textContent!.endsWith('archive'));
 
