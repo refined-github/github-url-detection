@@ -80,7 +80,6 @@
 		"strip-indent": "^4.0.0",
 		"svelte": "^3.55.1",
 		"svelte-check": "^3.0.3",
-		"tslib": "^2.5.0",
 		"typescript": "^4.9.5",
 		"vite": "^4.1.4",
 		"xo": "^0.53.1"
