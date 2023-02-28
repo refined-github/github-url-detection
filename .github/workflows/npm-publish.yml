@@ -20,20 +20,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 20
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 18
       - run: npm ci || npm install
-      - uses: fregante/setup-git-user@v1
-      - run: npm version ${{ github.event.inputs.Version }}
+      - uses: fregante/setup-git-user@v2
+      - run: npm version "${{ github.event.inputs.Version }}"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: git push --follow-tags
-      - uses: fregante/release-with-changelog@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          exclude: true
+      - run: gh release create "${{ github.event.inputs.Version }}" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
