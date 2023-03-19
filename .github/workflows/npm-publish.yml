@@ -25,10 +25,12 @@ jobs:
           node-version: 18
       - run: npm ci || npm install
       - uses: fregante/setup-git-user@v2
-      - run: npm version "${{ github.event.inputs.Version }}"
+      - name: Create version
+        run: VERSION="$(npm version "${{ github.event.inputs.Version }}")"
+        # Get the generated version, this enables support for keywords: `npm version patch`
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: gh release create "${{ github.event.inputs.Version }}" --generate-notes
+      - run: gh release create "$VERSION" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
