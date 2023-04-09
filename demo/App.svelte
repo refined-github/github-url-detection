@@ -1,26 +1,29 @@
 <script>
-	const urlParameter = new URLSearchParams(location.search).get('url')
-	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
-	export let url = urlParameter ?? '';
+
+	import parseUrl from './parse-url.js';
 	import * as urlDetection from '../index';
 	import { getAllUrls } from '../collector';
 
+	const urlParameter = new URLSearchParams(location.search);
+	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
+	// Parse partial URL in the URL parameter so that it's shown as full URL in the input
+	let url = parseUrl(urlParameter.get('url')).href || '';
+
 	const allUrls = [...getAllUrls()].sort();
 
-	let isUrlValid;
-	$: {
-		try {
-			// Do not use ?? because it should work on empty strings
-			new URL(url || defaultUrl);
-			isUrlValid = true;
-		} catch {
-			isUrlValid = false;
-		}
-	}
+	let parsedUrl;
+	// Do not use ?? because it should work on empty strings
+	$: parsedUrl = parseUrl(url || defaultUrl);
 
 	let detections = [];
 	$: {
-		if (isUrlValid) {
+		if (parsedUrl) {
+			if (url) {
+				urlParameter.set('url', url.replace('https://github.com', ''));
+				history.replaceState(null, '', `?${urlParameter}`);
+			} else {
+				history.replaceState(null, '', location.pathname);
+			}
 			detections = Object.entries(urlDetection)
 				.map(([name, detect]) => {
 					if (typeof detect !== 'function') {
@@ -31,7 +34,7 @@
 						return {
 							name,
 							detect,
-							result: detect(new URL(url || defaultUrl))
+							result: detect(parsedUrl)
 						};
 					} else {
 						return {name};
@@ -90,7 +93,7 @@
 	{/each}
 </datalist>
 
-{#if isUrlValid}
+{#if parsedUrl}
 	<pre><code>
 		{#each detections as {name, detect, result} (name)}
 				{#if detect}
