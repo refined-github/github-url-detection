@@ -1,6 +1,7 @@
 <script>
+	const urlParameter = new URLSearchParams(location.search).get('url')
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
-	export let url = '';
+	export let url = urlParameter ?? '';
 	import * as urlDetection from '../index';
 	import { getAllUrls } from '../collector';
 
@@ -9,6 +10,7 @@
 	let isUrlValid;
 	$: {
 		try {
+			// Do not use ?? because it should work on empty strings
 			new URL(url || defaultUrl);
 			isUrlValid = true;
 		} catch {
