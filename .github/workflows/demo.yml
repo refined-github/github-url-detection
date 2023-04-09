@@ -19,6 +19,9 @@ jobs:
       - run: npm ci
       - run: npm run demo:build
       - run: npm run demo:test
+      - run: grep -rq "/fregante/" ./demo/dist
+        # https://github.com/refined-github/github-url-detection/pull/161
+        name: Ensure that the demo is built correctly
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
