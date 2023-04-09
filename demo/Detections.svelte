@@ -12,7 +12,7 @@
 	}
 </style>
 {#each Object.keys(urlDetection) as name}
-	{#if !name.startsWith('_')}
+	{#if !name.startsWith('_') && name !== 'utils'}
 		<h2 id={name}><a href="#{name}">{name}</a></h2>
 		{@const urls = getTests(name)}
 		{#if urls[0] === 'combinedTestOnly'}
