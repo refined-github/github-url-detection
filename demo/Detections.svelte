@@ -1,12 +1,18 @@
 <script>
+	// Required to include the URLs in the testableUrls Map
 	import * as urlDetection from '../index';
 	import { testableUrls } from '../collector';
+
+	// Required to work around the aggressive tree-shaking
 	urlDetection.isRepo()
 </script>
 
 <style>
 	pre, code {
 		white-space: nowrap;
+	}
+	pre a {
+		color: inherit;
 	}
 </style>
 {#each [...testableUrls] as [detection, urls]}
@@ -15,7 +21,7 @@
 
 		<pre><code>
 		{#each urls as url}
-			{url}<br>
+			<a href="/url={encodeURIComponent(url)}">{url}</a><br>
 		{/each}
 		</code></pre>
 	{/if}
