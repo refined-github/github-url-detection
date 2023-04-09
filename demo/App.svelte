@@ -4,22 +4,23 @@
 	import * as urlDetection from '../index';
 	import { getAllUrls } from '../collector';
 
-	const urlParameter = new URLSearchParams(location.search);
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
-	// Parse partial URL in the URL parameter so that it's shown as full URL in the input
-	let url = parseUrl(urlParameter.get('url')).href || '';
+	const urlParameter = new URLSearchParams(location.search);
+	const parsedUrlParameter = parseUrl(urlParameter.get('url'), 'https://github.com').href;
+	// Parse partial URL in the parameter so that it's shown as full URL in the field
+	let urlField = parsedUrlParameter || '';
 
 	const allUrls = [...getAllUrls()].sort();
 
 	let parsedUrl;
 	// Do not use ?? because it should work on empty strings
-	$: parsedUrl = parseUrl(url || defaultUrl);
+	$: parsedUrl = parseUrl(urlField || defaultUrl);
 
 	let detections = [];
 	$: {
 		if (parsedUrl) {
-			if (url) {
-				urlParameter.set('url', url.replace('https://github.com', ''));
+			if (urlField) {
+				urlParameter.set('url', urlField.replace('https://github.com', ''));
 				history.replaceState(null, '', `?${urlParameter}`);
 			} else {
 				history.replaceState(null, '', location.pathname);
@@ -80,7 +81,7 @@
 	<span>URL:</span>
 	<input
 		type="search"
-		bind:value={url}
+		bind:value={urlField}
 		placeholder={defaultUrl}
 		autocomplete="off"
 		autocorrect="off"

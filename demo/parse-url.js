@@ -1,6 +1,6 @@
-export default function parseUrl(url) {
+export default function parseUrl(url, origin) {
 	try {
-		return new URL(url, 'https://github.com');
+		return new URL(url, origin);
 	} catch {
 		return false;
 	}
