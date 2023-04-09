@@ -1,10 +1,6 @@
 <script>
-	// Required to include the URLs in the testableUrls Map
 	import * as urlDetection from '../index';
-	import { testableUrls } from '../collector';
-
-	// Required to work around the aggressive tree-shaking
-	urlDetection.isRepo()
+	import { getTests } from '../collector';
 </script>
 
 <style>
@@ -15,14 +11,20 @@
 		color: inherit;
 	}
 </style>
-{#each [...testableUrls] as [detection, urls]}
-	{#if !detection.startsWith('_')}
-		<h2 id={detection}><a href="#{detection}">{detection}</a></h2>
-
-		<pre><code>
-		{#each urls as url}
-			<a href="/url={encodeURIComponent(url)}">{url}</a><br>
-		{/each}
-		</code></pre>
+{#each Object.keys(urlDetection) as name}
+	{#if !name.startsWith('_')}
+		<h2 id={name}><a href="#{name}">{name}</a></h2>
+		{@const urls = getTests(name)}
+		{#if urls[0] === 'combinedTestOnly'}
+			<p><em>Demo URLs missing</em></p>
+			{:else if urls.length === 0}
+			<p><em>Undeterminable via URL</em></p>
+		{:else}
+			<pre><code>
+				{#each urls as url}
+					<a href="/?url={encodeURIComponent(url)}">{url}</a><br>
+				{/each}
+			</code></pre>
+		{/if}
 	{/if}
 {/each}

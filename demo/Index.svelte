@@ -74,6 +74,10 @@
 	.undefined {
 		color: gray;
 	}
+
+	pre a {
+		color: inherit;
+	}
 </style>
 
 <label>
@@ -98,7 +102,7 @@
 		{#each detections as {name, detect, result} (name)}
 				{#if detect}
 					<div class={String(result)}>
-					{name}(url) // <span>{String(result)}</span></div>
+					<a href="/detections.html#{name}">{name}</a>(url) // <span>{String(result)}</span></div>
 				{:else}
 					<div class="undefined">
 					{name}() // undeterminable via URL</div>
@@ -108,7 +112,3 @@
 {:else}
 	<p>URL entered isn’t valid</p>
 {/if}
-
-{#each testableUrls as [test, urls]}
-	<h2>{test}</h2>
-{/each}
