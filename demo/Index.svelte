@@ -1,8 +1,7 @@
 <script>
-
 	import parseUrl from './parse-url.js';
 	import * as urlDetection from '../index';
-	import { getAllUrls } from '../collector';
+	import { getAllUrls, testableUrls } from '../collector';
 
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	const urlParameter = new URLSearchParams(location.search);
@@ -109,3 +108,7 @@
 {:else}
 	<p>URL entered isn’t valid</p>
 {/if}
+
+{#each testableUrls as [test, urls]}
+	<h2>{test}</h2>
+{/each}
