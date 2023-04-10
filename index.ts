@@ -364,7 +364,7 @@ export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork becau
 
 export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_public"][content="true"]');
 
-export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('#repository-container-header .Label')!.textContent!.endsWith('archive'));
+export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('main > .flash-warn')?.textContent!.includes('archived'));
 
 export const isBlank = (): boolean => exists('main .blankslate');
 
