@@ -366,7 +366,7 @@ export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimensi
 
 export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('main > .flash-warn')?.textContent!.includes('archived'));
 
-export const isBlank = (): boolean => exists('main .blankslate');
+export const isBlank = (): boolean => exists('.blankslate:not([hidden] .blankslate)');
 
 export const isRepoTaxonomyIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
 addTests('isRepoTaxonomyIssueOrPRList', [
