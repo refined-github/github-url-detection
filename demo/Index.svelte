@@ -1,8 +1,7 @@
 <script>
-
 	import parseUrl from './parse-url.js';
 	import * as urlDetection from '../index';
-	import { getAllUrls } from '../collector';
+	import { getAllUrls, testableUrls } from '../collector';
 
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	const urlParameter = new URLSearchParams(location.search);
@@ -75,6 +74,10 @@
 	.undefined {
 		color: gray;
 	}
+
+	pre a {
+		color: inherit;
+	}
 </style>
 
 <label>
@@ -99,7 +102,7 @@
 		{#each detections as {name, detect, result} (name)}
 				{#if detect}
 					<div class={String(result)}>
-					{name}(url) // <span>{String(result)}</span></div>
+					<a href="/detections.html#{name}">{name}</a>(url) // <span>{String(result)}</span></div>
 				{:else}
 					<div class="undefined">
 					{name}() // undeterminable via URL</div>

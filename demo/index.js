@@ -1,6 +1,6 @@
-import App from './App.svelte';
+import Index from './Index.svelte';
 
-const app = new App({
+const app = new Index({
 	target: document.querySelector('main'),
 });
 

@@ -1,6 +1,6 @@
 /** @file This needs to be in a separate file so it can bee tree-shaken before being published, while still being importable by tests */
 
-const testableUrls = new Map<string, string[]>();
+export const testableUrls = new Map<string, string[]>();
 
 export function addTests(test: string, urls: string[]): void {
 	// @ts-expect-error KISS for Vite
