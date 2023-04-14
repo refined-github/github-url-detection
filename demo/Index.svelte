@@ -102,7 +102,7 @@
 		{#each detections as {name, detect, result} (name)}
 				{#if detect}
 					<div class={String(result)}>
-					<a href="/detections.html#{name}">{name}</a>(url) // <span>{String(result)}</span></div>
+					<a href="detections.html#{name}">{name}</a>(url) // <span>{String(result)}</span></div>
 				{:else}
 					<div class="undefined">
 					{name}() // undeterminable via URL</div>
