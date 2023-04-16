@@ -785,6 +785,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 };
 
 export const utils = {
+	getOrg,
 	getUsername,
 	getCleanPathname,
 	getCleanGistPathname,
