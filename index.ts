@@ -629,9 +629,9 @@ addTests('isUserProfileFollowingTab', [
 	'https://github.com/sindresorhus?tab=following',
 ]);
 
-export const isProfileRepos = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+export const isProfileRepoList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isUserProfileRepoTab(url) || getOrg(url)?.path === 'repositories';
-addTests('isProfileRepos', [
+addTests('isProfileRepoList', [
 	'https://github.com/fregante?tab=repositories',
 	'https://github.com/fregante?tab=repositories&type=source',
 	'https://github.com/fregante?tab=repositories&q=&type=source&language=css&sort=',
