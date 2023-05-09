@@ -524,6 +524,21 @@ addTests('isRepoNetworkGraph', [
 	'https://github.com/sindresorhus/refined-github/network',
 ]);
 
+export const isRepoNetworkDependencies = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/dependencies';
+addTests('isRepoNetworkDependencies', [
+	'https://github.com/sindresorhus/refined-github/network/dependencies',
+]);
+
+export const isRepoNetworkDependents = (url: URL | HTMLAnchorElement | Location): boolean => getRepo(url)?.path === 'network/dependents';
+addTests('isRepoNetworkDependents', [
+	'https://github.com/sindresorhus/refined-github/network/dependents',
+]);
+
+export const isRepoNetworkUpdates = (url: URL | HTMLAnchorElement | Location): boolean => getRepo(url)?.path === 'network/updates';
+addTests('isRepoNetworkUpdates', [
+	'https://github.com/sindresorhus/refined-github/network/updates',
+]);
+
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
 export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}(\/[\da-f]{40})?$/.test(getCleanGistPathname(url)!);
