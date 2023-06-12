@@ -71,7 +71,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 test('is404', t => {
 	document.title = 'Page not found · GitHub';
 	t.true(pageDetect.is404());
-	
+
 	document.title = 'File not found · GitHub';
 	t.true(pageDetect.is404());
 
