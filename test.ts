@@ -72,6 +72,9 @@ test('is404', t => {
 	document.title = 'Page not found · GitHub';
 	t.true(pageDetect.is404());
 
+	document.title = 'File not found · GitHub';
+	t.true(pageDetect.is404());
+
 	document.title = 'examples/404: Page not found examples';
 	t.false(pageDetect.is404());
 

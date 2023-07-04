@@ -12,7 +12,7 @@ addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
 ]);
 
-export const is404 = (): boolean => document.title.startsWith('Page not found · GitHub'); // #98
+export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
 
 export const is500 = (): boolean => document.title === 'Server Error · GitHub' || document.title === 'Unicorn! · GitHub' || document.title === '504 Gateway Time-out';
 
