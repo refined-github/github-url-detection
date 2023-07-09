@@ -38,7 +38,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 					Is this URL \`${detectName}\`?
 						${url.replace('https://github.com', '')}
 
-					• Yes? The \`${detectName}\` test is wrong and should be fixed.
+					• Yes? The \`${detectName}\` detection is wrong and should be fixed.
 					• No? Remove it from its \`collect.set()\` array.
 				`),
 			);
@@ -60,7 +60,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 							${url.replace('https://github.com', '')}
 
 						• Yes? Add it to the \`collect.set()\` array.
-						• No? The \`${detectName}\` test is wrong and should be fixed.
+						• No? The \`${detectName}\` detection is wrong and should be fixed.
 					`),
 				);
 			});

@@ -629,6 +629,16 @@ addTests('isUserProfileFollowingTab', [
 	'https://github.com/sindresorhus?tab=following',
 ]);
 
+export const isProfileRepoList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isUserProfileRepoTab(url) || getOrg(url)?.path === 'repositories';
+addTests('isProfileRepoList', [
+	'https://github.com/fregante?tab=repositories',
+	'https://github.com/fregante?tab=repositories&type=source',
+	'https://github.com/fregante?tab=repositories&q=&type=source&language=css&sort=',
+	'https://github.com/orgs/refined-github/repositories',
+	'https://github.com/orgs/refined-github/repositories?q=&type=private&language=&sort=',
+]);
+
 addTests('hasComments', combinedTestOnly);
 export const hasComments = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isPR(url)
