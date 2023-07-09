@@ -1,7 +1,7 @@
 import reservedNames from 'github-reserved-names/reserved-names.json';
 import {addTests} from './collector.js';
 
-const $ = (selector: string) => document.querySelector(selector);
+const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
 const exists = (selector: string) => Boolean($(selector));
 
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
@@ -183,7 +183,7 @@ addTests('isNotifications', [
 
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
-export const isOrganizationRepo = (): boolean => Boolean(document.querySelector<HTMLElement>('[data-owner-scoped-search-url]')?.dataset['ownerScopedSearchUrl']!.startsWith('/org'));
+export const isOrganizationRepo = (): boolean => exists('.AppHeader-context-full [data-hovercard-type="organization"]');
 
 export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getOrg(url)?.path.startsWith('teams'));
 addTests('isTeamDiscussion', [
@@ -725,7 +725,7 @@ addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getUsername = (): string | undefined => document.querySelector('meta[name="user-login"]')?.getAttribute('content')!;
+const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content')!;
 
 /** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replace(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
@@ -767,7 +767,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 	if (!url) {
 		// We use `canonical` here to use the correct capitalization
 		// `rel=canonical` doesn't appear on every page
-		const canonical = document.querySelector<HTMLMetaElement>('[property="og:url"]');
+		const canonical = $<HTMLMetaElement>('[property="og:url"]');
 		if (canonical) {
 			const canonicalUrl = new URL(canonical.content, location.origin);
 			// Sometimes GitHub sets the canonical to an incomplete URL, so it can't be used
