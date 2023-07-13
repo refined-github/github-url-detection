@@ -9,6 +9,7 @@ const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests 
 addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
+	'https://github.com/orgs/reading-together/discussions/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
 ]);
 
@@ -211,6 +212,13 @@ export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location)
 addTests('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
 	'https://github.com/orgs/community/discussions/11202',
+]);
+
+export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('discussions/new') || getOrg(url)?.path.startsWith('discussions/new'))
+	&& new URLSearchParams(url.search).get('category') !== null;
+addTests('isNewDiscussion', [
+	'https://github.com/withastro/roadmap/discussions/new?category=proposal',
+	'https://github.com/orgs/community/discussions/new?category=pull-requests',
 ]);
 
 export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions' || getOrg(url)?.path === 'discussions';
@@ -654,7 +662,8 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isCompare(url)
 	|| isRepliesSettings(url)
 	|| hasReleaseEditor(url)
-	|| isDiscussion(url);
+	|| isDiscussion(url)
+	|| isNewDiscussion(url);
 
 addTests('hasCode', combinedTestOnly);
 /** Static code, not the code editor */
