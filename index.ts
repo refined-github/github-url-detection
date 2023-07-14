@@ -214,7 +214,7 @@ addTests('isDiscussion', [
 	'https://github.com/orgs/community/discussions/11202',
 ]);
 
-export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('discussions/new') || getOrg(url)?.path.startsWith('discussions/new'))
+export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('discussions/new') ?? getOrg(url)?.path.startsWith('discussions/new'))
 	&& new URLSearchParams(url.search).get('category') !== null;
 addTests('isNewDiscussion', [
 	'https://github.com/withastro/roadmap/discussions/new?category=proposal',
