@@ -9,8 +9,8 @@ const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests 
 addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
-	'https://github.com/orgs/reading-together/discussions/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+	'https://github.com/orgs/community/discussions/new/choose',
 ]);
 
 export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
@@ -214,8 +214,7 @@ addTests('isDiscussion', [
 	'https://github.com/orgs/community/discussions/11202',
 ]);
 
-export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => (getRepo(url)?.path === 'discussions/new' || getOrg(url)?.path === 'discussions/new')
-	&& new URLSearchParams(url.search).get('category') !== null;
+export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions/new' || getOrg(url)?.path === 'discussions/new';
 addTests('isNewDiscussion', [
 	'https://github.com/withastro/roadmap/discussions/new?category=proposal',
 	'https://github.com/orgs/community/discussions/new?category=pull-requests',
