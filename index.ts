@@ -405,7 +405,8 @@ addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
-export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '';
+export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === ''
+	&& !isRepoTreeFileFinder(url);
 addTests('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	'https://github.com/sindresorhus/refined-github',
@@ -422,6 +423,10 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
+		return false;
+	}
+
+	if (isRepoTreeFileFinder(url ?? location)) {
 		return false;
 	}
 
@@ -479,12 +484,23 @@ addTests('isUserSettings', [
 	'isRepliesSettings',
 ]);
 
-export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
+export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url)
+	|| Boolean(getRepo(url)?.path.startsWith('tree/'))
+	|| isRepoTreeFileFinder(url);
 addTests('isRepoTree', [
 	'isRepoRoot',
+	'isRepoTreeFileFinder',
 	'https://github.com/sindresorhus/refined-github/tree/master/distribution',
 	'https://github.com/sindresorhus/refined-github/tree/0.13.0/distribution',
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
+]);
+
+export const isRepoTreeFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => new URLSearchParams(url.search).get('search') === '1';
+addTests('isRepoTreeFileFinder', [
+	'https://github.com/sindresorhus/refined-github?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/master/distribution?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/0.13.0/distribution?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution?search=1',
 ]);
 
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
