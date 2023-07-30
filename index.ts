@@ -490,17 +490,17 @@ export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): 
 addTests('isRepoTree', [
 	'isRepoRoot',
 	'isRepoTreeFileFinder',
-	'https://github.com/sindresorhus/refined-github/tree/master/distribution',
-	'https://github.com/sindresorhus/refined-github/tree/0.13.0/distribution',
-	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
+	'https://github.com/sindresorhus/refined-github/tree/main/source',
+	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension',
+	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension',
 ]);
 
 export const isRepoTreeFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => new URLSearchParams(url.search).get('search') === '1';
 addTests('isRepoTreeFileFinder', [
 	'https://github.com/sindresorhus/refined-github?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/master/distribution?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/0.13.0/distribution?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/main/source?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension?search=1',
+	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension?search=1',
 ]);
 
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
