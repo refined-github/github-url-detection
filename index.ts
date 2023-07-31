@@ -10,7 +10,6 @@ addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
-	'https://github.com?search=1',
 	'https://github.com/orgs/community/discussions/new/choose',
 ]);
 
@@ -82,6 +81,7 @@ addTests('isDashboard', [
 	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
 	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
+	'https://github.com?search=1', // Gotcha for `isRepoTree`
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
