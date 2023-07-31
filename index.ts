@@ -301,17 +301,16 @@ addTests('isTags', [
 	'https://github.com/sindresorhus/refined-github/tags?after=21.8.1',
 ]);
 
-export const isSingleTag = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(releases\/tag)/.test(getRepo(url)?.path!);
-addTests('isSingleTag', [
-	'https://github.com/sindresorhus/refined-github/releases/tag/v1.0.0-beta.4',
-	'https://github.com/sindresorhus/refined-github/releases/tag/0.2.1',
+export const isSingleReleaseOrTag = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path!.startsWith('releases/tag'));
+addTests('isSingleReleaseOrTag', [
+	'https://github.com/refined-github/refined-github/releases/tag/1.20.1', // Tag
+	'https://github.com/refined-github/refined-github/releases/tag/23.7.25', // Release
 ]);
 
-export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleTag(url);
+export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url);
 addTests('isReleasesOrTags', [
 	'isReleases',
 	'isTags',
-	'isSingleTag',
 ]);
 
 export const isDeletingFile = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('delete'));
