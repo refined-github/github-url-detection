@@ -10,6 +10,7 @@ addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+	'https://github.com/orgs/community/discussions/new/choose',
 ]);
 
 export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
@@ -211,6 +212,12 @@ export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location)
 addTests('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
 	'https://github.com/orgs/community/discussions/11202',
+]);
+
+export const isNewDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions/new' || getOrg(url)?.path === 'discussions/new';
+addTests('isNewDiscussion', [
+	'https://github.com/withastro/roadmap/discussions/new?category=proposal',
+	'https://github.com/orgs/community/discussions/new?category=pull-requests',
 ]);
 
 export const isDiscussionList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'discussions' || getOrg(url)?.path === 'discussions';
@@ -654,7 +661,8 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isCompare(url)
 	|| isRepliesSettings(url)
 	|| hasReleaseEditor(url)
-	|| isDiscussion(url);
+	|| isDiscussion(url)
+	|| isNewDiscussion(url);
 
 addTests('hasCode', combinedTestOnly);
 /** Static code, not the code editor */
