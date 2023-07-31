@@ -443,6 +443,7 @@ const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
 
+// `_isRepoRoot` logic depends on whether a URL was passed, so don't use a `url` default parameter
 export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => !hasSearchParameter(url ?? location) && _isRepoRoot(url);
 
 addTests('isRepoRoot', [
