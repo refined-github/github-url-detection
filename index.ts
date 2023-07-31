@@ -271,9 +271,12 @@ addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!) || isPRCommit(url);
 addTests('isPRFiles', [
-	'https://github.com/sindresorhus/refined-github/pull/148/files',
+	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
+	'https://github.com/refined-github/refined-github/pull/6635/files',
+	'https://github.com/refined-github/refined-github/pull/6635/files/0971327', // This means "every commit until 0971327"
+	'https://github.com/refined-github/refined-github/pull/6635/files/3b9ad8c..1e9c7cb', // This means specifically "Between commit A and B"
 ]);
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
