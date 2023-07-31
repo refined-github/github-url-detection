@@ -10,6 +10,7 @@ addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+	'https://github.com/sindresorhus/refined-github?search=1',
 ]);
 
 export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
@@ -405,8 +406,10 @@ addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
+const hasSearchParameter = (url: URL | HTMLAnchorElement | Location = location): boolean => new URLSearchParams(url.search).get('search') === '1';
+
 export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === ''
-	&& !isRepoTreeFileFinder(url);
+	&& !hasSearchParameter(url);
 addTests('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	'https://github.com/sindresorhus/refined-github',
@@ -426,7 +429,7 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 		return false;
 	}
 
-	if (isRepoTreeFileFinder(url ?? location)) {
+	if (hasSearchParameter(url ?? location)) {
 		return false;
 	}
 
@@ -486,21 +489,12 @@ addTests('isUserSettings', [
 
 export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url)
 	|| Boolean(getRepo(url)?.path.startsWith('tree/'))
-	|| isRepoTreeFileFinder(url);
+	|| hasSearchParameter(url);
 addTests('isRepoTree', [
 	'isRepoRoot',
-	'isRepoTreeFileFinder',
 	'https://github.com/sindresorhus/refined-github/tree/main/source',
 	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension',
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension',
-]);
-
-export const isRepoTreeFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => new URLSearchParams(url.search).get('search') === '1';
-addTests('isRepoTreeFileFinder', [
-	'https://github.com/sindresorhus/refined-github?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/main/source?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension?search=1',
-	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension?search=1',
 ]);
 
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
