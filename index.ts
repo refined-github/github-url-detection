@@ -10,7 +10,7 @@ addTests('__urls_that_dont_match__', [
 	'https://github.com/sindresorhus/refined-github/issues/new',
 	'https://github.com/sindresorhus/refined-github/issues/new/choose',
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
-	'https://github.com/sindresorhus/refined-github?search=1',
+	'https://github.com?search=1',
 ]);
 
 export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
