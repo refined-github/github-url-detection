@@ -28,8 +28,7 @@ export const isCommit = (url: URL | HTMLAnchorElement | Location = location): bo
 addTests('isCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
 	'https://github.com/sindresorhus/refined-github/commit/5b614',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
+	'isPRCommit',
 ]);
 
 export const isCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoCommitList(url) || isPRCommitList(url);
@@ -229,11 +228,9 @@ addTests('isDiscussionList', [
 
 export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
 addTests('isPR', [
+	'isPRFiles',
+	'isPRCommitList',
 	'https://github.com/sindresorhus/refined-github/pull/148',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits',
-	'https://github.com/sindresorhus/refined-github/pull/148/files',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
 
 export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path!);
@@ -271,9 +268,12 @@ addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!) || isPRCommit(url);
 addTests('isPRFiles', [
+	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
+	'https://github.com/sindresorhus/refined-github/pull/148/files/e1aba6f', // This means "every commit until e1aba6f"
+	'https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
 ]);
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
