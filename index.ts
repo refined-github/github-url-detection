@@ -406,7 +406,7 @@ addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
-const hasSearchParameter = (url: URL | HTMLAnchorElement | Location = location): boolean => new URLSearchParams(url.search).get('search') === '1';
+const hasSearchParameter = (url: URL | HTMLAnchorElement | Location): boolean => new URLSearchParams(url.search).get('search') === '1';
 
 export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === ''
 	&& !hasSearchParameter(url);
@@ -426,10 +426,6 @@ const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
-		return false;
-	}
-
-	if (hasSearchParameter(url ?? location)) {
 		return false;
 	}
 
