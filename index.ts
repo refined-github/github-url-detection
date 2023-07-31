@@ -307,7 +307,7 @@ addTests('isSingleReleaseOrTag', [
 	'https://github.com/refined-github/refined-github/releases/tag/23.7.25',
 ]);
 
-export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url) || isSingleReleaseOrTag(url);
+export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url);
 addTests('isReleasesOrTags', [
 	'isReleases',
 	'isTags',
