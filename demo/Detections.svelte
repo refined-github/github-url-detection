@@ -22,7 +22,7 @@
 		{:else}
 			<pre><code>
 				{#each urls as url}
-					<a href="/?url={encodeURIComponent(url)}">{url}</a><br>
+					<a href="./?url={encodeURIComponent(url)}">{url}</a><br>
 				{/each}
 			</code></pre>
 		{/if}

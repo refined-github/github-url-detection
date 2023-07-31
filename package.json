@@ -73,21 +73,18 @@
 	"devDependencies": {
 		"@esbuild-kit/esm-loader": "^2.5.5",
 		"@sindresorhus/tsconfig": "^3.0.1",
-		"@sveltejs/vite-plugin-svelte": "^2.0.4",
-		"ava": "^5.2.0",
+		"@sveltejs/vite-plugin-svelte": "^2.4.3",
+		"ava": "^5.3.1",
 		"github-reserved-names": "^2.0.4",
 		"npm-run-all": "^4.1.5",
 		"strip-indent": "^4.0.0",
-		"svelte": "^3.58.0",
-		"svelte-check": "^3.2.0",
-		"typescript": "^5.0.4",
-		"vite": "^4.3.0-beta.4",
-		"xo": "^0.54.0"
+		"svelte": "^4.1.2",
+		"svelte-check": "^3.4.6",
+		"typescript": "^5.1.6",
+		"vite": "^4.4.7",
+		"xo": "^0.55.0"
 	},
 	"engines": {
 		"node": ">=18"
-	},
-	"overrides": {
-		"vite": "^4.3.0-beta.4"
 	}
 }
