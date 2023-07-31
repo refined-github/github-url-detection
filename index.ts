@@ -303,8 +303,8 @@ addTests('isTags', [
 
 export const isSingleReleaseOrTag = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path!.startsWith('releases/tag'));
 addTests('isSingleReleaseOrTag', [
-	'https://github.com/refined-github/refined-github/releases/tag/1.20.1',
-	'https://github.com/refined-github/refined-github/releases/tag/23.7.25',
+	'https://github.com/refined-github/refined-github/releases/tag/1.20.1', // Tag
+	'https://github.com/refined-github/refined-github/releases/tag/23.7.25', // Release
 ]);
 
 export const isReleasesOrTags = (url: URL | HTMLAnchorElement | Location = location): boolean => isReleases(url) || isTags(url);
