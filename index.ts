@@ -229,11 +229,9 @@ addTests('isDiscussionList', [
 
 export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
 addTests('isPR', [
-	'https://github.com/sindresorhus/refined-github/pull/148',
+	'isPRFiles',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 ]);
 
 export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path!);
@@ -274,9 +272,9 @@ addTests('isPRCommitList', [
 export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!) || isPRCommit(url);
 addTests('isPRFiles', [
 	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
-	'https://github.com/refined-github/refined-github/pull/6635/files',
-	'https://github.com/refined-github/refined-github/pull/6635/files/0971327', // This means "every commit until 0971327"
-	'https://github.com/refined-github/refined-github/pull/6635/files/3b9ad8c..1e9c7cb', // This means specifically "Between commit A and B"
+	'https://github.com/sindresorhus/refined-github/pull/148/files',
+	'https://github.com/sindresorhus/refined-github/pull/148/files/e1aba6f', // This means "every commit until e1aba6f"
+	'https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
 ]);
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
