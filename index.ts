@@ -422,7 +422,7 @@ addTests('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
+const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
@@ -446,6 +446,8 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 	// If we're checking the current page, add support for branches with slashes // #15 #24
 	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
+
+export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => !hasSearchParameter(url) && _isRepoRoot(url);
 
 addTests('isRepoRoot', [
 	'isRepoHome',
@@ -487,9 +489,7 @@ addTests('isUserSettings', [
 	'isRepliesSettings',
 ]);
 
-export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url)
-	|| Boolean(getRepo(url)?.path.startsWith('tree/'))
-	|| hasSearchParameter(url);
+export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => _isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
 addTests('isRepoTree', [
 	'isRepoRoot',
 	'https://github.com/sindresorhus/refined-github/tree/main/source',
