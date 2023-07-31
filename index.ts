@@ -81,6 +81,7 @@ addTests('isDashboard', [
 	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
 	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
+	'https://github.com?search=1', // Gotcha for `isRepoTree`
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
@@ -412,7 +413,10 @@ addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/labels/%3Adollar%3A%20Funded%20on%20Issuehunt',
 ]);
 
-export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === '';
+const hasSearchParameter = (url: URL | HTMLAnchorElement | Location): boolean => new URLSearchParams(url.search).get('search') === '1';
+
+export const isRepoHome = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === ''
+	&& !hasSearchParameter(url);
 addTests('isRepoHome', [
 	// Some tests are here only as "gotchas" for other tests that may misidentify their pages
 	'https://github.com/sindresorhus/refined-github',
@@ -425,7 +429,7 @@ addTests('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
-export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
+const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
@@ -445,6 +449,9 @@ export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean =>
 	// If we're checking the current page, add support for branches with slashes // #15 #24
 	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
+
+// `_isRepoRoot` logic depends on whether a URL was passed, so don't use a `url` default parameter
+export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => !hasSearchParameter(url ?? location) && _isRepoRoot(url);
 
 addTests('isRepoRoot', [
 	'isRepoHome',
@@ -486,12 +493,13 @@ addTests('isUserSettings', [
 	'isRepliesSettings',
 ]);
 
-export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
+export const isRepoTree = (url: URL | HTMLAnchorElement | Location = location): boolean => _isRepoRoot(url) || Boolean(getRepo(url)?.path.startsWith('tree/'));
 addTests('isRepoTree', [
 	'isRepoRoot',
-	'https://github.com/sindresorhus/refined-github/tree/master/distribution',
-	'https://github.com/sindresorhus/refined-github/tree/0.13.0/distribution',
-	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/distribution',
+	'https://github.com/sindresorhus/refined-github/tree/main/source',
+	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension',
+	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension',
+	'https://github.com/sindresorhus/refined-github?search=1',
 ]);
 
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
