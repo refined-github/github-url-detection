@@ -2,7 +2,13 @@
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
 		"outDir": "distribution",
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"target": "ES2022",
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ES2022"
+		],
 	},
 	"include": [
 		"index.ts",
