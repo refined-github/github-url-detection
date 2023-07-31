@@ -28,8 +28,7 @@ export const isCommit = (url: URL | HTMLAnchorElement | Location = location): bo
 addTests('isCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
 	'https://github.com/sindresorhus/refined-github/commit/5b614',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
+	'isPRCommit',
 ]);
 
 export const isCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoCommitList(url) || isPRCommitList(url);
@@ -230,8 +229,8 @@ addTests('isDiscussionList', [
 export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
 addTests('isPR', [
 	'isPRFiles',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits',
-	'https://github.com/sindresorhus/refined-github/pull/148/files',
+	'isPRCommitList',
+	'https://github.com/sindresorhus/refined-github/pull/148',
 ]);
 
 export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path!);
