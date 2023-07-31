@@ -443,7 +443,7 @@ const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
 };
 
-export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => !hasSearchParameter(url) && _isRepoRoot(url);
+export const isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => !hasSearchParameter(url ?? location) && _isRepoRoot(url);
 
 addTests('isRepoRoot', [
 	'isRepoHome',
@@ -491,6 +491,7 @@ addTests('isRepoTree', [
 	'https://github.com/sindresorhus/refined-github/tree/main/source',
 	'https://github.com/sindresorhus/refined-github/tree/0.13.0/extension',
 	'https://github.com/sindresorhus/refined-github/tree/57bf435ee12d14b482df0bbd88013a2814c7512e/extension',
+	'https://github.com/sindresorhus/refined-github?search=1',
 ]);
 
 export const isRepoWiki = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('wiki'));
