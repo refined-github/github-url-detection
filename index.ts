@@ -344,6 +344,10 @@ addTests('isEditingWikiPage', [
 export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
 addTests('hasWikiPageEditor', combinedTestOnly);
 
+/**
+ * @example https://github.com/sindresorhus/refined-github/blame/master/package.json
+ * @example https://github.com/sindresorhus/notifications/
+ */
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url))
 	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
 	&& !isDashboard(url)
