@@ -528,6 +528,12 @@ addTests('isFileFinder', [
 	'https://github.com/sindresorhus/refined-github/find/master',
 ]);
 
+/**
+ * @example https://github.com/fregante/GhostText/tree/3cacd7df71b097dc525d99c7aa2f54d31b02fcc8/chrome/scripts/InputArea
+ * @example https://github.com/refined-github/refined-github/blob/some-non-existent-ref/source/features/bugs-tab.tsx
+ */
+export const isRepoFile404 = (url: URL | HTMLAnchorElement | Location = location): boolean => (isSingleFile(url) || isRepoTree(url)) && document.title.startsWith('File not found');
+
 export const isRepoForksList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'network/members';
 addTests('isRepoForksList', [
 	'https://github.com/sindresorhus/refined-github/network/members',
