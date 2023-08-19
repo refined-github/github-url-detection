@@ -149,7 +149,7 @@ addTests('isLabelList', [
 
 export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path!);
 addTests('isMilestone', [
-	'https://github.com/sindresorhus/refined-github/milestones/12',
+	'https://github.com/kubernetes/kubernetes/milestone/56',
 ]);
 
 export const isMilestoneList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'milestones';
