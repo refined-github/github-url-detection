@@ -81,8 +81,8 @@ addTests('isDashboard', [
 	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
 	'https://github.com?search=1', // Gotcha for `isRepoTree`
-        'https://github.com/dashboard-feed',
-        'https://github.com//dashboard-feed'
+	'https://github.com/dashboard-feed',
+	'https://github.com//dashboard-feed'
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
