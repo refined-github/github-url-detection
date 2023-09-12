@@ -61,7 +61,7 @@ addTests('isCompareWikiPage', [
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 ]);
 
-export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(\/|$)/.test(getCleanPathname(url));
+export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
 addTests('isDashboard', [
 	'https://github.com///',
 	'https://github.com//',
@@ -81,6 +81,8 @@ addTests('isDashboard', [
 	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
 	'https://github.com?search=1', // Gotcha for `isRepoTree`
+        'https://github.com/dashboard-feed',
+        'https://github.com//dashboard-feed'
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
