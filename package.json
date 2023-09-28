@@ -24,7 +24,6 @@
 		"distribution/index.d.ts"
 	],
 	"scripts": {
-		"bun:test": "bun test",
 		"build": "run-p build:*",
 		"build:vite": "vite build",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
@@ -32,10 +31,11 @@
 		"demo:test": "svelte-check",
 		"demo:watch": "vite preview demo & vite build demo --watch # vite serve isn't real",
 		"prepack": "npm run build",
-		"test": "run-p build bun:test xo",
+		"test": "run-p build test:unit xo",
+		"test:unit": "bun test",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
 		"watch:typescript": "tsc --watch --noEmit",
-		"watch:bun:test": "run-p 'bun:test -- --watch' 'watch:typescript -- --watch'",
+		"watch:test:unit": "run-p 'test:unit -- --watch' 'watch:typescript -- --watch'",
 		"xo": "xo"
 	},
 	"xo": {

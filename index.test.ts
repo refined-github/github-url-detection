@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="bun-types" />
+/// <reference lib="dom" />
 import assert from 'node:assert/strict';
 import {test} from 'bun:test';
 import stripIndent from 'strip-indent';
