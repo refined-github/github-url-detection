@@ -24,7 +24,6 @@
 		"distribution/index.d.ts"
 	],
 	"scripts": {
-		"ava": "ava --timeout 30s",
 		"build": "run-p build:*",
 		"build:vite": "vite build",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
@@ -32,10 +31,11 @@
 		"demo:test": "svelte-check",
 		"demo:watch": "vite preview demo & vite build demo --watch # vite serve isn't real",
 		"prepack": "npm run build",
-		"test": "run-p build ava xo",
+		"test": "run-p build test:unit xo",
+		"test:unit": "bun test",
 		"watch": "run-p watch:typescript demo:watch # vite watch doesn’t generate the lib, so just use the demo",
 		"watch:typescript": "tsc --watch --noEmit",
-		"watch:ava": "run-p 'ava -- --watch' 'watch:typescript -- --watch'",
+		"watch:test:unit": "run-p 'test:unit -- --watch' 'watch:typescript -- --watch'",
 		"xo": "xo"
 	},
 	"xo": {
@@ -48,7 +48,7 @@
 					"*.ts"
 				],
 				"rules": {
-					"ava/assertion-arguments": "off",
+					"@typescript-eslint/triple-slash-reference": "off",
 					"@typescript-eslint/dot-notation": "off",
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-unsafe-member-access": "off",
@@ -62,19 +62,11 @@
 			"camelcase": "off"
 		}
 	},
-	"ava": {
-		"extensions": {
-			"ts": "module"
-		},
-		"nodeArguments": [
-			"--loader=@esbuild-kit/esm-loader"
-		]
-	},
 	"devDependencies": {
-		"@esbuild-kit/esm-loader": "^2.5.5",
 		"@sindresorhus/tsconfig": "^3.0.1",
 		"@sveltejs/vite-plugin-svelte": "^2.4.3",
-		"ava": "^5.3.1",
+		"bun": "^1.0.3",
+		"bun-types": "^1.0.3",
 		"github-reserved-names": "^2.0.4",
 		"npm-run-all": "^4.1.5",
 		"strip-indent": "^4.0.0",

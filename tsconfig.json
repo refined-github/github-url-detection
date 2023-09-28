@@ -12,7 +12,7 @@
 	},
 	"include": [
 		"index.ts",
-		"test.ts",
+		"index.test.ts",
 		"collector.ts"
 	]
 }
