@@ -48,6 +48,7 @@
 					"*.ts"
 				],
 				"rules": {
+					"@typescript-eslint/triple-slash-reference": "off",
 					"@typescript-eslint/dot-notation": "off",
 					"@typescript-eslint/no-non-null-assertion": "off",
 					"@typescript-eslint/no-unsafe-member-access": "off",
