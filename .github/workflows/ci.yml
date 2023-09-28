@@ -27,8 +27,8 @@ jobs:
         run: npm ci || npm install
       - name: build
         run: npm run build --if-present
-      - name: AVA
-        run: npx ava
+      - name: Test
+        run: npm run test:unit
 
   Build:
     runs-on: ubuntu-latest
