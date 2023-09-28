@@ -4,6 +4,7 @@
 		"outDir": "distribution",
 		"resolveJsonModule": true,
 		"target": "ES2022",
+		"module": "NodeNext",
 		"lib": [
 			"DOM",
 			"DOM.Iterable",
