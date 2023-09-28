@@ -6,10 +6,7 @@ import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
 
-(globalThis as any).document = {
-	title: '',
-	querySelector: () => null,
-};
+(globalThis as any).document = {title: ''};
 (globalThis as any).location = new URL('https://github.com/');
 
 const allUrls = getAllUrls();
@@ -21,7 +18,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = getTests(detectName);
 
-	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('()=>')) {
+	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
 		continue;
 	}
 
