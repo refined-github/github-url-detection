@@ -24,7 +24,9 @@
 		"distribution/index.d.ts"
 	],
 	"scripts": {
-		"build": "tsc",
+		"build": "run-p build:*",
+		"build:vite": "vite build",
+		"build:typescript": "tsc --declaration --emitDeclarationOnly",
 		"demo:build": "vite build demo",
 		"demo:test": "svelte-check",
 		"demo:watch": "vite preview demo & vite build demo --watch # vite serve isn't real",
@@ -67,6 +69,6 @@
 		"xo": "^0.58.0"
 	},
 	"engines": {
-		"node": ">=20.10"
+		"node": ">=18"
 	}
 }
