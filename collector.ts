@@ -3,8 +3,8 @@
 export const testableUrls = new Map<string, string[]>();
 
 export function addTests(test: string, urls: string[]): void {
-	// @ts-expect-error Vitest-only ENV
-	if (!import.meta.vitest) {
+	// @ts-expect-error -- Only works this way https://stackoverflow.com/a/76783737/288906
+	if (import.meta.env.DEV) {
 		testableUrls.set(test, urls);
 	}
 }
