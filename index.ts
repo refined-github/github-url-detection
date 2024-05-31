@@ -547,14 +547,14 @@ addTests('isRepoNetworkGraph', [
 
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
-export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}(\/[\da-f]{40})?$/.test(getCleanGistPathname(url)!);
+export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}(\/[\da-f]{40})?$/.test(getCleanGistPathname(url));
 addTests('isSingleGist', [
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3',
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3/d1ebf7d9cfaba4d4596d2ea9174e202479a5f9ad',
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
 ]);
 
-export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}\/revisions$/.test(getCleanGistPathname(url)!);
+export const isGistRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}\/revisions$/.test(getCleanGistPathname(url));
 addTests('isGistRevision', [
 	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
@@ -747,7 +747,7 @@ addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content');
+const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
 /** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);

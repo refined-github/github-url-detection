@@ -14,6 +14,7 @@
 	"include": [
 		"index.ts",
 		"index.test.ts",
+		"global.d.ts",
 		"collector.ts"
 	]
 }
