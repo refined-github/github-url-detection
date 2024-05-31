@@ -128,7 +128,7 @@ addTests('isGlobalSearchResults', [
 	'https://github.com/search?q=refined-github&ref=opensearch',
 ]);
 
-export const isIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues\/\d+/.test(getRepo(url)?.path!) && document.title !== 'GitHub · Where software is built'; // The title check excludes deleted issues
+export const isIssue = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues\/\d+/.test(getRepo(url)?.path) && document.title !== 'GitHub · Where software is built'; // The title check excludes deleted issues
 addTests('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
@@ -148,7 +148,7 @@ addTests('isLabelList', [
 	'https://github.com/sindresorhus/refined-github/labels/',
 ]);
 
-export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path!);
+export const isMilestone = (url: URL | HTMLAnchorElement | Location = location): boolean => /^milestone\/\d+/.test(getRepo(url)?.path);
 addTests('isMilestone', [
 	'https://github.com/kubernetes/kubernetes/milestone/56',
 ]);
@@ -199,7 +199,7 @@ export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsernam
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
 
-export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path!);
+export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path);
 addTests('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
 ]);
@@ -209,7 +209,7 @@ addTests('isProjects', [
 	'https://github.com/sindresorhus/refined-github/projects',
 ]);
 
-export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path ?? getOrg(url)?.path!);
+export const isDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => /^discussions\/\d+/.test(getRepo(url)?.path ?? getOrg(url)?.path);
 addTests('isDiscussion', [
 	'https://github.com/tophf/mpiv/discussions/50',
 	'https://github.com/orgs/community/discussions/11202',
@@ -227,14 +227,14 @@ addTests('isDiscussionList', [
 	'https://github.com/orgs/community/discussions',
 ]);
 
-export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path!) && !isPRConflicts(url);
+export const isPR = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+/.test(getRepo(url)?.path) && !isPRConflicts(url);
 addTests('isPR', [
 	'isPRFiles',
 	'isPRCommitList',
 	'https://github.com/sindresorhus/refined-github/pull/148',
 ]);
 
-export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path!);
+export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/conflicts/.test(getRepo(url)?.path);
 addTests('isPRConflicts', [
 	'https://github.com/sindresorhus/refined-github/pull/148/conflicts',
 ]);
@@ -250,7 +250,7 @@ addTests('isPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}$/.test(getRepo(url)?.path!);
+export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
 addTests('isPRCommit', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
 	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
@@ -259,17 +259,17 @@ addTests('isPRCommit', [
 export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
 export const isPRFile404 = (): boolean => isPRFiles() && document.title.startsWith('Commit range not found · Pull Request');
 
-export const isPRConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+$/.test(getRepo(url)?.path!);
+export const isPRConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+$/.test(getRepo(url)?.path);
 addTests('isPRConversation', [
 	'https://github.com/sindresorhus/refined-github/pull/148',
 ]);
 
-export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits$/.test(getRepo(url)?.path!);
+export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits$/.test(getRepo(url)?.path);
 addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path!) || isPRCommit(url);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path) || isPRCommit(url);
 addTests('isPRFiles', [
 	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
@@ -376,7 +376,7 @@ export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('main > .flas
 
 export const isBlank = (): boolean => exists('main .blankslate:not([hidden] .blankslate)');
 
-export const isRepoTaxonomyIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path!);
+export const isRepoTaxonomyIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^labels\/.+|^milestones\/\d+(?!\/edit)/.test(getRepo(url)?.path);
 addTests('isRepoTaxonomyIssueOrPRList', [
 	'https://github.com/sindresorhus/refined-github/labels/bug',
 	'https://github.com/sindresorhus/refined-github/labels/implemented%20by%20github',
@@ -400,7 +400,7 @@ addTests('isRepoPRList', [
 
 export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	// `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
-	/^labels\/|^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path!);
+	/^labels\/|^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path);
 addTests('isRepoIssueList', [
 	'http://github.com/sindresorhus/ava/issues',
 	'https://github.com/sindresorhus/refined-github/issues',
@@ -511,7 +511,7 @@ addTests('isRepoWiki', [
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 ]);
 
-export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path!);
+export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
 addTests('isSingleCommit', [
 	'https://github.com/sindresorhus/refined-github/commit/5b614b9035f2035b839f48b4db7bd5c3298d526f',
 	'https://github.com/sindresorhus/refined-github/commit/5b614',
@@ -711,7 +711,7 @@ addTests('isActionJobRun', [
 	'https://github.com/refined-github/github-url-detection/runs/1224552520?check_suite_focus=true',
 ]);
 
-export const isActionRun = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(actions\/)?runs/.test(getRepo(url)?.path!);
+export const isActionRun = (url: URL | HTMLAnchorElement | Location = location): boolean => /^(actions\/)?runs/.test(getRepo(url)?.path);
 addTests('isActionRun', [
 	'https://github.com/sindresorhus/refined-github/runs/639481849',
 	'https://github.com/refined-github/github-url-detection/runs/1224552520?check_suite_focus=true',
@@ -723,7 +723,7 @@ addTests('isNewAction', [
 	'https://github.com/sindresorhus/refined-github/actions/new',
 ]);
 
-export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => /^actions(\/workflows\/.+\.ya?ml)?$/.test(getRepo(url)?.path!);
+export const isRepositoryActions = (url: URL | HTMLAnchorElement | Location = location): boolean => /^actions(\/workflows\/.+\.ya?ml)?$/.test(getRepo(url)?.path);
 addTests('isRepositoryActions', [
 	'https://github.com/refined-github/github-url-detection/actions',
 	'https://github.com/refined-github/github-url-detection/actions/workflows/demo.yml',
@@ -747,7 +747,7 @@ addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content')!;
+const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content');
 
 /** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
