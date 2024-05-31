@@ -1,7 +1,6 @@
-/// <reference types="bun-types" />
 /// <reference lib="dom" />
 import assert from 'node:assert/strict';
-import {test} from 'bun:test';
+import {test} from 'vitest';
 import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
