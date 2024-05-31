@@ -24,9 +24,7 @@
 		"distribution/index.d.ts"
 	],
 	"scripts": {
-		"build": "run-p build:*",
-		"build:vite": "vite build",
-		"build:typescript": "tsc --declaration --emitDeclarationOnly",
+		"build": "tsc",
 		"demo:build": "vite build demo",
 		"demo:test": "svelte-check",
 		"demo:watch": "vite preview demo & vite build demo --watch # vite serve isn't real",
@@ -52,11 +50,7 @@
 					"@typescript-eslint/naming-convention": "off"
 				}
 			}
-		],
-		"rules": {
-			"camelcase": "off",
-			"n/prefer-global/process": "off"
-		}
+		]
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^5.0.0",
