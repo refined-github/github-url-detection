@@ -1,4 +1,4 @@
-import reservedNames from 'github-reserved-names/reserved-names.json' assert {type: 'json'};
+import reservedNames from 'github-reserved-names/reserved-names.json' with {type: 'json'};
 import {addTests} from './collector.js';
 
 const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
