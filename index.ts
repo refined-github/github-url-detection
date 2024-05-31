@@ -19,6 +19,8 @@ export const is500 = (): boolean => document.title === 'Server Error · GitHub' 
 
 export const isPasswordConfirmation = (): boolean => document.title === 'Confirm password' || document.title === 'Confirm access';
 
+export const isLoggedIn = (): boolean => exists('body.logged-in');
+
 export const isBlame = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blame/'));
 addTests('isBlame', [
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
