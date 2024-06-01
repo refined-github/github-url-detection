@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions -- Module augmentation */
 
-/// <reference types="vite/client" />
-
-interface ImportMetaEnv {
-	readonly VITE_KEEP_URLS: string;
-}
-
 interface ImportMeta {
+	readonly vitest: unknown;
 	readonly env: ImportMetaEnv;
 }
 
