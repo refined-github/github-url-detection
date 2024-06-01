@@ -4,7 +4,6 @@ import {addTests} from './collector.js';
 const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
 const exists = (selector: string) => Boolean($(selector));
 
-console.log('Running tests for page-detect');
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
 addTests('__urls_that_dont_match__', [
