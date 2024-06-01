@@ -35,7 +35,7 @@
 		"watch": "run-p watch:*",
 		"watch:typescript": "tsc --watch --noEmit",
 		"watch:test:unit": "npm run test:unit -- --watch",
-		"watch:demo": "vite preview demo & npm run demo:build -- --watch # vite serve isn't real",
+		"watch:demo": "vite preview demo & npm run build:demo -- --watch # vite serve isn't real",
 		"xo": "xo"
 	},
 	"xo": {
