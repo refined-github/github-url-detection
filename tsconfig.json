@@ -1,15 +1,10 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": "distribution",
 		"resolveJsonModule": true,
-		"target": "ES2022",
 		"module": "NodeNext",
-		"lib": [
-			"DOM",
-			"DOM.Iterable",
-			"ES2022"
-		],
+		"moduleResolution": "NodeNext",
+		"outDir": "distribution"
 	},
 	"include": [
 		"index.ts",

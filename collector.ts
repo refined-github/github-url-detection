@@ -3,7 +3,7 @@
 export const testableUrls = new Map<string, string[]>();
 
 export function addTests(test: string, urls: string[]): void {
-	if (import.meta.env.VITE_KEEP_URLS === '1') {
+	if (import.meta.vitest) {
 		testableUrls.set(test, urls);
 	}
 }
