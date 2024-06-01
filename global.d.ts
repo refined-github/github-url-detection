@@ -2,7 +2,6 @@
 
 interface ImportMeta {
 	readonly vitest: unknown;
-	readonly env: ImportMetaEnv;
 }
 
 // Broaden types because testing against `"undefined"` is fine for our regexes
