@@ -3,8 +3,7 @@
 export const testableUrls = new Map<string, string[]>();
 
 export function addTests(test: string, urls: string[]): void {
-	// eslint-disable-next-line n/prefer-global/process -- Better not import `process` to avoid bundling its polyfills by mistake
-	if (process.env.NODE_ENV !== 'bundling') {
+	if (import.meta.env.VITE_KEEP_URLS === '1') {
 		testableUrls.set(test, urls);
 	}
 }
