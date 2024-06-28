@@ -19,10 +19,10 @@ jobs:
   NPM:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version-file: package.json
           registry-url: https://registry.npmjs.org
       - run: npm ci || npm install
       - uses: fregante/setup-git-user@v2
