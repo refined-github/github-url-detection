@@ -25,7 +25,7 @@
 	],
 	"scripts": {
 		"build": "run-p build:*",
-		"build:esbuild": "esbuild index.ts --bundle --platform=node --outdir=distribution --format=esm --external:github-reserved-names --drop-labels=TEST",
+		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
 		"build:demo": "vite build demo",
 		"prepack": "npm run build",

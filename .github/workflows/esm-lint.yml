@@ -58,7 +58,7 @@ jobs:
     needs: Pack
     steps:
       - uses: actions/download-artifact@v4
-      - run: npm install --omit=dev ./artifact rollup@4 @rollup/plugin-node-resolve
+      - run: npm install --omit=dev ./artifact rollup@4 @rollup/plugin-json @rollup/plugin-node-resolve
       - run: echo "$IMPORT_STATEMENT" > index.js
       - run: npx rollup -p node-resolve index.js
   Vite:
