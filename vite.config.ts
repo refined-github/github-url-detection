@@ -15,4 +15,7 @@ export default defineConfig({
 			external: ['github-reserved-names/reserved-names.json'],
 		},
 	},
+	define: {
+		'import.meta.vitest': 'undefined',
+	},
 });
