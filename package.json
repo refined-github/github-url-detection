@@ -49,7 +49,9 @@
 				],
 				"rules": {
 					"@typescript-eslint/triple-slash-reference": "off",
-					"@typescript-eslint/naming-convention": "off"
+					"@typescript-eslint/naming-convention": "off",
+					"no-unused-labels": "off",
+					"no-labels": "off"
 				}
 			}
 		]
@@ -60,6 +62,7 @@
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^5.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"esbuild": "^0.21.5",
 		"npm-run-all": "^4.1.5",
 		"strip-indent": "^4.0.0",
 		"svelte": "^4.2.17",
