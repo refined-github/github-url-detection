@@ -1,5 +1,5 @@
 env:
-  IMPORT_STATEMENT: import * as pageDetect from "github-url-detection"
+  IMPORT_STATEMENT: export * as pageDetect from "github-url-detection"
 
 # FILE GENERATED WITH: npx ghat fregante/ghatemplates/esm-lint
 # SOURCE: https://github.com/fregante/ghatemplates
@@ -84,6 +84,7 @@ jobs:
     needs: Pack
     steps:
       - uses: actions/download-artifact@v4
+      - run: echo '{"type":"module"}' > package.json
       - run: npm install --omit=dev ./artifact @sindresorhus/tsconfig
       - run: echo "$IMPORT_STATEMENT" > index.ts
       - run: >
