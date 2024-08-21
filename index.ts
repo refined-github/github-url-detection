@@ -773,12 +773,17 @@ const getOrg = (url: URL | HTMLAnchorElement | Location = location): {name: stri
 	return undefined;
 };
 
+export type NameWithOwner = `${string}/${string}`;
+
 export type RepositoryInfo = {
+	/** The repo owner/user */
 	owner: string;
+
+	/** The repo name */
 	name: string;
 
 	/** The 'user/repo' part from an URL */
-	nameWithOwner: string;
+	nameWithOwner: NameWithOwner;
 
 	/** A repo's subpage
 	@example '/user/repo/issues/' -> 'issues'
@@ -813,7 +818,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 	return {
 		owner,
 		name,
-		nameWithOwner: owner + '/' + name,
+		nameWithOwner: `${owner}/${name}`,
 		path: path.join('/'),
 	};
 };
