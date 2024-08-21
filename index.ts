@@ -347,11 +347,17 @@ TEST: addTests('isEditingWikiPage', [
 export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
 TEST: addTests('hasWikiPageEditor', combinedTestOnly);
 
-export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[^/]+/.test(getCleanPathname(url))
-	&& !reservedNames.includes(url.pathname.split('/', 2)[1]!)
-	&& !isDashboard(url)
-	&& !isGist(url)
-	&& !isNewRepoTemplate(url);
+export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	const [user, repo, extra] = getCleanPathname(url).split('/');
+	return Boolean(
+		user
+		&& repo
+		&& !reservedNames.includes(user)
+		&& !url.hostname.startsWith('gist.')
+		&& extra !== 'generate', // Like isNewRepoTemplate but inlined for performance
+	);
+};
+
 TEST: addTests('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
@@ -751,8 +757,8 @@ TEST: addTests('isNewRepoTemplate', [
 /** Get the logged-in user’s username */
 const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
-/** Drop all duplicate slashes */
-const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
+/** Drop all redundant slashes */
+const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/\/+/g, '/').replace(/\/$/, '').slice(1);
 
 const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
 	const pathname = getCleanPathname(url);
@@ -765,7 +771,7 @@ const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location
 };
 
 const getOrg = (url: URL | HTMLAnchorElement | Location = location): {name: string; path: string} | undefined => {
-	const [, orgs, name, ...path] = url.pathname.split('/');
+	const [orgs, name, ...path] = getCleanPathname(url).split('/');
 	if (orgs === 'orgs' && name) {
 		return {name, path: path.join('/')};
 	}
@@ -792,6 +798,11 @@ export type RepositoryInfo = {
 	path: string;
 };
 
+/**
+ * Parse a repository URL into its parts, or return `undefined`
+ * @param url Can be a full URL or a relative URL
+ * @returns
+ */
 const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryInfo | undefined => {
 	if (!url) {
 		// We use `canonical` here to use the correct capitalization
