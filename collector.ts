@@ -2,10 +2,6 @@
 
 export const testableUrls = new Map<string, string[]>();
 
-export function addTests(test: string, urls: string[]): void {
-	TEST: testableUrls.set(test, urls);
-}
-
 export function getTests(detectName: string): string[] {
 	if (detectName === 'combinedTestOnly') {
 		return ['combinedTestOnly'];
