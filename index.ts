@@ -196,7 +196,7 @@ TEST: addTests('isTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team',
 ]);
 
-export const isOwnUserProfile = (): boolean => getCleanPathname() === getUsername();
+export const isOwnUserProfile = (): boolean => getCleanPathname() === getLoggedInUser();
 
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
@@ -749,7 +749,7 @@ TEST: addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getUsername = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
+const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
 /** Drop all duplicate slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/+/g, '/').slice(1, url.pathname.endsWith('/') ? -1 : undefined);
@@ -825,7 +825,9 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 
 export const utils = {
 	getOrg,
-	getUsername,
+	/** @deprecated Use `getLoggedInUser` */
+	getUsername: getLoggedInUser,
+	getLoggedInUser,
 	getCleanPathname,
 	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
