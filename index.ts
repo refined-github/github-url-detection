@@ -740,7 +740,11 @@ TEST: addTests('isRepositoryActions', [
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
-export const canUserEditRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
+
+export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
+
+/** @deprecated Use `canUserAdminRepo` */
+export const canUserEditRepo = canUserAdminRepo;
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url));
 TEST: addTests('isNewRepo', [
