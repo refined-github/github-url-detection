@@ -289,20 +289,12 @@ TEST: addTests('isQuickPR', [
 export const isDraftPR = (): boolean => exists('#partial-discussion-header .octicon-git-pull-request-draft');
 export const isOpenPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request, .octicon-git-pull-request-draft)');
 export const isMergedPR = (): boolean => {
-	if (exists('#partial-discussion-header :is(.octicon-git-merge)')) {
-		return true;
-	}
-
-	const status = $('[class^="StateLabel"]')!.textContent;
+	const status = ($('.State') || $('[class^="StateLabel"]'))!.textContent!.trim();
 	return status === 'Merged';
 };
 
 export const isClosedPR = (): boolean => {
-	if (exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)')) {
-		return true;
-	}
-
-	const status = $('[class^="StateLabel"]')!.textContent;
+	const status = ($('.State') || $('[class^="StateLabel"]'))!.textContent!.trim();
 	return status === 'Closed' || status === 'Merged';
 };
 
