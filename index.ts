@@ -286,15 +286,19 @@ TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-export const isDraftPR = (): boolean => exists('#partial-discussion-header .octicon-git-pull-request-draft');
-export const isOpenPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request, .octicon-git-pull-request-draft)');
+export const isDraftPR = (): boolean => ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim() === 'Draft';
+export const isOpenPR = (): boolean => {
+	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
+	return status === 'Open' || status === 'Draft';
+};
+
 export const isMergedPR = (): boolean => {
-	const status = ($('.State') || $('[class^="StateLabel"]'))!.textContent!.trim();
+	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
 	return status === 'Merged';
 };
 
 export const isClosedPR = (): boolean => {
-	const status = ($('.State') || $('[class^="StateLabel"]'))!.textContent!.trim();
+	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
 	return status === 'Closed' || status === 'Merged';
 };
 
