@@ -286,19 +286,24 @@ TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-export const isDraftPR = (): boolean => ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim() === 'Draft';
+const prStateSelector = [
+	'.State',
+	'[class^="StateLabel"]',
+].join(',');
+
+export const isDraftPR = (): boolean => $(prStateSelector)!.textContent!.trim() === 'Draft';
 export const isOpenPR = (): boolean => {
-	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
+	const status = $(prStateSelector)!.textContent!.trim();
 	return status === 'Open' || status === 'Draft';
 };
 
 export const isMergedPR = (): boolean => {
-	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
+	const status = $(prStateSelector)!.textContent!.trim();
 	return status === 'Merged';
 };
 
 export const isClosedPR = (): boolean => {
-	const status = ($('.State') ?? $('[class^="StateLabel"]'))!.textContent!.trim();
+	const status = $(prStateSelector)!.textContent!.trim();
 	return status === 'Closed' || status === 'Merged';
 };
 
