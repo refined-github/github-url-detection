@@ -286,10 +286,27 @@ TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-export const isDraftPR = (): boolean => exists('#partial-discussion-header .octicon-git-pull-request-draft');
-export const isOpenPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request, .octicon-git-pull-request-draft)');
-export const isMergedPR = (): boolean => exists('#partial-discussion-header .octicon-git-merge');
-export const isClosedPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)');
+const prStateSelector = [
+	'.State',
+	'[class^="StateLabel"]',
+].join(',');
+
+export const isDraftPR = (): boolean => $(prStateSelector)!.textContent!.trim() === 'Draft';
+export const isOpenPR = (): boolean => {
+	const status = $(prStateSelector)!.textContent!.trim();
+	return status === 'Open' || status === 'Draft';
+};
+
+export const isMergedPR = (): boolean => {
+	const status = $(prStateSelector)!.textContent!.trim();
+	return status === 'Merged';
+};
+
+export const isClosedPR = (): boolean => {
+	const status = $(prStateSelector)!.textContent!.trim();
+	return status === 'Closed' || status === 'Merged';
+};
+
 export const isClosedIssue = (): boolean => exists('#partial-discussion-header :is(.octicon-issue-closed, .octicon-skip)');
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
@@ -739,7 +756,6 @@ TEST: addTests('isRepositoryActions', [
 ]);
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
-
 
 export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
