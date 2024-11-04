@@ -288,8 +288,19 @@ TEST: addTests('isQuickPR', [
 
 export const isDraftPR = (): boolean => exists('#partial-discussion-header .octicon-git-pull-request-draft');
 export const isOpenPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request, .octicon-git-pull-request-draft)');
-export const isMergedPR = (): boolean => exists('#partial-discussion-header .octicon-git-merge');
-export const isClosedPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)');
+export const isMergedPR = (): boolean => {
+	if (exists('#partial-discussion-header :is(.octicon-git-merge)'))
+		return true;
+ const status = $('[class^="StateLabel"]')!.textContent
+ return status === 'Merged'
+}
+export const isClosedPR = (): boolean => {
+	if (exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)'))
+		return true;
+	const status = $('[class^="StateLabel"]')!.textContent
+	return status === 'Closed' || status === 'Merged'
+}
+
 export const isClosedIssue = (): boolean => exists('#partial-discussion-header :is(.octicon-issue-closed, .octicon-skip)');
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
