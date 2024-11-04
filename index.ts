@@ -289,17 +289,22 @@ TEST: addTests('isQuickPR', [
 export const isDraftPR = (): boolean => exists('#partial-discussion-header .octicon-git-pull-request-draft');
 export const isOpenPR = (): boolean => exists('#partial-discussion-header :is(.octicon-git-pull-request, .octicon-git-pull-request-draft)');
 export const isMergedPR = (): boolean => {
-	if (exists('#partial-discussion-header :is(.octicon-git-merge)'))
+	if (exists('#partial-discussion-header :is(.octicon-git-merge)')) {
 		return true;
- const status = $('[class^="StateLabel"]')!.textContent
- return status === 'Merged'
-}
+	}
+
+	const status = $('[class^="StateLabel"]')!.textContent;
+	return status === 'Merged';
+};
+
 export const isClosedPR = (): boolean => {
-	if (exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)'))
+	if (exists('#partial-discussion-header :is(.octicon-git-pull-request-closed, .octicon-git-merge)')) {
 		return true;
-	const status = $('[class^="StateLabel"]')!.textContent
-	return status === 'Closed' || status === 'Merged'
-}
+	}
+
+	const status = $('[class^="StateLabel"]')!.textContent;
+	return status === 'Closed' || status === 'Merged';
+};
 
 export const isClosedIssue = (): boolean => exists('#partial-discussion-header :is(.octicon-issue-closed, .octicon-skip)');
 
@@ -750,7 +755,6 @@ TEST: addTests('isRepositoryActions', [
 ]);
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
-
 
 export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
