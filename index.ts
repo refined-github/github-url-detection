@@ -325,7 +325,7 @@ export const isClosedIssue = (): boolean => {
 	}
 
 	const status = $(stateSelector)!.textContent!.trim();
-	return status === 'Closed';
+	return status === 'Closed' || status === 'Closed as not planned';
 };
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
