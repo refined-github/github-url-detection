@@ -291,7 +291,7 @@ const stateSelector = [
 	'[class^="StateLabel"]',
 ].join(',');
 
-export const isDraftPR = (): boolean => isPR() && $(stateSelector)!.textContent!.trim() === 'Draft';
+export const isDraftPR = (): boolean => $(stateSelector)?.textContent!.trim() === 'Draft';
 export const isOpenPR = (): boolean => {
 	if (!isPR()) {
 		return false;
@@ -302,11 +302,7 @@ export const isOpenPR = (): boolean => {
 };
 
 export const isMergedPR = (): boolean => {
-	if (!isPR()) {
-		return false;
-	}
-
-	const status = $(stateSelector)!.textContent!.trim();
+	const status = $(stateSelector)?.textContent!.trim();
 	return status === 'Merged';
 };
 
