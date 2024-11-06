@@ -288,7 +288,7 @@ TEST: addTests('isQuickPR', [
 
 const stateSelector = [
 	'.State',
-	'[class^="StateLabel"]',
+	'[data-testid="header-state"]',
 ].join(',');
 
 export const isDraftPR = (): boolean => $(stateSelector)?.textContent!.trim() === 'Draft';
