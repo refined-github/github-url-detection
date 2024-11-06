@@ -293,7 +293,7 @@ const stateSelector = [
 
 export const isDraftPR = (): boolean => isPR() && $(stateSelector)!.textContent!.trim() === 'Draft';
 export const isOpenPR = (): boolean => {
-	if (isPR()) {
+	if (!isPR()) {
 		return false;
 	}
 
@@ -302,7 +302,7 @@ export const isOpenPR = (): boolean => {
 };
 
 export const isMergedPR = (): boolean => {
-	if (isPR()) {
+	if (!isPR()) {
 		return false;
 	}
 
@@ -311,7 +311,7 @@ export const isMergedPR = (): boolean => {
 };
 
 export const isClosedPR = (): boolean => {
-	if (isPR()) {
+	if (!isPR()) {
 		return false;
 	}
 
@@ -320,7 +320,7 @@ export const isClosedPR = (): boolean => {
 };
 
 export const isClosedIssue = (): boolean => {
-	if (isIssue()) {
+	if (!isIssue()) {
 		return false;
 	}
 
