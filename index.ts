@@ -291,13 +291,13 @@ const stateSelector = [
 	'[class^="StateLabel"]',
 ].join(',');
 
-export const isDraftPR = (): boolean => isPR() && $(stateSelector)?.textContent!.trim() === 'Draft';
+export const isDraftPR = (): boolean => isPR() && $(stateSelector)!.textContent!.trim() === 'Draft';
 export const isOpenPR = (): boolean => {
 	if (isPR()) {
 		return false;
 	}
 
-	const status = $(stateSelector)?.textContent!.trim();
+	const status = $(stateSelector)!.textContent!.trim();
 	return status === 'Open' || status === 'Draft';
 };
 
@@ -306,7 +306,7 @@ export const isMergedPR = (): boolean => {
 		return false;
 	}
 
-	const status = $(stateSelector)?.textContent!.trim();
+	const status = $(stateSelector)!.textContent!.trim();
 	return status === 'Merged';
 };
 
@@ -315,7 +315,7 @@ export const isClosedPR = (): boolean => {
 		return false;
 	}
 
-	const status = $(stateSelector)?.textContent!.trim();
+	const status = $(stateSelector)!.textContent!.trim();
 	return status === 'Closed' || status === 'Merged';
 };
 
@@ -324,7 +324,7 @@ export const isClosedIssue = (): boolean => {
 		return false;
 	}
 
-	const status = $(stateSelector)?.textContent!.trim();
+	const status = $(stateSelector)!.textContent!.trim();
 	return status === 'Closed';
 };
 
