@@ -301,10 +301,7 @@ export const isOpenPR = (): boolean => {
 	return status === 'Open' || status === 'Draft';
 };
 
-export const isMergedPR = (): boolean => {
-	const status = $(stateSelector)?.textContent!.trim();
-	return status === 'Merged';
-};
+export const isMergedPR = (): boolean => $(stateSelector)?.textContent!.trim() === 'Merged';
 
 export const isClosedPR = (): boolean => {
 	if (!isPR()) {
