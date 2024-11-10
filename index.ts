@@ -300,7 +300,7 @@ export const isOpenConversation = (): boolean => {
 
 export const isClosedConversation = (): boolean => {
 	const status = getStateLabel();
-	return status === 'Closed' || status === 'Closed as not planned';
+	return status === 'Closed' || status === 'Closed as not planned' || status === 'Merged';
 };
 
 export const isReleases = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'releases';
