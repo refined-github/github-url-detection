@@ -286,38 +286,20 @@ TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-const stateSelector = [
-	'.State',
-	'[data-testid="header-state"]',
-].join(',');
+const getStateLabel = (): string | undefined => $([
+	'.State', // Old view
+	'[class^="StateLabel"]', // React version
+].join(','))?.textContent?.trim();
 
-export const isDraftPR = (): boolean => $(stateSelector)?.textContent!.trim() === 'Draft';
-export const isOpenPR = (): boolean => {
-	if (!isPR()) {
-		return false;
-	}
-
-	const status = $(stateSelector)!.textContent!.trim();
+export const isMergedPR = (): boolean => getStateLabel() === 'Merged';
+export const isDraftPR = (): boolean => getStateLabel() === 'Draft';
+export const isOpenConversation = (): boolean => {
+	const status = getStateLabel();
 	return status === 'Open' || status === 'Draft';
 };
 
-export const isMergedPR = (): boolean => $(stateSelector)?.textContent!.trim() === 'Merged';
-
-export const isClosedPR = (): boolean => {
-	if (!isPR()) {
-		return false;
-	}
-
-	const status = $(stateSelector)!.textContent!.trim();
-	return status === 'Closed' || status === 'Merged';
-};
-
-export const isClosedIssue = (): boolean => {
-	if (!isIssue()) {
-		return false;
-	}
-
-	const status = $(stateSelector)!.textContent!.trim();
+export const isClosedConversation = (): boolean => {
+	const status = getStateLabel();
 	return status === 'Closed' || status === 'Closed as not planned';
 };
 

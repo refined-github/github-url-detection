@@ -28,6 +28,7 @@
 		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
 		"build:demo": "vite build demo",
+		"fix": "xo --fix",
 		"prepack": "npm run build",
 		"test": "run-p build test:* xo",
 		"test:unit": "vitest",
