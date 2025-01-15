@@ -100,6 +100,7 @@ export const isGist = (url: URL | HTMLAnchorElement | Location = location): bool
 TEST: addTests('isGist', [
 	'https://gist.github.com',
 	'http://gist.github.com',
+	'https://gist.github.com/new',
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3',
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3/d1ebf7d9cfaba4d4596d2ea9174e202479a5f9ad',
 	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
