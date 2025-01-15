@@ -756,7 +756,7 @@ export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item
 /** @deprecated Use `canUserAdminRepo` */
 export const canUserEditRepo = canUserAdminRepo;
 
-export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url));
+export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
 	'https://github.com/new',
 	'https://github.com/organizations/npmhub/repositories/new',
