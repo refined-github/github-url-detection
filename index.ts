@@ -757,6 +757,16 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isCompareWikiPage(url)
 	|| isBlame(url);
 
+TEST: addTests('isRepoGitObject', [
+	'isRepoTree',
+	'isSingleFile',
+	'isBlame',
+]);
+/** Covers blob, trees and blame pages */
+export const isRepoGitObject = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isRepo(url)
+  && [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
+
 TEST: addTests('hasFiles', combinedTestOnly);
 /** Has a list of files */
 export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean =>

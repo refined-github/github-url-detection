@@ -24,7 +24,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	test(detectName + ' has tests', () => {
 		assert.ok(
 			Array.isArray(validURLs),
-			`The function \`${detectName}\` doesn’t have any tests. Set them via \`collect.set()\``,
+			`The function \`${detectName}\` doesn’t have any tests. Set them via \`addTests()\``,
 		);
 	});
 
@@ -41,7 +41,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						${url.replace('https://github.com', '')}
 
 					• Yes? The \`${detectName}\` detection is wrong and should be fixed.
-					• No? Remove it from its \`collect.set()\` array.
+					• No? Remove it from its \`addTests()\` array.
 				`),
 			);
 		});
@@ -62,7 +62,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						Is this URL \`${detectName}\`?
 							${url.replace('https://github.com', '')}
 
-						• Yes? Add it to the \`collect.set()\` array.
+						• Yes? Add it to the \`addTests()\` array.
 						• No? The \`${detectName}\` detection is wrong and should be fixed.
 					`),
 				);
