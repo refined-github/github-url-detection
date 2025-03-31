@@ -449,25 +449,71 @@ TEST: addTests('isRepoHome', [
 	'https://github.com/sindresorhus/refined-github?files=1',
 ]);
 
+export type RepoExplorerInfo = {
+	nameWithOwner: string;
+	branch: string;
+	filePath: string;
+};
+
+// https://github.com/eslint/js/tree/2.x ->'eslint/js at 2.x'
+// https://github.com/eslint/js/tree/2.x ->'js/ at 2.x · eslint/js'
+// https://github.com/eslint/js/tree/2.x/tools -> 'js/tools at 2.x · eslint/js'
+const titleParseRegex = /^(?:(?<nameWithOwner>[^ ]+) at (?<branch>[^ ]+)|[^/ ]+(?:\/(?<filePath>[^ ]*))? at (?<branch2>[^ ]+)(?: · (?<nameWithOwner2>[^ ]+))?)$/;
+// TODO: Reuse regex group names on the next MAJOR version https://github.com/tc39/proposal-duplicate-named-capturing-groups/issues/4
+
+const parseRepoExplorerTitle = (pathname: string, title: string): RepoExplorerInfo | undefined => {
+	const match = titleParseRegex.exec(title);
+	if (!match?.groups) {
+		return;
+	}
+
+	let {nameWithOwner, branch, filePath, nameWithOwner2, branch2} = match.groups;
+
+	nameWithOwner ??= nameWithOwner2;
+	branch ??= branch2;
+	filePath ??= '';
+
+	if (!nameWithOwner || !branch || !pathname.startsWith(`/${nameWithOwner}/tree/`)) {
+		return;
+	}
+
+	return {nameWithOwner, branch, filePath};
+};
+
 const _isRepoRoot = (url?: URL | HTMLAnchorElement | Location): boolean => {
 	const repository = getRepo(url ?? location);
 
 	if (!repository) {
+		// Not a repo
 		return false;
 	}
 
-	if (!repository.path) {
-		// Absolute repo root: `isRepoHome`
-		return true;
-	}
+	const path = repository.path ? repository.path.split('/') : [];
 
-	if (url) {
-		// Root of a branch/commit/tag
-		return /^tree\/[^/]+$/.test(repository.path);
-	}
+	switch (path.length) {
+		case 0: {
+			// Absolute repo root: `isRepoHome`
+			return true;
+		}
 
-	// If we're checking the current page, add support for branches with slashes // #15 #24
-	return repository.path.startsWith('tree/') && document.title.startsWith(repository.nameWithOwner) && !document.title.endsWith(repository.nameWithOwner);
+		case 2: {
+			// 100% certainty that it's a root if it's `tree`
+			return path[0] === 'tree';
+		}
+
+		default: {
+			if (url) {
+				// From the URL we can safely only know it's a root if it's `user/repo/tree/something`
+				// With `user/repo/tree/something/else` we can't be sure whether `else` is a folder or still the branch name ("something/else")
+				return false;
+			}
+
+			// If we're checking the current page, add support for branches with slashes
+			const titleInfo = parseRepoExplorerTitle(location.pathname, document.title);
+
+			return titleInfo?.filePath === '';
+		}
+	}
 };
 
 // `_isRepoRoot` logic depends on whether a URL was passed, so don't use a `url` default parameter
@@ -857,4 +903,5 @@ export const utils = {
 	getCleanPathname,
 	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
+	parseRepoExplorerTitle,
 };
