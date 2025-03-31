@@ -162,3 +162,48 @@ test('getRepositoryInfo', () => {
 		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/')).toMatchSnapshot();
 	}
 });
+
+test('parseRepoExplorerTitle', () => {
+	const parse = pageDetect.utils.parseRepoExplorerTitle;
+
+	assert.deepEqual(
+		parse('/eslint/js/tree/2.x', 'eslint/js at 2.x'),
+		{
+			nameWithOwner: 'eslint/js',
+			branch: '2.x',
+			filePath: '',
+		},
+	);
+	assert.deepEqual(
+		parse('/eslint/js/tree/2.x', 'js/ at 2.x · eslint/js'),
+		{
+			nameWithOwner: 'eslint/js',
+			branch: '2.x',
+			filePath: '',
+		},
+	);
+	assert.deepEqual(
+		parse('/eslint/js/tree/2.x/tools', 'js/tools at 2.x · eslint/js'),
+		{
+			nameWithOwner: 'eslint/js',
+			branch: '2.x',
+			filePath: 'tools',
+		},
+	);
+	assert.deepEqual(
+		parse('/eslint/js/tree/2.x/docs/ast', 'js/docs/ast at 2.x · eslint/js'),
+		{
+			nameWithOwner: 'eslint/js',
+			branch: '2.x',
+			filePath: 'docs/ast',
+		},
+	);
+	assert.deepEqual(
+		parse('https://github.com/eslint/js', 'only /tree/ URLs are supported'),
+		undefined,
+	);
+	assert.deepEqual(
+		parse('https://github.com/eslint/js/issues', 'irrelephant'),
+		undefined,
+	);
+});
