@@ -202,9 +202,10 @@ export const isOwnUserProfile = (): boolean => getCleanPathname() === getLoggedI
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
 
-export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path);
+export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path ?? getOrg(url)?.path);
 TEST: addTests('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
+	'https://github.com/orgs/RSSNext/projects/3',
 ]);
 
 export const isProjects = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'projects';
