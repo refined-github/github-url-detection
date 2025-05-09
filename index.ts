@@ -868,6 +868,12 @@ export type RepositoryInfo = {
 	@example '/user/repo/' -> ''
 	@example '/settings/token/' -> undefined */
 	path: string;
+
+	/** The `path` segments
+	@example '/user/repo/' -> []
+	@example '/user/repo/issues/' -> ['issues']
+	@example '/user/repo/issues/new' -> ['issues', 'new'] */
+	pathParts: string[];
 };
 
 /**
@@ -897,12 +903,13 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 		return;
 	}
 
-	const [owner, name, ...path] = getCleanPathname(url).split('/') as [string, string, string];
+	const [owner, name, ...pathParts] = getCleanPathname(url).split('/') as [string, string, string];
 	return {
 		owner,
 		name,
+		pathParts,
 		nameWithOwner: `${owner}/${name}`,
-		path: path.join('/'),
+		path: pathParts.join('/'),
 	};
 };
 
