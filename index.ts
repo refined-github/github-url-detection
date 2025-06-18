@@ -614,6 +614,11 @@ TEST: addTests('isRepoNetworkGraph', [
 
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
+export const isFork = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'fork';
+TEST: addTests('isFork', [
+	'https://github.com/refined-github/refined-github/fork',
+]);
+
 export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}(\/[\da-f]{40})?$/.test(getCleanGistPathname(url));
 TEST: addTests('isSingleGist', [
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3',
