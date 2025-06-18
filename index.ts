@@ -567,8 +567,8 @@ TEST: addTests('isRepoNetworkGraph', [
 
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
-export const isForkingRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'fork';
-TEST: addTests('isForkingRepo', [
+export const isFork = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'fork';
+TEST: addTests('isFork', [
 	'https://github.com/refined-github/refined-github/fork',
 ]);
 
