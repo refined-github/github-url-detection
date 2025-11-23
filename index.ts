@@ -812,16 +812,18 @@ TEST: addTests('isRepositoryActions', [
 	'https://github.com/refined-github/github-url-detection/actions/workflows/esm-lint.yml',
 ]);
 
-export const isStars = (url: URL | HTMLAnchorElement | Location = location): boolean => {
-    const patharr = getCleanPathname(url).split('/'), [stars, user, lists, ...extra] = patharr;
+const isStars = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+    const patharr = getCleanPathname(url).split('/'), [stars, user, subpath, ...extra] = patharr;
     return stars === 'stars' 
         && ([1, 2, 4].includes(patharr.length)
-            || lists === 'lists' && extra.length !== 0);
-};
+            || subpath === 'lists' && patharr.length !== 3 
+            || ['repositories', 'topics'].includes(subpath) && patharr.length == 3);
+}
 TEST: addTests('isStars', [
 	'https://github.com/stars',
 	'https://github.com/stars/lstn',
 	'https://github.com/stars/lstn/repositories',
+	'https://github.com/stars/lstn/topics',
 	'https://github.com/stars/lstn/lists/test'
 ]);
 
