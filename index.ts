@@ -813,34 +813,35 @@ TEST: addTests('isRepositoryActions', [
 ]);
 
 const isStars = (url: URL | HTMLAnchorElement | Location = location): boolean => {
-    const patharr = getCleanPathname(url).split('/'), [stars, user, subpath, ...extra] = patharr;
-    return stars === 'stars' 
-        && ([1, 2, 4].includes(patharr.length)
-            || subpath === 'lists' && patharr.length !== 3 
-            || ['repositories', 'topics'].includes(subpath) && patharr.length == 3);
-}
+	const patharr = getCleanPathname(url).split('/');
+	const [stars, user, subpath, ...extra] = patharr;
+	return stars === 'stars'
+		&& ([1, 2, 4].includes(patharr.length)
+			|| (subpath === 'lists' && patharr.length !== 3)
+			|| (['repositories', 'topics'].includes(subpath) && patharr.length === 3));
+};
+
 TEST: addTests('isStars', [
 	'https://github.com/stars',
 	'https://github.com/stars/lstn',
 	'https://github.com/stars/lstn/repositories',
 	'https://github.com/stars/lstn/topics',
-	'https://github.com/stars/lstn/lists/test'
+	'https://github.com/stars/lstn/lists/test',
 ]);
 
 export const isOwnStars = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-    isStars(url) 
-    && [['stars'],['stars', getLoggedInUser()]].some(
-        (needle => arr => arr.length === needle.length 
-        && arr.every((v, i) => v === needle[i]))(getCleanPathname(url).split('/').slice(0,2))
-    );
+	isStars(url)
+	&& [['stars'], ['stars', getLoggedInUser()]].some(
+		(needle => pathArray => pathArray.length === needle.length
+		&& pathArray.every((v, i) => v === needle[i]))(getCleanPathname(url).split('/').slice(0, 2)),
+	);
 
 export const isStarsList = (url: URL | HTMLAnchorElement | Location = location): boolean => isStars(url) && getCleanPathname(url).split('/')[2] === 'lists';
 TEST: addTests('isStarsList', [
-	'https://github.com/stars/lstn/lists/test'
+	'https://github.com/stars/lstn/lists/test',
 ]);
 
 export const isOwnStarsList = (url: URL | HTMLAnchorElement | Location = location): boolean => isOwnStars(url) && getCleanPathname(url).split('/')[2] === 'lists';
-
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
