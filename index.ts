@@ -814,11 +814,11 @@ TEST: addTests('isRepositoryActions', [
 
 const isStars = (url: URL | HTMLAnchorElement | Location = location): boolean => {
 	const patharr = getCleanPathname(url).split('/');
-	const [stars, , subpath, ] = patharr; // only get the elements we're only to check from destructuring to avoid compile error
+	const [stars, , subpath] = patharr; // Only get the elements we're only to check from destructuring to avoid compile error
 	return Boolean(stars === 'stars'
 		&& ([1, 2, 4].includes(patharr.length)
 			|| (subpath === 'lists' && patharr.length !== 3)
-			|| (subpath && ['repositories', 'topics'].includes(subpath) && patharr.length === 3))
+			|| (subpath && ['repositories', 'topics'].includes(subpath) && patharr.length === 3)),
 	);
 };
 
