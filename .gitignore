@@ -12,3 +12,4 @@ distribution
 dist
 .cache
 .parcel-cache
+.vscode/
