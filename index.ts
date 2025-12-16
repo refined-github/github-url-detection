@@ -254,10 +254,13 @@ TEST: addTests('isPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
+export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
 TEST: addTests('isPRCommit', [
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
+	'https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d7998afdd3608d9fc3bf95ccf27fa5010641',
+	'https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d79',
+	// Since December 2025
+	'https://github.com/sindresorhus/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641',
+	'https://github.com/sindresorhus/refined-github/pull/148/changes/1e27d79',
 ]);
 
 export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
