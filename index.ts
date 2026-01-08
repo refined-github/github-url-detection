@@ -276,7 +276,7 @@ TEST: addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|changes)/.test(getRepo(url)?.path) || isPRCommit(url);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|(changes$|changes\/[\da-f]{7,40}..[\da-f]{7,40}$))/.test(getRepo(url)?.path) || isPRCommit(url);
 TEST: addTests('isPRFiles', [
 	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
@@ -284,8 +284,8 @@ TEST: addTests('isPRFiles', [
 	'https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
 	// Since December 2025
 	'https://github.com/refined-github/refined-github/pull/148/changes',
-	'https://github.com/refined-github/refined-github/pull/148/changes/e1aba6f', // This means "every commit until e1aba6f"
 	'https://github.com/refined-github/refined-github/pull/148/changes/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
+	'https://github.com/refined-github/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641..e1aba6febb3fe38aafd1137cff28b536eeeabe7e',
 ]);
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
