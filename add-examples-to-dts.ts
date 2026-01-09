@@ -23,9 +23,11 @@ for (const line of lines) {
 		// Get the tests/examples for this function
 		const examples = getTests(functionName);
 
-		// Only add examples if they exist and aren't just references to other functions
+		// Only add examples if they exist and aren't the special 'combinedTestOnly' marker
+		// 'combinedTestOnly' is used to skip tests for combined functions (e.g., isPageA() || isPageB())
 		if (examples && examples.length > 0 && examples[0] !== 'combinedTestOnly') {
 			// Filter to only include actual URLs (not references to other functions)
+			// getTests() recursively expands function references, so we just need to filter the final list
 			const urlExamples = examples.filter((url: string) => url.startsWith('http'));
 
 			if (urlExamples.length > 0) {

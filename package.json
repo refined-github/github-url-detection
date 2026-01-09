@@ -24,7 +24,7 @@
 		"distribution/index.d.ts"
 	],
 	"scripts": {
-		"build": "run-p build:esbuild build:typescript build:demo && npx tsx add-examples-to-dts.ts",
+		"build": "run-p build:esbuild build:typescript build:demo && tsx add-examples-to-dts.ts",
 		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
 		"build:typescript": "tsc --declaration --emitDeclarationOnly",
 		"build:demo": "vite build demo",
@@ -69,6 +69,7 @@
 		"strip-indent": "^4.0.0",
 		"svelte": "^4.2.18",
 		"svelte-check": "^3.8.5",
+		"tsx": "^4.21.0",
 		"typescript": "^5.5.4",
 		"vite": "^5.4.2",
 		"vitest": "^2.0.5",
