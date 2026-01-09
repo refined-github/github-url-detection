@@ -276,7 +276,7 @@ TEST: addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|(changes$|changes\/[\da-f]{7,40}..[\da-f]{7,40}$))/.test(getRepo(url)?.path) || isPRCommit(url);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|(changes(\/[\da-f]{7,40}..[\da-f]{7,40})?$))/.test(getRepo(url)?.path) || isPRCommit(url);
 TEST: addTests('isPRFiles', [
 	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
