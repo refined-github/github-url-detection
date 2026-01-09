@@ -202,9 +202,10 @@ export const isOwnUserProfile = (): boolean => getCleanPathname() === getLoggedI
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
 
-export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path);
+export const isProject = (url: URL | HTMLAnchorElement | Location = location): boolean => /^projects\/\d+/.test(getRepo(url)?.path ?? getOrg(url)?.path);
 TEST: addTests('isProject', [
 	'https://github.com/sindresorhus/refined-github/projects/3',
+	'https://github.com/orgs/RSSNext/projects/3',
 ]);
 
 export const isProjects = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'projects';
@@ -253,10 +254,13 @@ TEST: addTests('isPRList', [
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
 ]);
 
-export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
+export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
 TEST: addTests('isPRCommit', [
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/0019603b83bd97c2f7ef240969f49e6126c5ec85',
-	'https://github.com/sindresorhus/refined-github/pull/148/commits/00196',
+	'https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d7998afdd3608d9fc3bf95ccf27fa5010641',
+	'https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d79',
+	// Since December 2025
+	'https://github.com/sindresorhus/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641',
+	'https://github.com/sindresorhus/refined-github/pull/148/changes/1e27d79',
 ]);
 
 export const isPRCommit404 = (): boolean => isPRCommit() && document.title.startsWith('Commit range not found · Pull Request');
@@ -272,12 +276,16 @@ TEST: addTests('isPRCommitList', [
 	'https://github.com/sindresorhus/refined-github/pull/148/commits',
 ]);
 
-export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/files/.test(getRepo(url)?.path) || isPRCommit(url);
+export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|(changes(\/[\da-f]{7,40}..[\da-f]{7,40})?$))/.test(getRepo(url)?.path) || isPRCommit(url);
 TEST: addTests('isPRFiles', [
 	'isPRCommit', // File contents but lacks "Viewed" checkbox, has commit information
 	'https://github.com/sindresorhus/refined-github/pull/148/files',
 	'https://github.com/sindresorhus/refined-github/pull/148/files/e1aba6f', // This means "every commit until e1aba6f"
 	'https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
+	// Since December 2025
+	'https://github.com/refined-github/refined-github/pull/148/changes',
+	'https://github.com/refined-github/refined-github/pull/148/changes/1e27d799..e1aba6f', // This means specifically "Between commit A and B"
+	'https://github.com/refined-github/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641..e1aba6febb3fe38aafd1137cff28b536eeeabe7e',
 ]);
 
 export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
@@ -613,6 +621,11 @@ TEST: addTests('isRepoNetworkGraph', [
 
 export const isForkedRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_is_fork"][content="true"]');
 
+export const isForkingRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'fork';
+TEST: addTests('isForkingRepo', [
+	'https://github.com/refined-github/refined-github/fork',
+]);
+
 export const isSingleGist = (url: URL | HTMLAnchorElement | Location = location): boolean => /^[^/]+\/[\da-f]{20,32}(\/[\da-f]{40})?$/.test(getCleanGistPathname(url));
 TEST: addTests('isSingleGist', [
 	'https://gist.github.com/fregante/2205329b71218fa2c1d3',
@@ -756,6 +769,16 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isCompare(url)
 	|| isCompareWikiPage(url)
 	|| isBlame(url);
+
+TEST: addTests('isRepoGitObject', [
+	'isRepoTree',
+	'isSingleFile',
+	'isBlame',
+]);
+/** Covers blob, trees and blame pages */
+export const isRepoGitObject = (url: URL | HTMLAnchorElement | Location = location): boolean =>
+	isRepo(url)
+  && [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
 
 TEST: addTests('hasFiles', combinedTestOnly);
 /** Has a list of files */
