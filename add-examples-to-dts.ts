@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+#!/usr/bin/env node --experimental-strip-types
 import {readFileSync, writeFileSync} from 'node:fs';
 // Import index.ts to populate the test data via side effect
 // eslint-disable-next-line import/no-unassigned-import, n/file-extension-in-import
