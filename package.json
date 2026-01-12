@@ -1,6 +1,6 @@
 {
 	"name": "github-url-detection",
-	"version": "10.2.2",
+	"version": "10.2.3",
 	"description": "Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.",
 	"keywords": [
 		"github",
@@ -72,10 +72,10 @@
 		"svelte-check": "^3.8.5",
 		"typescript": "^5.5.4",
 		"vite": "^5.4.2",
-		"vitest": "^2.0.5",
+		"vitest": "^4.0.16",
 		"xo": "^0.59.3"
 	},
 	"engines": {
-		"node": ">=20.10"
+		"node": ">=22.18"
 	}
 }
