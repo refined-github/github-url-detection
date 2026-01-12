@@ -30,13 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: npx publint ./artifact
   Webpack:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: npm install --omit=dev ./artifact
       - run: echo "$IMPORT_STATEMENT" > index.js
       - run: webpack --entry ./index.js
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: npm install --omit=dev ./artifact
       - run: echo "$IMPORT_STATEMENT" > index.js
       - run: >
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: npm install --omit=dev ./artifact rollup@4 @rollup/plugin-json @rollup/plugin-node-resolve
       - run: echo "$IMPORT_STATEMENT" > index.js
       - run: npx rollup -p node-resolve -p @rollup/plugin-json index.js
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: npm install --omit=dev ./artifact
       - run: echo '<script type="module">$IMPORT_STATEMENT</script>' > index.html
       - run: npx vite build
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: echo '{}' > package.json
       - run: echo "$IMPORT_STATEMENT" > index.js
       - run: npm install --omit=dev ./artifact
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - run: echo '{"type":"module"}' > package.json
       - run: npm install --omit=dev ./artifact @sindresorhus/tsconfig
       - run: echo "$IMPORT_STATEMENT" > index.ts
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Pack
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v4
       - uses: actions/setup-node@v6
         with:
           node-version-file: artifact/package.json
