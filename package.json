@@ -40,39 +40,22 @@
 		"watch:demo": "vite preview demo & npm run build:demo -- --watch # vite serve isn't real",
 		"xo": "xo"
 	},
-	"xo": {
-		"envs": [
-			"browser"
-		],
-		"overrides": [
-			{
-				"files": [
-					"*.ts"
-				],
-				"rules": {
-					"@typescript-eslint/triple-slash-reference": "off",
-					"@typescript-eslint/naming-convention": "off",
-					"no-unused-labels": "off",
-					"no-labels": "off"
-				}
-			}
-		]
-	},
 	"dependencies": {
 		"github-reserved-names": "^2.1.1"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^8.1.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
-		"esbuild": "^0.24.2",
+		"esbuild": "^0.27.2",
+		"globals": "^17.0.0",
 		"npm-run-all": "^4.1.5",
 		"strip-indent": "^4.1.1",
-		"svelte": "^5.16.0",
+		"svelte": "^5.46.1",
 		"svelte-check": "^4.3.5",
-		"typescript": "^5.7.3",
-		"vite": "^6.0.7",
-		"vitest": "^2.1.8",
-		"xo": "^0.60.0"
+		"typescript": "5.9.3",
+		"vite": "^7.3.1",
+		"vitest": "^4.0.17",
+		"xo": "^1.2.3"
 	},
 	"engines": {
 		"node": ">=22.18"
