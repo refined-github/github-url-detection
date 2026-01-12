@@ -213,12 +213,13 @@ var getRepo = (url) => {
   if (!isRepo(url)) {
     return;
   }
-  const [owner, name, ...path] = getCleanPathname(url).split("/");
+  const [owner, name, ...pathParts] = getCleanPathname(url).split("/");
   return {
     owner,
     name,
+    pathParts,
     nameWithOwner: `${owner}/${name}`,
-    path: path.join("/")
+    path: pathParts.join("/")
   };
 };
 var utils = {

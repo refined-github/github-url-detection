@@ -1,4 +1,3 @@
-#!/usr/bin/env node --experimental-strip-types
 /* eslint-disable n/prefer-global/process */
 import {readFileSync, writeFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
