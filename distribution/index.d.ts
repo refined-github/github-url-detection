@@ -1,3 +1,4 @@
+/* Examples added by add-examples-to-dts.ts */
 export declare const is404: () => boolean;
 export declare const is500: () => boolean;
 export declare const isPasswordConfirmation: () => boolean;
@@ -195,8 +196,8 @@ export declare const isPR: (url?: URL | HTMLAnchorElement | Location) => boolean
  * @example https://github.com/sindresorhus/refined-github/pull/148/conflicts
  */
 export declare const isPRConflicts: (url?: URL | HTMLAnchorElement | Location) => boolean;
-/** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 /**
+ * Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown
  * @example https://github.com/pulls
  * @example https://github.com/pulls?q=issues
  * @example https://github.com/sindresorhus/refined-github/pulls
@@ -532,8 +533,8 @@ export declare const hasComments: (url?: URL | HTMLAnchorElement | Location) => 
 export declare const hasRichTextEditor: (url?: URL | HTMLAnchorElement | Location) => boolean;
 /** Static code, not the code editor */
 export declare const hasCode: (url?: URL | HTMLAnchorElement | Location) => boolean;
-/** Covers blob, trees and blame pages */
 /**
+ * Covers blob, trees and blame pages
  * @example https://github.com/sindresorhus/refined-github
  * @example https://github.com/sindresorhus/refined-github/
  * @example https://github.com/sindresorhus/notifications/
