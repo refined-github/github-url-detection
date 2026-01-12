@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 import assert from 'node:assert/strict';
-import {test} from 'vitest';
+import {test, expect} from 'vitest';
 import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
@@ -153,48 +153,87 @@ test('getRepositoryInfo', () => {
 		assert.equal(getRepositoryInfoAdapter('https://github.com'), undefined);
 		assert.equal(getRepositoryInfoAdapter('https://gist.github.com/'), undefined);
 		assert.equal(getRepositoryInfoAdapter('https://github.com/settings/developers'), undefined);
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: '',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: '',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/blame/master/package.json'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: 'blame/master/package.json',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/commit/57bf4'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: 'commit/57bf4',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/compare/test-branch?quick_pull=0'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: 'compare/test-branch',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: 'tree/master/distribution',
-		});
-		assert.deepEqual(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/'), {
-			owner: 'refined-github',
-			name: 'github-url-detection',
-			nameWithOwner: 'refined-github/github-url-detection',
-			path: 'tree/master/distribution',
-		});
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "",
+			  "pathParts": [],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "",
+			  "pathParts": [],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/blame/master/package.json')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "blame/master/package.json",
+			  "pathParts": [
+			    "blame",
+			    "master",
+			    "package.json",
+			  ],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/commit/57bf4')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "commit/57bf4",
+			  "pathParts": [
+			    "commit",
+			    "57bf4",
+			  ],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/compare/test-branch?quick_pull=0')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "compare/test-branch",
+			  "pathParts": [
+			    "compare",
+			    "test-branch",
+			  ],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "tree/master/distribution",
+			  "pathParts": [
+			    "tree",
+			    "master",
+			    "distribution",
+			  ],
+			}
+		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/github-url-detection/tree/master/distribution/')).toMatchInlineSnapshot(`
+			{
+			  "name": "github-url-detection",
+			  "nameWithOwner": "refined-github/github-url-detection",
+			  "owner": "refined-github",
+			  "path": "tree/master/distribution",
+			  "pathParts": [
+			    "tree",
+			    "master",
+			    "distribution",
+			  ],
+			}
+		`);
 	}
 });
 
