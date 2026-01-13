@@ -1,11 +1,11 @@
-/* eslint-disable n/prefer-global/process */
+/* eslint-disable n/prefer-global/process, unicorn/no-process-exit */
 import {readFileSync, writeFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
 // Import index.ts to populate the test data via side effect
-// eslint-disable-next-line import/no-unassigned-import, n/file-extension-in-import
-import './index.ts';
+// eslint-disable-next-line n/file-extension-in-import, import-x/no-unassigned-import
+import './index.js';
 // eslint-disable-next-line n/file-extension-in-import
-import {getTests} from './collector.ts';
+import {getTests} from './collector.js';
 
 // Read the generated .d.ts file
 const dtsPath = './distribution/index.d.ts';
