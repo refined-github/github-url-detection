@@ -93,7 +93,7 @@
 
 <datalist id="url-examples">
 	{#each [...allUrls] as url}
-		<option value={url} />
+		<option value={url}></option>
 	{/each}
 </datalist>
 
