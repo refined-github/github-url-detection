@@ -15,7 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: package.json
       - run: npm ci
       - run: npm run build:demo
       - run: npm run test:demo
@@ -23,7 +26,7 @@ jobs:
         # https://github.com/refined-github/github-url-detection/pull/161
         name: Ensure that the demo is built correctly
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: demo/dist/
 

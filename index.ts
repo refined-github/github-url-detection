@@ -369,13 +369,11 @@ TEST: addTests('hasWikiPageEditor', combinedTestOnly);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => {
 	const [user, repo, extra] = getCleanPathname(url).split('/');
-	return Boolean(
-		user
+	return Boolean(user
 		&& repo
 		&& !reservedNames.includes(user)
 		&& !url.hostname.startsWith('gist.')
-		&& extra !== 'generate', // Like isNewRepoTemplate but inlined for performance
-	);
+		&& extra !== 'generate'); // Like isNewRepoTemplate but inlined for performance
 };
 
 TEST: addTests('isRepo', [
@@ -778,7 +776,7 @@ TEST: addTests('isRepoGitObject', [
 /** Covers blob, trees and blame pages */
 export const isRepoGitObject = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isRepo(url)
-  && [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
+	&& [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
 
 TEST: addTests('hasFiles', combinedTestOnly);
 /** Has a list of files */
