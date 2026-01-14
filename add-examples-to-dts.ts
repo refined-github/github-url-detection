@@ -1,6 +1,7 @@
-/* eslint-disable n/prefer-global/process, unicorn/no-process-exit */
-import {readFileSync, writeFileSync} from 'node:fs';
+/* eslint-disable n/prefer-global/process, unicorn/no-process-exit, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
+import {readFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
+import {Project} from 'ts-morph';
 // Import index.ts to populate the test data via side effect
 // eslint-disable-next-line import-x/no-unassigned-import
 import './index.ts';
@@ -17,16 +18,21 @@ if (dtsContent.includes(marker)) {
 	process.exit(1);
 }
 
-// Process each exported function
-const lines = dtsContent.split('\n');
-const outputLines: string[] = [];
+// Create a ts-morph project and load the file
+const project = new Project();
+const sourceFile = project.createSourceFile('temp.d.ts', dtsContent, {overwrite: true});
+
 let examplesAdded = 0;
 
-for (const line of lines) {
-	// Check if this is a function declaration
-	const match = /^export declare const (\w+):/.exec(line);
-	if (match) {
-		const functionName = match[1];
+// Process each exported variable declaration (these are the function declarations)
+for (const statement of sourceFile.getVariableStatements()) {
+	// Only process exported statements
+	if (!statement.isExported()) {
+		continue;
+	}
+
+	for (const declaration of statement.getDeclarations()) {
+		const functionName = declaration.getName();
 
 		// Get the tests/examples for this function
 		const examples = getTests(functionName);
@@ -37,95 +43,102 @@ for (const line of lines) {
 			const urlExamples = examples.filter((url: string) => url.startsWith('http'));
 
 			if (urlExamples.length > 0) {
-				// Check if there's an existing JSDoc block immediately before this line
-				let jsDocumentEndIndex = -1;
-				let jsDocumentStartIndex = -1;
-				let isSingleLineJsDocument = false;
+				// Get or create JSDoc for this statement (not the declaration)
+				const jsDoc = statement.getJsDocs()[0];
 
-				// Look backwards from outputLines to find JSDoc
-				for (let index = outputLines.length - 1; index >= 0; index--) {
-					const previousLine = outputLines[index];
-					const trimmed = previousLine.trim();
+				if (jsDoc) {
+					// Add @example tags to existing JSDoc
+					const existingTags = jsDoc.getTags();
+					const description = jsDoc.getDescription().trim();
 
-					if (trimmed === '') {
-						continue; // Skip empty lines
+					// Build new JSDoc content
+					const newJsDocLines: string[] = [];
+					if (description) {
+						newJsDocLines.push(description);
 					}
 
-					// Check for single-line JSDoc: /** ... */
-					if (trimmed.startsWith('/**') && trimmed.endsWith('*/') && trimmed.length > 5) {
-						jsDocumentStartIndex = index;
-						jsDocumentEndIndex = index;
-						isSingleLineJsDocument = true;
-						break;
+					// Add existing tags (that aren't @example tags)
+					for (const tag of existingTags) {
+						if (tag.getTagName() !== 'example') {
+							newJsDocLines.push(tag.getText());
+						}
 					}
 
-					// Check for multi-line JSDoc ending
-					if (trimmed === '*/') {
-						jsDocumentEndIndex = index;
-						// Now find the start of this JSDoc
-						for (let k = index - 1; k >= 0; k--) {
-							if (outputLines[k].trim().startsWith('/**')) {
-								jsDocumentStartIndex = k;
-								break;
-							}
-						}
-
-						break;
-					}
-
-					// If we hit a non-JSDoc line, there's no JSDoc block
-					break;
-				}
-
-				if (jsDocumentStartIndex >= 0 && jsDocumentEndIndex >= 0) {
-					// Extend existing JSDoc block
-					if (isSingleLineJsDocument) {
-						// Convert single-line to multi-line and add examples
-						const singleLineContent = outputLines[jsDocumentStartIndex];
-						// Extract the comment text without /** and */
-						const commentText = singleLineContent.trim().slice(3, -2).trim();
-
-						// Replace the single line with multi-line format
-						outputLines[jsDocumentStartIndex] = '/**';
-						if (commentText) {
-							outputLines.splice(jsDocumentStartIndex + 1, 0, ` * ${commentText}`);
-						}
-
-						// Add examples after the existing content
-						const insertIndex = jsDocumentStartIndex + (commentText ? 2 : 1);
-						for (const url of urlExamples) {
-							outputLines.splice(insertIndex + urlExamples.indexOf(url), 0, ` * @example ${url}`);
-						}
-
-						outputLines.splice(insertIndex + urlExamples.length, 0, ' */');
-						examplesAdded += urlExamples.length;
-					} else {
-						// Insert @example lines before the closing */
-						for (const url of urlExamples) {
-							outputLines.splice(jsDocumentEndIndex, 0, ` * @example ${url}`);
-						}
-
-						examplesAdded += urlExamples.length;
-					}
-				} else {
-					// Add new JSDoc comment with examples before the declaration
-					outputLines.push('/**');
+					// Add new @example tags
 					for (const url of urlExamples) {
-						outputLines.push(` * @example ${url}`);
+						newJsDocLines.push(`@example ${url}`);
 					}
 
-					outputLines.push(' */');
-					examplesAdded += urlExamples.length;
+					// Replace the JSDoc
+					jsDoc.remove();
+					statement.addJsDoc(newJsDocLines.join('\n'));
+				} else {
+					// Create new JSDoc with examples
+					const jsDocLines: string[] = [];
+					for (const url of urlExamples) {
+						jsDocLines.push(`@example ${url}`);
+					}
+
+					statement.addJsDoc(jsDocLines.join('\n'));
 				}
+
+				examplesAdded += urlExamples.length;
 			}
 		}
 	}
-
-	outputLines.push(line);
 }
 
-// Add marker at the beginning
-const finalContent = `${marker}\n${outputLines.join('\n')}`;
+// Also process exported type aliases (like RepoExplorerInfo)
+for (const typeAlias of sourceFile.getTypeAliases()) {
+	if (!typeAlias.isExported()) {
+		continue;
+	}
+
+	const typeName = typeAlias.getName();
+
+	// Get the tests/examples for this type (unlikely but keeping consistency)
+	const examples = getTests(typeName);
+
+	if (examples && examples.length > 0 && examples[0] !== 'combinedTestOnly') {
+		const urlExamples = examples.filter((url: string) => url.startsWith('http'));
+
+		if (urlExamples.length > 0) {
+			const jsDoc = typeAlias.getJsDocs()[0];
+
+			if (jsDoc) {
+				const existingTags = jsDoc.getTags();
+				const description = jsDoc.getDescription().trim();
+
+				const newJsDocLines: string[] = [];
+				if (description) {
+					newJsDocLines.push(description);
+				}
+
+				for (const tag of existingTags) {
+					if (tag.getTagName() !== 'example') {
+						newJsDocLines.push(tag.getText());
+					}
+				}
+
+				for (const url of urlExamples) {
+					newJsDocLines.push(`@example ${url}`);
+				}
+
+				jsDoc.remove();
+				typeAlias.addJsDoc(newJsDocLines.join('\n'));
+			} else {
+				const jsDocLines: string[] = [];
+				for (const url of urlExamples) {
+					jsDocLines.push(`@example ${url}`);
+				}
+
+				typeAlias.addJsDoc(jsDocLines.join('\n'));
+			}
+
+			examplesAdded += urlExamples.length;
+		}
+	}
+}
 
 // Validate that we added some examples
 if (examplesAdded === 0) {
@@ -133,8 +146,12 @@ if (examplesAdded === 0) {
 	process.exit(1);
 }
 
+// Get the modified content and add marker
+const modifiedContent = sourceFile.getFullText();
+const finalContent = `${marker}\n${modifiedContent}`;
+
 // Write the modified content back
-writeFileSync(dtsPath, finalContent, 'utf8');
+sourceFile.getProject().createSourceFile(dtsPath, finalContent, {overwrite: true}).saveSync();
 
 console.log(`✓ Added ${examplesAdded} example URLs to index.d.ts`);
 
