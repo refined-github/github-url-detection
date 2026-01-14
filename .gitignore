@@ -8,7 +8,6 @@ Thumbs.db
 *.log
 logs
 *.map
-distribution
 dist
 .cache
 .parcel-cache
