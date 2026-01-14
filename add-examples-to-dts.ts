@@ -1,5 +1,5 @@
 /* eslint-disable n/prefer-global/process, unicorn/no-process-exit, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
-import {readFileSync} from 'node:fs';
+import {readFileSync, writeFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
 import {Project, type JSDocableNode} from 'ts-morph';
 // Import index.ts to populate the test data via side effect
@@ -20,7 +20,7 @@ if (dtsContent.includes(marker)) {
 
 // Create a ts-morph project and load the file
 const project = new Project();
-const sourceFile = project.createSourceFile('temp.d.ts', dtsContent, {overwrite: true});
+const sourceFile = project.createSourceFile(dtsPath, dtsContent, {overwrite: true});
 
 let examplesAdded = 0;
 
@@ -125,7 +125,7 @@ const modifiedContent = sourceFile.getFullText();
 const finalContent = `${marker}\n${modifiedContent}`;
 
 // Write the modified content back
-sourceFile.getProject().createSourceFile(dtsPath, finalContent, {overwrite: true}).saveSync();
+writeFileSync(dtsPath, finalContent, 'utf8');
 
 console.log(`✓ Added ${examplesAdded} example URLs to index.d.ts`);
 
