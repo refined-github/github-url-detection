@@ -1,7 +1,7 @@
 /* eslint-disable n/prefer-global/process, unicorn/no-process-exit, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
 import {readFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
-import {Project} from 'ts-morph';
+import {Project, type JSDocableNode} from 'ts-morph';
 // Import index.ts to populate the test data via side effect
 // eslint-disable-next-line import-x/no-unassigned-import
 import './index.ts';
@@ -24,6 +24,49 @@ const sourceFile = project.createSourceFile('temp.d.ts', dtsContent, {overwrite:
 
 let examplesAdded = 0;
 
+/**
+ * Add example URLs to a JSDocable node (e.g., variable statement or type alias)
+ */
+function addExamplesToNode(node: JSDocableNode, urlExamples: string[]): void {
+	const jsDoc = node.getJsDocs()[0];
+
+	if (jsDoc) {
+		// Add @example tags to existing JSDoc
+		const existingTags = jsDoc.getTags();
+		const description = jsDoc.getDescription().trim();
+
+		// Build new JSDoc content
+		const newJsDocLines: string[] = [];
+		if (description) {
+			newJsDocLines.push(description);
+		}
+
+		// Add existing tags (that aren't @example tags)
+		for (const tag of existingTags) {
+			if (tag.getTagName() !== 'example') {
+				newJsDocLines.push(tag.getText());
+			}
+		}
+
+		// Add new @example tags
+		for (const url of urlExamples) {
+			newJsDocLines.push(`@example ${url}`);
+		}
+
+		// Replace the JSDoc
+		jsDoc.remove();
+		node.addJsDoc(newJsDocLines.join('\n'));
+	} else {
+		// Create new JSDoc with examples
+		const jsDocLines: string[] = [];
+		for (const url of urlExamples) {
+			jsDocLines.push(`@example ${url}`);
+		}
+
+		node.addJsDoc(jsDocLines.join('\n'));
+	}
+}
+
 // Process each exported variable declaration (these are the function declarations)
 for (const statement of sourceFile.getVariableStatements()) {
 	// Only process exported statements
@@ -43,45 +86,7 @@ for (const statement of sourceFile.getVariableStatements()) {
 			const urlExamples = examples.filter((url: string) => url.startsWith('http'));
 
 			if (urlExamples.length > 0) {
-				// Get or create JSDoc for this statement (not the declaration)
-				const jsDoc = statement.getJsDocs()[0];
-
-				if (jsDoc) {
-					// Add @example tags to existing JSDoc
-					const existingTags = jsDoc.getTags();
-					const description = jsDoc.getDescription().trim();
-
-					// Build new JSDoc content
-					const newJsDocLines: string[] = [];
-					if (description) {
-						newJsDocLines.push(description);
-					}
-
-					// Add existing tags (that aren't @example tags)
-					for (const tag of existingTags) {
-						if (tag.getTagName() !== 'example') {
-							newJsDocLines.push(tag.getText());
-						}
-					}
-
-					// Add new @example tags
-					for (const url of urlExamples) {
-						newJsDocLines.push(`@example ${url}`);
-					}
-
-					// Replace the JSDoc
-					jsDoc.remove();
-					statement.addJsDoc(newJsDocLines.join('\n'));
-				} else {
-					// Create new JSDoc with examples
-					const jsDocLines: string[] = [];
-					for (const url of urlExamples) {
-						jsDocLines.push(`@example ${url}`);
-					}
-
-					statement.addJsDoc(jsDocLines.join('\n'));
-				}
-
+				addExamplesToNode(statement, urlExamples);
 				examplesAdded += urlExamples.length;
 			}
 		}
@@ -103,38 +108,7 @@ for (const typeAlias of sourceFile.getTypeAliases()) {
 		const urlExamples = examples.filter((url: string) => url.startsWith('http'));
 
 		if (urlExamples.length > 0) {
-			const jsDoc = typeAlias.getJsDocs()[0];
-
-			if (jsDoc) {
-				const existingTags = jsDoc.getTags();
-				const description = jsDoc.getDescription().trim();
-
-				const newJsDocLines: string[] = [];
-				if (description) {
-					newJsDocLines.push(description);
-				}
-
-				for (const tag of existingTags) {
-					if (tag.getTagName() !== 'example') {
-						newJsDocLines.push(tag.getText());
-					}
-				}
-
-				for (const url of urlExamples) {
-					newJsDocLines.push(`@example ${url}`);
-				}
-
-				jsDoc.remove();
-				typeAlias.addJsDoc(newJsDocLines.join('\n'));
-			} else {
-				const jsDocLines: string[] = [];
-				for (const url of urlExamples) {
-					jsDocLines.push(`@example ${url}`);
-				}
-
-				typeAlias.addJsDoc(jsDocLines.join('\n'));
-			}
-
+			addExamplesToNode(typeAlias, urlExamples);
 			examplesAdded += urlExamples.length;
 		}
 	}
