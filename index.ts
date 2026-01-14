@@ -594,7 +594,30 @@ TEST: addTests('isSingleFile', [
 	'https://github.com/sindresorhus/refined-github/blob/master/.gitattributes',
 	'https://github.com/sindresorhus/refined-github/blob/fix-narrow-diff/distribution/content.css',
 	'https://github.com/sindresorhus/refined-github/blob/master/edit.txt',
+	'isRenderedTextFile',
 ]);
+
+export const isRenderedTextFile = (url: URL | HTMLAnchorElement | Location = location): boolean => isSingleFile(url) && /\.(md|markdown|mdown|mkdn|textile|rdoc|org|creole|mediawiki|wiki|rst|asciidoc|adoc|asc|pod)$/i.test(url.pathname);
+TEST: addTests('isRenderedTextFile', [
+	'https://github.com/sindresorhus/refined-github/blob/master/readme.md',
+	'https://github.com/sindresorhus/refined-github/blob/master/README.markdown',
+	'https://github.com/sindresorhus/refined-github/blob/main/docs/guide.mdown',
+	'https://github.com/sindresorhus/refined-github/blob/main/CONTRIBUTING.mkdn',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.textile',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.rdoc',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.org',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.creole',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.mediawiki',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.wiki',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.rst',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.asciidoc',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.adoc',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.asc',
+	'https://github.com/sindresorhus/refined-github/blob/master/file.pod',
+]);
+
+export const hasRenderedText = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || isRenderedTextFile(url);
+TEST: addTests('hasRenderedText', combinedTestOnly);
 
 export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('find/'));
 TEST: addTests('isFileFinder', [
