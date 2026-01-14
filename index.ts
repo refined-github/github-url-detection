@@ -821,9 +821,6 @@ export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile()
 
 export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
 
-/** @deprecated Use `canUserAdminRepo` */
-export const canUserEditRepo = canUserAdminRepo;
-
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
 	'https://github.com/new',
@@ -925,8 +922,6 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 
 export const utils = {
 	getOrg,
-	/** @deprecated Use `getLoggedInUser` */
-	getUsername: getLoggedInUser,
 	getLoggedInUser,
 	getCleanPathname,
 	getCleanGistPathname,
