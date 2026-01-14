@@ -26,8 +26,8 @@
 	"scripts": {
 		"build": "run-p build:*",
 		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
-		"build:typescript": "tsc --declaration --emitDeclarationOnly",
-		"postbuild:typescript": "node --experimental-strip-types add-examples-to-dts.ts",
+		"build:typescript": "tsc",
+		"postbuild:typescript": "node add-examples-to-dts.ts",
 		"build:demo": "vite build demo",
 		"try": "esbuild index.ts --bundle --global-name=x --format=iife | pbcopy && echo 'Copied to clipboard'",
 		"fix": "xo --fix",

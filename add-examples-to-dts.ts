@@ -2,9 +2,8 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {execSync} from 'node:child_process';
 // Import index.ts to populate the test data via side effect
-// eslint-disable-next-line import-x/no-unassigned-import, n/file-extension-in-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import './index.ts';
-// eslint-disable-next-line n/file-extension-in-import
 import {getTests} from './collector.ts';
 
 // Read the generated .d.ts file
