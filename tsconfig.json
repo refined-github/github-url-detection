@@ -1,10 +1,8 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		// TODO: Drop after https://github.com/sindresorhus/tsconfig/issues/29
-		"resolveJsonModule": true,
-		"moduleResolution": "Node",
-		"module": "Preserve"
+		"emitDeclarationOnly": true,
+		"allowImportingTsExtensions": true
 	},
 	"include": [
 		"index.ts",

@@ -26,7 +26,8 @@
 	"scripts": {
 		"build": "run-p build:*",
 		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
-		"build:typescript": "tsc --declaration --emitDeclarationOnly",
+		"build:typescript": "tsc",
+		"postbuild:typescript": "node add-examples-to-dts.ts",
 		"build:demo": "vite build demo",
 		"try": "esbuild index.ts --bundle --global-name=x --format=iife | pbcopy && echo 'Copied to clipboard'",
 		"fix": "xo --fix",
@@ -46,6 +47,7 @@
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^8.1.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@types/node": "^25.0.8",
 		"esbuild": "^0.27.2",
 		"globals": "^17.0.0",
 		"npm-run-all": "^4.1.5",
