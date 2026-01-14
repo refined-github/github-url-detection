@@ -28,7 +28,7 @@ let examplesAdded = 0;
  * Add example URLs to a JSDocable node (e.g., variable statement or type alias)
  */
 function addExamplesToNode(node: JSDocableNode, urlExamples: string[]): void {
-	const jsDoc = node.getJsDocs()[0];
+	const jsDoc = node.getJsDocs().at(0);
 
 	if (jsDoc) {
 		// Add @example tags to existing JSDoc
