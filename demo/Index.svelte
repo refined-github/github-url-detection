@@ -7,55 +7,56 @@
 	const urlParameter = new URLSearchParams(location.search);
 	const parsedUrlParameter = parseUrl(urlParameter.get('url'), 'https://github.com').href;
 	// Parse partial URL in the parameter so that it's shown as full URL in the field
-	let urlField = parsedUrlParameter || '';
+	let urlField = $state(parsedUrlParameter || '');
 
 	const allUrls = [...getAllUrls()].sort();
 
-	let parsedUrl;
 	// Do not use ?? because it should work on empty strings
-	$: parsedUrl = parseUrl(urlField || defaultUrl);
+	let parsedUrl = $derived(parseUrl(urlField || defaultUrl));
 
-	let detections = [];
-	$: {
-		if (parsedUrl) {
-			if (urlField) {
-				urlParameter.set('url', urlField.replace('https://github.com', ''));
-				history.replaceState(null, '', `?${urlParameter}`);
-			} else {
-				history.replaceState(null, '', location.pathname);
-			}
-			detections = Object.entries(urlDetection)
-				.map(([name, detect]) => {
-					if (typeof detect !== 'function') {
-						return;
-					}
+	let detections = $derived(
+		parsedUrl ? Object.entries(urlDetection)
+			.map(([name, detect]) => {
+				if (typeof detect !== 'function') {
+					return;
+				}
 
-					if (!String(detect).startsWith('()')) {
-						return {
-							name,
-							detect,
-							result: detect(parsedUrl)
-						};
-					} else {
-						return {name};
-					}
-				})
-				.filter(Boolean)
-				.sort((a, b) => {
-					// Pull true values to the top
-					if (a.result || b.result) {
-						return a.result ? b.result ? 0 : -1 : 1;
-					}
+				if (!String(detect).startsWith('()')) {
+					return {
+						name,
+						detect,
+						result: detect(parsedUrl)
+					};
+				} else {
+					return {name};
+				}
+			})
+			.filter(Boolean)
+			.sort((a, b) => {
+				// Pull true values to the top
+				if (a.result || b.result) {
+					return a.result ? b.result ? 0 : -1 : 1;
+				}
 
-					// Push false values to the top
-					if (a.detect || b.detect) {
-						return a.detect ? b.detect ? 0 : 1 : -1;
-					}
+				// Push false values to the top
+				if (a.detect || b.detect) {
+					return a.detect ? b.detect ? 0 : 1 : -1;
+				}
 
-					// DOM-based detections should be in the middle
-				});
+				// DOM-based detections should be in the middle
+			}) : []
+	);
+
+	$effect(() => {
+		if (!parsedUrl) return;
+
+		if (urlField) {
+			urlParameter.set('url', urlField.replace('https://github.com', ''));
+			history.replaceState(null, '', `?${urlParameter}`);
+		} else {
+			history.replaceState(null, '', location.pathname);
 		}
-	}
+	});
 </script>
 
 <style>
