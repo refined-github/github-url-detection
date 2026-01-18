@@ -1,6 +1,8 @@
+import { mount } from 'svelte';
+
 import Detections from './Detections.svelte';
 
-const app = new Detections({
+const app = mount(Detections, {
 	target: document.querySelector('main'),
 });
 
