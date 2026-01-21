@@ -297,7 +297,9 @@ TEST: addTests('isQuickPR', [
 
 const getStateLabel = (): string | undefined => $([
 	'.State', // Old view
-	'[class^="StateLabel"]', // React version
+	// React versions
+	'[class^="StateLabel"]',
+	'[data-testid="header-state"]',
 ].join(','))?.textContent?.trim();
 
 export const isMergedPR = (): boolean => getStateLabel() === 'Merged';
