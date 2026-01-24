@@ -1,8 +1,9 @@
 import reservedNames from 'github-reserved-names/reserved-names.json' with {type: 'json'};
 import {addTests} from './collector.ts';
 
-// eslint-disable-next-line @typescript-eslint/no-deprecated -- Intentionally using typed querySelector
-const $: typeof document.querySelector = <E extends Element = Element>(selector: string) => document.querySelector<E>(selector);
+// Selector helpers with typed-query-selector validation.
+// The generic parameter allows type override when selector inference isn't specific enough (e.g., attribute-only selectors)
+const $ = <E extends Element = Element>(selector: string) => document.querySelector<E>(selector);
 const exists = (selector: string): boolean => Boolean(document.querySelector(selector));
 
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
