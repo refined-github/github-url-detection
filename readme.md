@@ -67,6 +67,30 @@ if (pageDetect.isOrganizationProfile()) {
 }
 ```
 
+### Async detections with `wait`
+
+The `wait` helper function allows you to wait for a detection to become true by repeatedly checking it on each animation frame. This is useful for DOM-based detections that need to wait for elements to appear before the document is fully loaded.
+
+```js
+import {wait, isOrganizationProfile} from 'github-url-detection';
+
+async function init() {
+	// Wait for the detection to return true or for the document to be complete
+	if (!await wait(isOrganizationProfile)) {
+		return; // Not an organization profile
+	}
+
+	// The page is now confirmed to be an organization profile
+	console.log('On organization profile!');
+}
+```
+
+The `wait` function:
+- Repeatedly calls the detection function on each animation frame
+- Stops when the detection returns `true` or when `document.readyState` is `'complete'`
+- Returns the final result of the detection
+- Works with any detection function that returns a boolean
+
 ## Related
 
 - [github-reserved-names](https://github.com/Mottie/github-reserved-names) - Get a list, or check if a user or organization name is reserved by GitHub.
