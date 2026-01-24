@@ -1,6 +1,8 @@
+import { mount } from 'svelte';
+
 import Index from './Index.svelte';
 
-const app = new Index({
+const app = mount(Index, {
 	target: document.querySelector('main'),
 });
 

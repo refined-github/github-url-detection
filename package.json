@@ -1,6 +1,6 @@
 {
 	"name": "github-url-detection",
-	"version": "11.0.0",
+	"version": "11.0.1",
 	"description": "Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.",
 	"keywords": [
 		"github",
@@ -27,7 +27,7 @@
 		"build": "run-p build:*",
 		"build:esbuild": "esbuild index.ts --bundle --external:github-reserved-names --outdir=distribution --format=esm --drop-labels=TEST",
 		"build:typescript": "tsc",
-		"postbuild:typescript": "node add-examples-to-dts.ts",
+		"postbuild:typescript": "tsx add-examples-to-dts.ts",
 		"build:demo": "vite build demo",
 		"try": "esbuild index.ts --bundle --global-name=x --format=iife | pbcopy && echo 'Copied to clipboard'",
 		"fix": "xo --fix",
@@ -54,6 +54,8 @@
 		"strip-indent": "^4.1.1",
 		"svelte": "^5.46.1",
 		"svelte-check": "^4.3.5",
+		"ts-morph": "^27.0.2",
+		"tsx": "^4.21.0",
 		"typed-query-selector": "^2.12.0",
 		"typescript": "5.9.3",
 		"vite": "^7.3.1",
