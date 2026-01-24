@@ -333,5 +333,8 @@ test('wait - false when document complete', async () => {
 	// Restore original state
 	if (originalReadyState) {
 		Object.defineProperty(document, 'readyState', originalReadyState);
+	} else {
+		// If readyState wasn't a property before, delete it
+		delete (document as any).readyState;
 	}
 });
