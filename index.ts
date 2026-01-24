@@ -64,6 +64,22 @@ TEST: addTests('isCompareWikiPage', [
 	'https://github.com/refined-github/refined-github/wiki/Home/_compare/b64098961263e40d985aaf7c5c03ef6f2ce4beda...ae9e6e8443a39323823748a1645e8acd4cf39dde',
 ]);
 
+export const isWikiRevision = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	if (!isRepoWiki(url)) {
+		return false;
+	}
+
+	const parts = getCleanPathname(url).split('/');
+	// Wiki/Page/hash or wiki/Page/_history patterns
+	// Parts: [owner, repo, 'wiki', pageName, revisionOrSpecial, ...]
+	return parts.length >= 5 && /^[\da-f]{5,40}$/.test(parts[4]);
+};
+
+TEST: addTests('isWikiRevision', [
+	'https://github.com/refined-github/refined-github/wiki/Home/b64098961263e40d985aaf7c5c03ef6f2ce4beda',
+	'https://github.com/pixiebrix/pixiebrix-extension/wiki/Web-Extensions-behaviors/664a8f7',
+]);
+
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
 TEST: addTests('isDashboard', [
 	'https://github.com///',
@@ -585,6 +601,8 @@ TEST: addTests('isRepoWiki', [
 	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 	'https://github.com/refined-github/refined-github/wiki/Home/_compare/b64098961263e40d985aaf7c5c03ef6f2ce4beda...ae9e6e8443a39323823748a1645e8acd4cf39dde',
+	'https://github.com/refined-github/refined-github/wiki/Home/b64098961263e40d985aaf7c5c03ef6f2ce4beda',
+	'https://github.com/pixiebrix/pixiebrix-extension/wiki/Web-Extensions-behaviors/664a8f7',
 ]);
 
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
@@ -803,6 +821,7 @@ export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boo
 	|| isGist(url)
 	|| isCompare(url)
 	|| isCompareWikiPage(url)
+	|| isWikiRevision(url)
 	|| isBlame(url);
 
 TEST: addTests('isRepoGitObject', [
