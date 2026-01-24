@@ -70,8 +70,8 @@ export const isWikiRevision = (url: URL | HTMLAnchorElement | Location = locatio
 	}
 
 	const parts = getCleanPathname(url).split('/');
-	// Wiki/Page/hash or wiki/Page/_history patterns
-	// Parts: [owner, repo, 'wiki', pageName, revisionOrSpecial, ...]
+	// Wiki/Page/hash pattern - detects specific revision views
+	// Parts: [owner, repo, 'wiki', pageName, revisionHash, ...]
 	return parts.length >= 5 && /^[\da-f]{5,40}$/.test(parts[4]);
 };
 
