@@ -61,6 +61,7 @@ export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = loca
 TEST: addTests('isCompareWikiPage', [
 	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
+	'https://github.com/refined-github/refined-github/wiki/Home/_compare/b64098961263e40d985aaf7c5c03ef6f2ce4beda...ae9e6e8443a39323823748a1645e8acd4cf39dde',
 ]);
 
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
@@ -583,6 +584,7 @@ TEST: addTests('isRepoWiki', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
+	'https://github.com/refined-github/refined-github/wiki/Home/_compare/b64098961263e40d985aaf7c5c03ef6f2ce4beda...ae9e6e8443a39323823748a1645e8acd4cf39dde',
 ]);
 
 export const isSingleCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^commit\/[\da-f]{5,40}$/.test(getRepo(url)?.path);
