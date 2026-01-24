@@ -1,8 +1,8 @@
 import reservedNames from 'github-reserved-names/reserved-names.json' with {type: 'json'};
 import {addTests} from './collector.ts';
 
-const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
-const exists = (selector: string) => Boolean($(selector));
+const $: typeof document.querySelector = <E extends Element = Element>(selector: string) => document.querySelector<E>(selector);
+const exists = (selector: string): boolean => Boolean(document.querySelector(selector));
 
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
