@@ -661,6 +661,16 @@ TEST: addTests('isGistRevision', [
 	'https://gist.github.com/kidonng/0d16c7f17045f486751fad1b602204a0/revisions',
 ]);
 
+export const isGistFile = (url: URL | HTMLAnchorElement | Location = location): boolean => {
+	const pathname = getCleanGistPathname(url);
+	return pathname?.replace(/[^/]/g, '').length === 1;
+};
+
+TEST: addTests('isGistFile', [
+	'https://gist.github.com/fregante/2205329b71218fa2c1d3',
+	'https://gist.github.com/sindresorhus/0ea3c2845718a0a0f0beb579ff14f064',
+]);
+
 export const isTrending = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/trending' || url.pathname.startsWith('/trending/');
 TEST: addTests('isTrending', [
 	'https://github.com/trending',
