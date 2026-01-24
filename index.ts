@@ -11,17 +11,17 @@ const exists = (selector: string) => Boolean($(selector));
  * @returns A promise that resolves to the final result of the detection
  * @example
  * ```
- * import {wait, isOrganizationProfile} from 'github-url-detection';
+ * import {utils} from 'github-url-detection';
  *
  * async function init() {
- *   if (!await wait(isOrganizationProfile)) {
+ *   if (!await utils.waitFor(isOrganizationProfile)) {
  *     return;
  *   }
  *   // Do something when on organization profile
  * }
  * ```
  */
-export async function wait(detection: () => boolean): Promise<boolean> {
+async function waitFor(detection: () => boolean): Promise<boolean> {
 	// eslint-disable-next-line no-await-in-loop -- We need to wait on each frame
 	while (!detection() && document.readyState !== 'complete') {
 		// eslint-disable-next-line no-await-in-loop
@@ -991,4 +991,5 @@ export const utils = {
 	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
 	parseRepoExplorerTitle,
+	waitFor,
 };

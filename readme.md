@@ -67,16 +67,16 @@ if (pageDetect.isOrganizationProfile()) {
 }
 ```
 
-### Async detections with `wait`
+### Async detections with `waitFor`
 
-The `wait` helper function allows you to wait for a detection to become true by repeatedly checking it on each animation frame. This is useful for DOM-based detections that need to wait for elements to appear before the document is fully loaded.
+The `waitFor` helper function allows you to wait for a detection to become true by repeatedly checking it on each animation frame. This is useful for DOM-based detections that need to wait for elements to appear before the document is fully loaded.
 
 ```js
-import {wait, isOrganizationProfile} from 'github-url-detection';
+import {utils, isOrganizationProfile} from 'github-url-detection';
 
 async function init() {
 	// Wait for the detection to return true or for the document to be complete
-	if (!await wait(isOrganizationProfile)) {
+	if (!await utils.waitFor(isOrganizationProfile)) {
 		return; // Not an organization profile
 	}
 
@@ -85,7 +85,7 @@ async function init() {
 }
 ```
 
-The `wait` function:
+The `waitFor` function:
 - Repeatedly calls the detection function on each animation frame
 - Stops when the detection returns `true` or when `document.readyState` is `'complete'`
 - Returns the final result of the detection

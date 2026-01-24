@@ -22,19 +22,11 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 		continue;
 	}
 
-	// Skip wait and other utility functions
-	if (detectName === 'wait') {
-		continue;
-	}
-
 	const validURLs = getTests(detectName);
 
 	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
 		continue;
 	}
-
-	// Type assertion for TypeScript to understand this is a detection function
-	const detectionFn = detect as (url?: URL | HTMLAnchorElement | Location) => boolean;
 
 	test(detectName + ' has tests', () => {
 		assert.ok(
@@ -50,7 +42,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 	for (const url of validURLs) {
 		test(`${detectName} ${url.replace('https://github.com', '')}`, () => {
 			assert.ok(
-				detectionFn(new URL(url)),
+				detect(new URL(url)),
 				stripIndent(`
 					Is this URL \`${detectName}\`?
 						${url.replace('https://github.com', '')}
@@ -71,7 +63,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 		if (!validURLs.includes(url)) {
 			test(`${detectName} NO ${url}`, () => {
 				assert.equal(
-					detectionFn(new URL(url)),
+					detect(new URL(url)),
 					false,
 					stripIndent(`
 						Is this URL \`${detectName}\`?
@@ -297,25 +289,25 @@ test('parseRepoExplorerTitle', () => {
 	);
 });
 
-test('wait - immediately true', async () => {
+test('waitFor - immediately true', async () => {
 	const detection = () => true;
-	const result = await pageDetect.wait(detection);
+	const result = await pageDetect.utils.waitFor(detection);
 	assert.equal(result, true);
 });
 
-test('wait - becomes true', async () => {
+test('waitFor - becomes true', async () => {
 	let callCount = 0;
 	const detection = () => {
 		callCount++;
 		return callCount >= 3;
 	};
 
-	const result = await pageDetect.wait(detection);
+	const result = await pageDetect.utils.waitFor(detection);
 	assert.equal(result, true);
 	assert.ok(callCount >= 3);
 });
 
-test('wait - false when document complete', async () => {
+test('waitFor - false when document complete', async () => {
 	// Save original state
 	const originalReadyState = Object.getOwnPropertyDescriptor(document, 'readyState');
 
@@ -327,7 +319,7 @@ test('wait - false when document complete', async () => {
 	});
 
 	const detection = () => false;
-	const result = await pageDetect.wait(detection);
+	const result = await pageDetect.utils.waitFor(detection);
 	assert.equal(result, false);
 
 	// Restore original state
