@@ -35,7 +35,7 @@ export const is500 = (): boolean => document.title === 'Server Error · GitHub' 
 
 export const isPasswordConfirmation = (): boolean => document.title === 'Confirm password' || document.title === 'Confirm access';
 
-export const isLoggedIn = (): boolean => exists('body.logged-in >');
+export const isLoggedIn = (): boolean => exists('body.logged-in');
 
 export const isBlame = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('blame/'));
 TEST: addTests('isBlame', [
@@ -875,7 +875,7 @@ TEST: addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
+const getLoggedInUser = (): string | undefined => $('meta[name="user-login"] >')?.getAttribute('content') ?? undefined;
 
 /** Drop all redundant slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/\/+/g, '/').replace(/\/$/, '').slice(1);
