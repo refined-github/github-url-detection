@@ -8,7 +8,6 @@
 		"index.ts",
 		"index.test.ts",
 		"global.d.ts",
-		"strict-types.d.ts",
 		"collector.ts"
 	]
 }

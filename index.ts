@@ -1,26 +1,19 @@
+import type {StrictlyParseSelector} from 'typed-query-selector/parser.js';
 import reservedNames from 'github-reserved-names/reserved-names.json' with {type: 'json'};
 import {addTests} from './collector.ts';
-import type {StrictlyParseSelector} from './strict-types.ts';
 
-// Selector helpers with typed-query-selector strict validation
-// Overload 1: Strict validation with type inference from selector
-function $<S extends string, E extends StrictlyParseSelector<S>>(
-	selector: S,
-): [E] extends [never] ? never : E | undefined;
-// Overload 2: Allow explicit type override when inference isn't specific enough
-function $<E extends Element>(selector: string): E | undefined;
-// Implementation
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Return type is inferred from overloads
-function $(selector: string) {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Return type validated by strict typing
-	return document.querySelector(selector);
+function $<Selector extends string, Selected extends Element = StrictlyParseSelector<Selector>>(
+	selector: Selector,
+): Selected | undefined;
+function $<Selected extends Element = HTMLElement>(
+	selector: string,
+): Selected | undefined;
+function $<Selected extends Element>(selector: string): Selected | undefined {
+	return document.querySelector<Selected>(selector) ?? undefined;
 }
 
-// @ts-expect-error -- E is inferred by TypeScript automatically, not used explicitly
-function exists<S extends string, E extends StrictlyParseSelector<S>>(selector: S): boolean {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- querySelector return type validated by strict typing
-	const element = document.querySelector(selector);
-	return Boolean(element);
+function exists(selector: string): boolean {
+	return Boolean(document.querySelector(selector));
 }
 
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
@@ -314,7 +307,6 @@ TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
 ]);
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call -- Strict validation may mark complex selectors as potentially invalid
 const getStateLabel = (): string | undefined => $([
 	'.State', // Old view
 	// React versions
@@ -420,7 +412,6 @@ export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork becau
 
 export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_public"][content="true"]');
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call -- Strict validation may mark selectors with child combinators as potentially invalid
 export const isArchivedRepo = (): boolean => Boolean(isRepo() && $('main > .flash-warn')?.textContent!.includes('archived'));
 
 export const isBlank = (): boolean => exists('main .blankslate:not([hidden] .blankslate)');
@@ -880,7 +871,6 @@ TEST: addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call -- getAttribute is safe
 const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
 /** Drop all redundant slashes */
