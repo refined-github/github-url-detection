@@ -298,7 +298,7 @@ TEST: addTests('isQuickPR', [
 const getStateLabel = (): string | undefined => $([
 	'.State', // Old view
 	// React versions
-	'[class^="StateLabel"]', // TODO: Remove after August 2026
+	'[class^="StateLabel"]', // TODO: Remove after July 2026
 	'[class^="prc-StateLabel-StateLabel'], // PRs
 	'[data-testid="header-state"]', // Issues
 ].join(','))?.textContent?.trim();
