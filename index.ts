@@ -722,7 +722,7 @@ TEST: addTests('isGistProfile', [
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
-export const isPrivateUserProfile = (): boolean => isUserProfile() && !exists('.UnderlineNav-item[href$="tab=stars"]');
+export const isPrivateUserProfile = (): boolean => isUserProfile() && exists('#user-private-profile-frame');
 
 export const isUserProfileMainTab = (): boolean =>
 	isUserProfile()
