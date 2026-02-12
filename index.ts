@@ -187,7 +187,7 @@ TEST: addTests('isNotifications', [
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
 // TODO: Remove the second check after June 2026
-export const isOrganizationRepo = (): boolean => Boolean($('qbsearch-input')?.getAttribute('data-current-org')) || exists('.AppHeader-context-full [data-hovercard-type="organization"]');
+export const isOrganizationRepo = (): boolean => exists('qbsearch-input[data-current-org]:not[[data-current-org]=""]') || exists('.AppHeader-context-full [data-hovercard-type="organization"]');
 
 export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getOrg(url)?.path.startsWith('teams'));
 TEST: addTests('isTeamDiscussion', [
