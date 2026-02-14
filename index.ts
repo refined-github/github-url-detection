@@ -187,7 +187,7 @@ TEST: addTests('isNotifications', [
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
 export const isOrganizationRepo = (): boolean => exists([
-	'qbsearch-input[data-current-repository]:not([data-current-repository=""])[data-current-org]:not([data-current-org=""])',
+	'qbsearch-input[data-current-repository][data-current-org]:not([data-current-repository=""], [data-current-org=""])',
 	// TODO: Remove after June 2026
 	'.AppHeader-context-full [data-hovercard-type="organization"]',
 ].join(','));
