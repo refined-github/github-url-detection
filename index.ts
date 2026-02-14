@@ -296,10 +296,10 @@ TEST: addTests('isQuickPR', [
 ]);
 
 const getStateLabel = (): string | undefined => $([
-	'.State', // Old view
-	// React versions
-	'[class^="StateLabel"]', // TODO: Remove after July 2026
 	'[class^="prc-StateLabel-StateLabel"]',
+	// TODO: Remove after July 2026
+	'[class^="StateLabel"]',
+	'.State',
 ].join(','))?.textContent?.trim();
 
 export const isMergedPR = (): boolean => getStateLabel() === 'Merged';
