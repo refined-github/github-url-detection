@@ -89,10 +89,10 @@ TEST: addTests('isDashboard', [
 export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(getCleanPathname(url));
 TEST: addTests('isHome', [
 	'https://github.com',
+	'https://github.com//dashboard',
 	'https://github.com///',
 	'https://github.com//',
 	'https://github.com/',
-	'https://github.com//dashboard',
 	'https://github.com/dashboard',
 	'https://github.big-corp.com/',
 	'https://not-github.com/',
