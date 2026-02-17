@@ -61,6 +61,9 @@ TEST: addTests('isCompareWikiPage', [
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 ]);
 
+/**
+ * @deprecated Use `isHome` and/or `isFeed` instead
+ */
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
 TEST: addTests('isDashboard', [
 	'https://github.com///',
@@ -82,6 +85,18 @@ TEST: addTests('isDashboard', [
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
 	'https://github.com?search=1', // Gotcha for `isRepoTree`
 	'https://github.com/dashboard-feed',
+]);
+
+export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard(\/|$)/.test(getCleanPathname(url));
+TEST: addTests('isHome', [
+	'https://github.com',
+	'https://github.com/dashboard',
+]);
+
+export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)(\/|$)/.test(getCleanPathname(url));
+TEST: addTests('isFeed', [
+	'https://github.com/feed',
+	'https://github.com/orgs/refined-github/dashboard',
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
