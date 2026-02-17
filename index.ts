@@ -74,8 +74,9 @@ TEST: addTests('isDashboard', [
 	'https://github.com/dashboard/index/2',
 	'https://github.com//dashboard',
 	'https://github.com/dashboard',
-	'https://ghe.big-corp.com/',
-	'https://ghe-instance.com/',
+	'https://github.big-corp.com/',
+	'https://not-github.com/',
+	'https://my-little-hub.com/',
 	'https://github.com/?tab=repositories', // Gotcha for `isUserProfileRepoTab`
 	'https://github.com/?tab=stars', // Gotcha for `isUserProfileStarsTab`
 	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
@@ -93,8 +94,9 @@ TEST: addTests('isHome', [
 	'https://github.com/',
 	'https://github.com//dashboard',
 	'https://github.com/dashboard',
-	'https://ghe.big-corp.com/',
-	'https://ghe-instance.com/',
+	'https://github.big-corp.com/',
+	'https://not-github.com/',
+	'https://my-little-hub.com/',
 	'https://github.com/?tab=repositories', // Gotcha for `isUserProfileRepoTab`
 	'https://github.com/?tab=stars', // Gotcha for `isUserProfileStarsTab`
 	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
