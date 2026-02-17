@@ -87,13 +87,13 @@ TEST: addTests('isDashboard', [
 	'https://github.com/dashboard-feed',
 ]);
 
-export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard(\/|$)/.test(getCleanPathname(url));
+export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(getCleanPathname(url));
 TEST: addTests('isHome', [
 	'https://github.com',
 	'https://github.com/dashboard',
 ]);
 
-export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)(\/|$)/.test(getCleanPathname(url));
+export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)\/?$/.test(getCleanPathname(url));
 TEST: addTests('isFeed', [
 	'https://github.com/feed',
 	'https://github.com/orgs/refined-github/dashboard',
