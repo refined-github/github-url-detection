@@ -397,8 +397,7 @@ TEST: addTests('isRepo', [
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
 TEST: addTests('hasRepoHeader', combinedTestOnly);
 
-// On empty repos, there's only isRepoHome; this element is found in `<head>`
-export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
+export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists('.blankslate-icon, #empty-setup-clone-url');
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
