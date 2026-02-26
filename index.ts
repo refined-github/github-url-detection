@@ -397,7 +397,12 @@ TEST: addTests('isRepo', [
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
 TEST: addTests('hasRepoHeader', combinedTestOnly);
 
-export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists('.blankslate-icon, #empty-setup-clone-url');
+export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists([
+	// If you don't have write access
+	'.blankslate-icon',
+	// If you have write access
+	'#empty-setup-clone-url',
+].join(','));
 
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
