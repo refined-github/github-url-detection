@@ -401,7 +401,7 @@ TEST: addTests('hasRepoHeader', combinedTestOnly);
 export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
 
 /**
- * @deprecated Doesn't work anymore. Use API instead.
+ * @deprecated Doesn't work anymore. Use `isEmptyRepoRoot` or API instead.
  */
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
