@@ -404,6 +404,9 @@ export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists([
 	'#empty-setup-clone-url',
 ].join(','));
 
+/**
+ * @deprecated Doesn't work anymore. Use `isEmptyRepoRoot` or API instead.
+ */
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
 export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_public"][content="true"]');
