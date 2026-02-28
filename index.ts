@@ -868,7 +868,7 @@ export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile()
 export const canUserAdminRepo = (): boolean => {
 	const repo = getRepo();
 	return Boolean(repo && exists([
-		`.GlobalNav a[href="${repo.nameWithOwner}/settings"]`,
+		`.GlobalNav a[href="/${repo.nameWithOwner}/settings"]`,
 		// Remove after June 2026
 		'.reponav-item[href$="/settings"]',
 		'[data-tab-item$="settings-tab"]',
