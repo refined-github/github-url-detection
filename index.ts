@@ -869,7 +869,7 @@ export const canUserAdminRepo = (): boolean => isRepo() && exists([
 	'.GlobalNav a[href$="/settings"]',
 	// Remove after June 2026
 	'.reponav-item[href$="/settings"]',
-	'[data-tab-item$="settings-tab"]'
+	'[data-tab-item$="settings-tab"]',
 ].join(','));
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
