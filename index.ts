@@ -865,6 +865,9 @@ TEST: addTests('isRepositoryActions', [
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
+/**
+ * @deprecated Use doesUserHaveRepoWriteAccess or API instead.
+ */
 export const canUserAdminRepo = (): boolean => {
 	const repo = getRepo();
 	return Boolean(repo && exists(`:is(${[
@@ -873,6 +876,9 @@ export const canUserAdminRepo = (): boolean => {
 		'.js-repo-nav',
 	].join(',')}) a[href="/${repo.nameWithOwner}/settings"]`));
 };
+
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const doesUserHaveRepoWriteAccess = canUserAdminRepo;
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
