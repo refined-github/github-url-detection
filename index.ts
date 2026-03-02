@@ -4,6 +4,35 @@ import {addTests} from './collector.ts';
 const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
 const exists = (selector: string) => Boolean($(selector));
 
+/**
+ * Waits for a detection to return true by repeatedly checking it on each animation frame.
+ * Useful for DOM-based detections that need to wait for elements to appear.
+ * @param detection - A detection function to check repeatedly
+ * @returns A promise that resolves to the final result of the detection
+ * @example
+ * ```
+ * import {utils} from 'github-url-detection';
+ *
+ * async function init() {
+ *   if (!await utils.waitFor(isOrganizationProfile)) {
+ *     return;
+ *   }
+ *   // Do something when on organization profile
+ * }
+ * ```
+ */
+async function waitFor(detection: () => boolean): Promise<boolean> {
+	// eslint-disable-next-line no-await-in-loop -- We need to wait on each frame
+	while (!detection() && document.readyState !== 'complete') {
+		// eslint-disable-next-line no-await-in-loop
+		await new Promise(resolve => {
+			requestAnimationFrame(resolve);
+		});
+	}
+
+	return detection();
+}
+
 const combinedTestOnly = ['combinedTestOnly']; // To be used only to skip tests of combined functions, i.e. isPageA() || isPageB()
 
 TEST: addTests('__urls_that_dont_match__', [
@@ -980,4 +1009,5 @@ export const utils = {
 	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
 	parseRepoExplorerTitle,
+	waitFor,
 };
