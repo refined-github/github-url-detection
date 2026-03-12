@@ -424,9 +424,16 @@ TEST: addTests('isRepo', [
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
 TEST: addTests('hasRepoHeader', combinedTestOnly);
 
-// On empty repos, there's only isRepoHome; this element is found in `<head>`
-export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
+export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists([
+	// If you don't have write access
+	'.blankslate-icon',
+	// If you have write access
+	'#empty-setup-clone-url',
+].join(','));
 
+/**
+ * @deprecated Doesn't work anymore. Use `isEmptyRepoRoot` or API instead.
+ */
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
 export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_public"][content="true"]');
@@ -885,7 +892,14 @@ TEST: addTests('isRepositoryActions', [
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
-export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
+export const canUserAdminRepo = (): boolean => {
+	const repo = getRepo();
+	return Boolean(repo && exists(`:is(${[
+		'.GlobalNav',
+		// Remove after June 2026
+		'.js-repo-nav',
+	].join(',')}) a[href="/${repo.nameWithOwner}/settings"]`));
+};
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
