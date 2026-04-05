@@ -1,8 +1,24 @@
+import type {StrictlyParseSelector} from 'typed-query-selector/parser.js';
 import reservedNames from 'github-reserved-names/reserved-names.json' with {type: 'json'};
 import {addTests} from './collector.ts';
 
-const $ = <E extends Element>(selector: string) => document.querySelector<E>(selector);
-const exists = (selector: string) => Boolean($(selector));
+function $<Selector extends string, Selected extends Element = StrictlyParseSelector<Selector>>(
+	selector: Selector,
+): Selected | undefined;
+function $<Selected extends Element = HTMLElement>(
+	selector: string,
+): Selected | undefined;
+function $<Selected extends Element>(selector: string): Selected | undefined {
+	return document.querySelector<Selected>(selector) ?? undefined;
+}
+
+function exists<Selector extends string, Selected extends Element = StrictlyParseSelector<Selector>>(
+	selector: Selector,
+): Selected extends never ? never : boolean;
+function exists(selector: string): boolean;
+function exists(selector: string): boolean {
+	return Boolean(document.querySelector(selector));
+}
 
 /**
  * Waits for a detection to return true by repeatedly checking it on each animation frame.
