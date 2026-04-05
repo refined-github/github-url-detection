@@ -81,9 +81,7 @@ TEST: addTests('isCompare', [
 	'https://github.com/sindresorhus/refined-github/compare',
 	'https://github.com/sindresorhus/refined-github/compare/',
 	'https://github.com/sindresorhus/refined-github/compare/master...branch-name',
-	'https://github.com/sindresorhus/refined-github/compare/master...branch-name?quick_pull=1',
-	'https://github.com/sindresorhus/refined-github/compare/branch-1...branch-2?quick_pull=1',
-	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
+	'isQuickPR',
 ]);
 
 export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).split('/').slice(3, 5).includes('_compare');
@@ -92,17 +90,19 @@ TEST: addTests('isCompareWikiPage', [
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 ]);
 
+/**
+ * @deprecated Use `isHome` and/or `isFeed` instead
+ */
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
 TEST: addTests('isDashboard', [
 	'https://github.com///',
 	'https://github.com//',
 	'https://github.com/',
 	'https://github.com',
-	'https://github.com/orgs/test/dashboard',
+	'https://github.com/orgs/refined-github/dashboard',
 	'https://github.com/dashboard/index/2',
 	'https://github.com//dashboard',
 	'https://github.com/dashboard',
-	'https://github.com/orgs/edit/dashboard',
 	'https://github.big-corp.com/',
 	'https://not-github.com/',
 	'https://my-little-hub.com/',
@@ -113,6 +113,31 @@ TEST: addTests('isDashboard', [
 	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
 	'https://github.com?search=1', // Gotcha for `isRepoTree`
 	'https://github.com/dashboard-feed',
+]);
+
+export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(getCleanPathname(url));
+TEST: addTests('isHome', [
+	'https://github.com',
+	'https://github.com//dashboard',
+	'https://github.com///',
+	'https://github.com//',
+	'https://github.com/',
+	'https://github.com/dashboard',
+	'https://github.big-corp.com/',
+	'https://not-github.com/',
+	'https://my-little-hub.com/',
+	'https://github.com/?tab=repositories', // Gotcha for `isUserProfileRepoTab`
+	'https://github.com/?tab=stars', // Gotcha for `isUserProfileStarsTab`
+	'https://github.com/?tab=followers', // Gotcha for `isUserProfileFollowersTab`
+	'https://github.com/?tab=following', // Gotcha for `isUserProfileFollowingTab`
+	'https://github.com/?tab=overview', // Gotcha for `isUserProfileMainTab`
+	'https://github.com?search=1', // Gotcha for `isRepoTree`
+]);
+
+export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)\/?$/.test(getCleanPathname(url));
+TEST: addTests('isFeed', [
+	'https://github.com/feed',
+	'https://github.com/orgs/refined-github/dashboard',
 ]);
 
 export const isEnterprise = (url: URL | HTMLAnchorElement | Location = location): boolean => url.hostname !== 'github.com' && url.hostname !== 'gist.github.com';
@@ -217,7 +242,11 @@ TEST: addTests('isNotifications', [
 
 export const isOrganizationProfile = (): boolean => exists('meta[name="hovercard-subject-tag"][content^="organization"]');
 
-export const isOrganizationRepo = (): boolean => exists('.AppHeader-context-full [data-hovercard-type="organization"]');
+export const isOrganizationRepo = (): boolean => exists([
+	'qbsearch-input[data-current-repository][data-current-org]:not([data-current-repository=""], [data-current-org=""])',
+	// TODO: Remove after June 2026
+	'.AppHeader-context-full [data-hovercard-type="organization"]',
+].join(','));
 
 export const isTeamDiscussion = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getOrg(url)?.path.startsWith('teams'));
 TEST: addTests('isTeamDiscussion', [
@@ -317,18 +346,20 @@ TEST: addTests('isPRFiles', [
 	'https://github.com/refined-github/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641..e1aba6febb3fe38aafd1137cff28b536eeeabe7e',
 ]);
 
-export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&]quick_pull=1(&|$)/.test(url.search);
+export const isQuickPR = (url: URL | HTMLAnchorElement | Location = location): boolean => isCompare(url) && /[?&](quick_pull|expand)=1(&|$)/.test(url.search);
 TEST: addTests('isQuickPR', [
 	'https://github.com/sindresorhus/refined-github/compare/master...branch-name?quick_pull=1',
 	'https://github.com/sindresorhus/refined-github/compare/branch-1...branch-2?quick_pull=1',
 	'https://github.com/sindresorhus/refined-github/compare/test-branch?quick_pull=1',
+	'https://github.com/refined-github/sandbox/compare/fregante-patch-2?expand=1',
+	'https://github.com/refined-github/sandbox/compare/default-a...fregante-patch-2?expand=1',
 ]);
 
 const getStateLabel = (): string | undefined => $([
 	'.State', // Old view
 	// React versions
-	'[class^="StateLabel"]',
-	'[data-testid="header-state"]',
+	'[class^="StateLabel"]', // TODO: Remove after July 2026
+	'[class^="prc-StateLabel-StateLabel"]',
 ].join(','))?.textContent?.trim();
 
 export const isMergedPR = (): boolean => getStateLabel() === 'Merged';
@@ -422,9 +453,16 @@ TEST: addTests('isRepo', [
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
 TEST: addTests('hasRepoHeader', combinedTestOnly);
 
-// On empty repos, there's only isRepoHome; this element is found in `<head>`
-export const isEmptyRepoRoot = (): boolean => isRepoHome() && !exists('link[rel="canonical"]');
+export const isEmptyRepoRoot = (): boolean => isRepoHome() && exists([
+	// If you don't have write access
+	'.blankslate-icon',
+	// If you have write access
+	'#empty-setup-clone-url',
+].join(','));
 
+/**
+ * @deprecated Doesn't work anymore. Use `isEmptyRepoRoot` or API instead.
+ */
 export const isEmptyRepo = (): boolean => exists('[aria-label="Cannot fork because repository is empty."]');
 
 export const isPublicRepo = (): boolean => exists('meta[name="octolytics-dimension-repository_public"][content="true"]');
@@ -751,7 +789,7 @@ TEST: addTests('isGistProfile', [
 
 export const isUserProfile = (): boolean => isProfile() && !isOrganizationProfile();
 
-export const isPrivateUserProfile = (): boolean => isUserProfile() && !exists('.UnderlineNav-item[href$="tab=stars"]');
+export const isPrivateUserProfile = (): boolean => isUserProfile() && exists('#user-private-profile-frame');
 
 export const isUserProfileMainTab = (): boolean =>
 	isUserProfile()
@@ -883,7 +921,20 @@ TEST: addTests('isRepositoryActions', [
 
 export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile() && exists('[aria-label="Organization"] [data-tab-item="org-header-settings-tab"]');
 
-export const canUserAdminRepo = (): boolean => isRepo() && exists('.reponav-item[href$="/settings"], [data-tab-item$="settings-tab"]');
+/**
+ * @deprecated Use canUserAccessRepoSettings or API instead.
+ */
+export const canUserAdminRepo = (): boolean => {
+	const repo = getRepo();
+	return Boolean(repo && exists(`:is(${[
+		'.GlobalNav',
+		// Remove after June 2026
+		'.js-repo-nav',
+	].join(',')}) a[href="/${repo.nameWithOwner}/settings"]`));
+};
+
+// eslint-disable-next-line @typescript-eslint/no-deprecated
+export const canUserAccessRepoSettings = canUserAdminRepo;
 
 export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
