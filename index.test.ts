@@ -5,8 +5,15 @@ import stripIndent from 'strip-indent';
 import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
 
-(globalThis as any).document = {title: ''};
+(globalThis as any).document = {title: '', readyState: 'loading'};
 (globalThis as any).location = new URL('https://github.com/');
+(globalThis as any).requestAnimationFrame = (callback: FrameRequestCallback) => setTimeout(() => {
+	callback(Date.now());
+}, 0) as unknown as number;
+
+(globalThis as any).cancelAnimationFrame = (id: number) => {
+	clearTimeout(id);
+};
 
 const allUrls = getAllUrls();
 
@@ -280,4 +287,46 @@ test('parseRepoExplorerTitle', () => {
 		parse('https://github.com/eslint/js/issues', 'irrelephant'),
 		undefined,
 	);
+});
+
+test('waitFor - immediately true', async () => {
+	const detection = () => true;
+	const result = await pageDetect.utils.waitFor(detection);
+	assert.equal(result, true);
+});
+
+test('waitFor - becomes true', async () => {
+	let callCount = 0;
+	const detection = () => {
+		callCount++;
+		return callCount >= 3;
+	};
+
+	const result = await pageDetect.utils.waitFor(detection);
+	assert.equal(result, true);
+	assert.ok(callCount >= 3);
+});
+
+test('waitFor - false when document complete', async () => {
+	// Save original state
+	const originalReadyState = Object.getOwnPropertyDescriptor(document, 'readyState');
+
+	// Mock document.readyState to be 'complete'
+	Object.defineProperty(document, 'readyState', {
+		writable: true,
+		configurable: true,
+		value: 'complete',
+	});
+
+	const detection = () => false;
+	const result = await pageDetect.utils.waitFor(detection);
+	assert.equal(result, false);
+
+	// Restore original state
+	if (originalReadyState) {
+		Object.defineProperty(document, 'readyState', originalReadyState);
+	} else {
+		// If readyState wasn't a property before, delete it
+		delete (document as any).readyState;
+	}
 });
