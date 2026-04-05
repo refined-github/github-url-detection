@@ -875,7 +875,7 @@ TEST: addTests('isNewRepoTemplate', [
 ]);
 
 /** Get the logged-in user’s username */
-const getLoggedInUser = (): string | undefined => $('meta[name="user-login"] >')?.getAttribute('content') ?? undefined;
+const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
 /** Drop all redundant slashes */
 const getCleanPathname = (url: URL | HTMLAnchorElement | Location = location): string => url.pathname.replaceAll(/\/\/+/g, '/').replace(/\/$/, '').slice(1);
