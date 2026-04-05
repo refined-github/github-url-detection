@@ -15,6 +15,10 @@ on:
         description: 'Version accepted by `npm version *`'
         required: true
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   NPM:
     runs-on: ubuntu-latest
@@ -23,7 +27,6 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: package.json
-          registry-url: https://registry.npmjs.org
       - run: npm ci || npm install
       - uses: fregante/setup-git-user@v2
       - name: Create version
@@ -31,9 +34,7 @@ jobs:
         run: |
           VERSION="$(npm version "${{ github.event.inputs.Version }}")"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --provenance --access public
       - run: git push --follow-tags
       - run: gh release create "$VERSION" --generate-notes
         env:

@@ -1,6 +1,6 @@
 {
 	"name": "github-url-detection",
-	"version": "11.0.1",
+	"version": "11.1.3",
 	"description": "Which GitHub page are you on? Is it an issue? Is it a list? Perfect for your WebExtension or userscript.",
 	"keywords": [
 		"github",
@@ -42,7 +42,7 @@
 		"xo": "xo"
 	},
 	"dependencies": {
-		"github-reserved-names": "^2.1.1"
+		"github-reserved-names": "^2.1.3"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^8.1.0",
