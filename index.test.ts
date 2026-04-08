@@ -256,6 +256,21 @@ test('getRepositoryInfo', () => {
 			  ],
 			}
 		`);
+		expect(getRepositoryInfoAdapter('https://github.com/refined-github/sandbox/blob/bracket-in-path/foo%2F%5Bbar%5D%2F%2Fbaz')).toMatchInlineSnapshot(`
+			{
+			  "name": "sandbox",
+			  "nameWithOwner": "refined-github/sandbox",
+			  "owner": "refined-github",
+			  "path": "blob/bracket-in-path/foo/[bar]/baz",
+			  "pathParts": [
+			    "blob",
+			    "bracket-in-path",
+			    "foo",
+			    "[bar]",
+			    "baz",
+			  ],
+			}
+		`);
 		expect(getRepositoryInfoAdapter('https://github.com/refined-github/sandbox/blob/bracket-in-path/foo%252F%5Bbar%5D%252Fbaz')).toMatchInlineSnapshot(`
 			{
 			  "name": "sandbox",
