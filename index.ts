@@ -318,10 +318,11 @@ TEST: addTests('isPRConflicts', [
 ]);
 
 /** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
-export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/pulls' || getRepo(url)?.path === 'pulls';
+export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/pulls') || isRepoPRList(url);
 TEST: addTests('isPRList', [
 	'https://github.com/pulls',
 	'https://github.com/pulls?q=issues',
+	'https://github.com/pulls/review-requested',
 	'https://github.com/sindresorhus/refined-github/pulls',
 	'https://github.com/sindresorhus/refined-github/pulls/',
 	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Aopen+is%3Apr',
