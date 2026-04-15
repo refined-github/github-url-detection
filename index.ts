@@ -202,7 +202,7 @@ TEST: addTests('isGlobalPRList', [
 	'https://github.com//pulls/',
 ]);
 
-export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalIssueList(url) || isGlobalPRList(url);
+export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalPRList(url) || isGlobalIssueList(url);
 TEST: addTests('isGlobalIssueOrPRList', combinedTestOnly);
 
 export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
@@ -327,7 +327,7 @@ TEST: addTests('isPRConflicts', [
 ]);
 
 /** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
-export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalPRList(url) || isRepoPRList(url);
+export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoPRList(url) || isGlobalPRList(url);
 TEST: addTests('isPRList', combinedTestOnly);
 
 export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
