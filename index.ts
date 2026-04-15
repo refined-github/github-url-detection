@@ -215,10 +215,10 @@ TEST: addTests('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isGlobalIssueOrPRList(url)
-	|| isRepoIssueOrPRList(url)
-	|| isMilestone(url);
+export const isIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoIssueList(url) || isGlobalIssueList(url) || isMilestone(url);
+TEST: addTests('isIssueList', combinedTestOnly);
+
+export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssueList(url) || isPRList(url);
 TEST: addTests('isIssueOrPRList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
@@ -540,8 +540,8 @@ TEST: addTests('isRepoHome', [
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
-	'https://github.com/pullsuser/my-library', // Gotcha for isRepoPRList
-	'https://github.com/issuesuser/my-library', // Gotcha for isRepoIssueList
+	'https://github.com/pullsuser/my-library',
+	'https://github.com/issuesuser/my-library',
 ]);
 
 export type RepoExplorerInfo = {
