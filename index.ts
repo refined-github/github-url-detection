@@ -466,8 +466,8 @@ TEST: addTests('isRepo', [
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
-	'https://github.com//pullsuser/my-library', // Gotcha for isRepoPRList
-	'https://github.com//issuesuser/my-library', // Gotcha for isRepoIssueList
+	'https://github.com/pullsuser/my-library', // Gotcha for isRepoPRList
+	'https://github.com/issuesuser/my-library', // Gotcha for isRepoIssueList
 ]);
 
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
@@ -542,6 +542,8 @@ TEST: addTests('isRepoHome', [
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
+	'https://github.com/pullsuser/my-library', // Gotcha for isRepoPRList
+	'https://github.com/issuesuser/my-library', // Gotcha for isRepoIssueList
 ]);
 
 export type RepoExplorerInfo = {
