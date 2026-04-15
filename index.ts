@@ -183,7 +183,7 @@ TEST: addTests('isGist', [
 	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
-export const isGlobalIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'issues';
+export const isGlobalIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues($|\/)/.test(getCleanPathname(url));
 TEST: addTests('isGlobalIssueList', [
 	'https://github.com/issues',
 	'https://github.com/issues/assigned',
@@ -192,7 +192,7 @@ TEST: addTests('isGlobalIssueList', [
 	'https://github.com//issues/',
 ]);
 
-export const isGlobalPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'pulls';
+export const isGlobalPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pulls($|\/)/.test(getCleanPathname(url));
 TEST: addTests('isGlobalPRList', [
 	'https://github.com/pulls',
 	'https://github.com/pulls/assigned',
