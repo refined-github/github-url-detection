@@ -216,7 +216,7 @@ TEST: addTests('isIssue', [
 ]);
 
 export const isIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoIssueList(url) || isGlobalIssueList(url) || isMilestone(url);
-TEST: addTests('isIssueList', combinedTestOnly)
+TEST: addTests('isIssueList', combinedTestOnly);
 
 export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssueList(url) || isPRList(url);
 TEST: addTests('isIssueOrPRList', combinedTestOnly);
