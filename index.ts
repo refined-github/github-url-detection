@@ -184,7 +184,7 @@ TEST: addTests('isGist', [
 ]);
 
 export const isGlobalIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'issues';
-TEST: addTests('isGlobalPRList', [
+TEST: addTests('isGlobalIssueList', [
 	'https://github.com/issues',
 	'https://github.com/issues/assigned',
 	'https://github.com/issues/mentioned',
