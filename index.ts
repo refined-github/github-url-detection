@@ -38,7 +38,6 @@ function exists(selector: string): boolean {
  * ```
  */
 async function waitFor(detection: () => boolean): Promise<boolean> {
-	// eslint-disable-next-line no-await-in-loop -- We need to wait on each frame
 	while (!detection() && document.readyState !== 'complete') {
 		// eslint-disable-next-line no-await-in-loop
 		await new Promise(resolve => {
@@ -492,10 +491,10 @@ TEST: addTests('isRepo', [
 	'isSingleReleaseOrTag',
 	'isTags',
 	// Repo URLs from detections that also cover non-repo pages
-	'https://github.com/sindresorhus/refined-github/projects/3', // from isProject
-	'https://github.com/tophf/mpiv/discussions/50', // from isDiscussion
-	'https://github.com/withastro/roadmap/discussions/new?category=proposal', // from isNewDiscussion
-	'https://github.com/tophf/mpiv/discussions', // from isDiscussionList
+	'https://github.com/sindresorhus/refined-github/projects/3', // From isProject
+	'https://github.com/tophf/mpiv/discussions/50', // From isDiscussion
+	'https://github.com/withastro/roadmap/discussions/new?category=proposal', // From isNewDiscussion
+	'https://github.com/tophf/mpiv/discussions', // From isDiscussionList
 	// These URLs are repos but don't match any specific detection
 	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
