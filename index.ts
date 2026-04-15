@@ -215,10 +215,10 @@ TEST: addTests('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isGlobalIssueOrPRList(url)
-	|| isRepoIssueOrPRList(url)
-	|| isMilestone(url);
+export const isIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoIssueList(url) || isGlobalIssueList(url) || isMilestone(url);
+TEST: addTests('isIssueList', combinedTestOnly)
+
+export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssueList(url) || isPRList(url);
 TEST: addTests('isIssueOrPRList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
