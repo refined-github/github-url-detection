@@ -540,8 +540,8 @@ TEST: addTests('isRepoHome', [
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
-	'https://github.com/pullsuser/my-library', // Gotcha for isRepoPRList
-	'https://github.com/issuesuser/my-library', // Gotcha for isRepoIssueList
+	'https://github.com/pullsuser/my-library',
+	'https://github.com/issuesuser/my-library',
 ]);
 
 export type RepoExplorerInfo = {
