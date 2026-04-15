@@ -183,18 +183,27 @@ TEST: addTests('isGist', [
 	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
-export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
-TEST: addTests('isGlobalIssueOrPRList', [
+export const isGlobalIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'issues';
+TEST: addTests('isGlobalPRList', [
 	'https://github.com/issues',
-	'https://github.com/issues?q=is%3Apr+is%3Aopen',
 	'https://github.com/issues/assigned',
 	'https://github.com/issues/mentioned',
+	'https://github.com/issues?q=is%3Apr+is%3Aopen',
+	'https://github.com//issues/',
+]);
+
+export const isGlobalPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'pulls';
+TEST: addTests('isGlobalPRList', [
 	'https://github.com/pulls',
-	'https://github.com/pulls?q=issues',
 	'https://github.com/pulls/assigned',
 	'https://github.com/pulls/mentioned',
 	'https://github.com/pulls/review-requested',
+	'https://github.com/pulls?q=issues',
+	'https://github.com//pulls/',
 ]);
+
+export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalIssueList(url) || isGlobalPRList(url);
+TEST: addTests('isGlobalIssueOrPRList', combinedTestOnly);
 
 export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
 TEST: addTests('isGlobalSearchResults', [
@@ -318,16 +327,8 @@ TEST: addTests('isPRConflicts', [
 ]);
 
 /** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
-export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname.startsWith('/pulls') || isRepoPRList(url);
-TEST: addTests('isPRList', [
-	'https://github.com/pulls',
-	'https://github.com/pulls?q=issues',
-	'https://github.com/pulls/review-requested',
-	'https://github.com/sindresorhus/refined-github/pulls',
-	'https://github.com/sindresorhus/refined-github/pulls/',
-	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Aopen+is%3Apr',
-	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
-]);
+export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalPRList(url) || isRepoPRList(url);
+TEST: addTests('isPRList', combinedTestOnly);
 
 export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
 TEST: addTests('isPRCommit', [
@@ -459,7 +460,7 @@ TEST: addTests('isRepo', [
 	// Some of these are here simply as "gotchas" to other detections
 	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
 	'https://github.com/sindresorhus/refined-github/issues/146',
-	'https://github.com/sindresorhus/notifications/',
+	'https://github.com/sindresorhus/notifications/', // Gotcha for isNotifications
 	'https://github.com/sindresorhus/refined-github/pull/148',
 	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
@@ -792,6 +793,8 @@ TEST: addTests('isProfile', [
 	'https://github.com/sindresorhus?tab=followers',
 	'https://github.com/fregante?tab=following',
 	'https://github.com/sindresorhus?tab=following',
+	'https://github.com/pullsuser', // Gotcha for isGlobalPRList
+	'https://github.com/issuesuser', // Gotcha for isGlobalIssueList
 ]);
 
 export const isGistProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => doesLookLikeAProfile(getCleanGistPathname(url));
