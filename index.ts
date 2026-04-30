@@ -78,7 +78,10 @@ TEST: addTests('isCommit', [
 ]);
 
 export const isCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoCommitList(url) || isPRCommitList(url);
-TEST: addTests('isCommitList', combinedTestOnly);
+TEST: addTests('isCommitList', [
+	'isRepoCommitList',
+	'isPRCommitList',
+]);
 
 export const isRepoCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('commits'));
 TEST: addTests('isRepoCommitList', [
@@ -202,7 +205,10 @@ TEST: addTests('isGlobalPRList', [
 ]);
 
 export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalPRList(url) || isGlobalIssueList(url);
-TEST: addTests('isGlobalIssueOrPRList', combinedTestOnly);
+TEST: addTests('isGlobalIssueOrPRList', [
+	'isGlobalPRList',
+	'isGlobalIssueList',
+]);
 
 export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
 TEST: addTests('isGlobalSearchResults', [
@@ -215,13 +221,23 @@ TEST: addTests('isIssue', [
 ]);
 
 export const isIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoIssueList(url) || isGlobalIssueList(url) || isMilestone(url);
-TEST: addTests('isIssueList', combinedTestOnly);
+TEST: addTests('isIssueList', [
+	'isRepoIssueList',
+	'isGlobalIssueList',
+	'isMilestone',
+]);
 
 export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssueList(url) || isPRList(url);
-TEST: addTests('isIssueOrPRList', combinedTestOnly);
+TEST: addTests('isIssueOrPRList', [
+	'isIssueList',
+	'isPRList',
+]);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
-TEST: addTests('isConversation', combinedTestOnly);
+TEST: addTests('isConversation', [
+	'isIssue',
+	'isPRConversation',
+]);
 
 export const isLabelList = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'labels';
 TEST: addTests('isLabelList', [
@@ -327,7 +343,10 @@ TEST: addTests('isPRConflicts', [
 
 /** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
 export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoPRList(url) || isGlobalPRList(url);
-TEST: addTests('isPRList', combinedTestOnly);
+TEST: addTests('isPRList', [
+	'isRepoPRList',
+	'isGlobalPRList',
+]);
 
 export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
 TEST: addTests('isPRCommit', [
@@ -428,7 +447,11 @@ TEST: addTests('isEditingFile', [
 ]);
 
 export const hasFileEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingFile(url) || isNewFile(url) || isDeletingFile(url);
-TEST: addTests('hasFileEditor', combinedTestOnly);
+TEST: addTests('hasFileEditor', [
+	'isEditingFile',
+	'isNewFile',
+	'isDeletingFile',
+]);
 
 export const isEditingRelease = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('releases/edit'));
 TEST: addTests('isEditingRelease', [
@@ -436,7 +459,10 @@ TEST: addTests('isEditingRelease', [
 ]);
 
 export const hasReleaseEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingRelease(url) || isNewRelease(url);
-TEST: addTests('hasReleaseEditor', combinedTestOnly);
+TEST: addTests('hasReleaseEditor', [
+	'isEditingRelease',
+	'isNewRelease',
+]);
 
 export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 TEST: addTests('isEditingWikiPage', [
@@ -444,7 +470,10 @@ TEST: addTests('isEditingWikiPage', [
 ]);
 
 export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
-TEST: addTests('hasWikiPageEditor', combinedTestOnly);
+TEST: addTests('hasWikiPageEditor', [
+	'isEditingWikiPage',
+	'isNewWikiPage',
+]);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => {
 	const [user, repo, extra] = getCleanPathname(url).split('/');
@@ -535,7 +564,11 @@ export const isRepoIssueOrPRList = (url: URL | HTMLAnchorElement | Location = lo
 	isRepoPRList(url)
 	|| isRepoIssueList(url)
 	|| isRepoTaxonomyIssueOrPRList(url);
-TEST: addTests('isRepoIssueOrPRList', combinedTestOnly);
+TEST: addTests('isRepoIssueOrPRList', [
+	'isRepoPRList',
+	'isRepoIssueList',
+	'isRepoTaxonomyIssueOrPRList',
+]);
 
 export const isRepoPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('pulls'));
 TEST: addTests('isRepoPRList', [
@@ -740,7 +773,10 @@ TEST: addTests('isRenderedTextFile', [
 ]);
 
 export const hasRenderedText = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoRoot(url) || isRenderedTextFile(url);
-TEST: addTests('hasRenderedText', combinedTestOnly);
+TEST: addTests('hasRenderedText', [
+	'isRepoRoot',
+	'isRenderedTextFile',
+]);
 
 export const isFileFinder = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path.startsWith('find/'));
 TEST: addTests('isFileFinder', [
@@ -895,7 +931,13 @@ TEST: addTests('isProfileRepoList', [
 	'https://github.com/orgs/refined-github/repositories?q=&type=private&language=&sort=',
 ]);
 
-TEST: addTests('hasComments', combinedTestOnly);
+TEST: addTests('hasComments', [
+	'isPR',
+	'isIssue',
+	'isCommit',
+	'isTeamDiscussion',
+	'isSingleGist',
+]);
 export const hasComments = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isPR(url)
 	|| isIssue(url)
@@ -903,7 +945,15 @@ export const hasComments = (url: URL | HTMLAnchorElement | Location = location):
 	|| isTeamDiscussion(url)
 	|| isSingleGist(url);
 
-TEST: addTests('hasRichTextEditor', combinedTestOnly);
+TEST: addTests('hasRichTextEditor', [
+	'hasComments',
+	'isNewIssue',
+	'isCompare',
+	'isRepliesSettings',
+	'hasReleaseEditor',
+	'isDiscussion',
+	'isNewDiscussion',
+]);
 export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url)
 	|| isNewIssue(url)
@@ -913,7 +963,17 @@ export const hasRichTextEditor = (url: URL | HTMLAnchorElement | Location = loca
 	|| isDiscussion(url)
 	|| isNewDiscussion(url);
 
-TEST: addTests('hasCode', combinedTestOnly);
+TEST: addTests('hasCode', [
+	'hasComments',
+	'isRepoTree',
+	'isRepoSearch',
+	'isGlobalSearchResults',
+	'isSingleFile',
+	'isGist',
+	'isCompare',
+	'isCompareWikiPage',
+	'isBlame',
+]);
 /** Static code, not the code editor */
 export const hasCode = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	hasComments(url)
@@ -936,7 +996,11 @@ export const isRepoGitObject = (url: URL | HTMLAnchorElement | Location = locati
 	isRepo(url)
 	&& [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
 
-TEST: addTests('hasFiles', combinedTestOnly);
+TEST: addTests('hasFiles', [
+	'isCommit',
+	'isCompare',
+	'isPRFiles',
+]);
 /** Has a list of files */
 export const hasFiles = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isCommit(url)
