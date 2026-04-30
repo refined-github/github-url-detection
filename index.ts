@@ -38,7 +38,6 @@ function exists(selector: string): boolean {
  * ```
  */
 async function waitFor(detection: () => boolean): Promise<boolean> {
-	// eslint-disable-next-line no-await-in-loop -- We need to wait on each frame
 	while (!detection() && document.readyState !== 'complete') {
 		// eslint-disable-next-line no-await-in-loop
 		await new Promise(resolve => {
@@ -457,11 +456,46 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 };
 
 TEST: addTests('isRepo', [
-	// Some of these are here simply as "gotchas" to other detections
-	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
-	'https://github.com/sindresorhus/refined-github/issues/146',
-	'https://github.com/sindresorhus/notifications/', // Gotcha for isNotifications
-	'https://github.com/sindresorhus/refined-github/pull/148',
+	'isActionRun', // Includes isActionJobRun URLs
+	'isBranches',
+	'isCompare', // Includes isQuickPR URLs
+	'isDeletingFile',
+	'isEditingFile',
+	'isEditingRelease',
+	'isFileFinder',
+	'isForkingRepo',
+	'isIssue',
+	'isLabelList',
+	'isMilestone',
+	'isMilestoneList',
+	'isNewAction',
+	'isNewFile',
+	'isNewIssue',
+	'isNewRelease',
+	'isPR', // Includes isPRConversation, isPRFiles (→isPRCommit), isPRCommitList
+	'isPRConflicts',
+	'isProjects',
+	'isReleases',
+	'isRepoPRList',
+	'isRepoCommitList',
+	'isRepoForksList',
+	'isRepoGitObject', // Includes isRepoTree (→isRepoRoot→isRepoHome), isSingleFile (→isRenderedTextFile), isBlame
+	'isRepoIssueList',
+	'isRepoNetworkGraph',
+	'isRepoSearch',
+	'isRepoSettings', // Includes isRepoMainSettings
+	'isRepoTaxonomyIssueOrPRList',
+	'isRepoWiki', // Includes isNewWikiPage, isEditingWikiPage, isCompareWikiPage
+	'isRepositoryActions',
+	'isSingleCommit',
+	'isSingleReleaseOrTag',
+	'isTags',
+	// Repo URLs from detections that also cover non-repo pages
+	'https://github.com/sindresorhus/refined-github/projects/3', // From isProject
+	'https://github.com/tophf/mpiv/discussions/50', // From isDiscussion
+	'https://github.com/withastro/roadmap/discussions/new?category=proposal', // From isNewDiscussion
+	'https://github.com/tophf/mpiv/discussions', // From isDiscussionList
+	// These URLs are repos but don't match any specific detection
 	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
