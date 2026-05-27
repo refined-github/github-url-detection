@@ -1007,10 +1007,7 @@ TEST: addTests('isNewRepoTemplate', [
 /** Get the logged-in user’s username */
 const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
-/**
- * Drop all redundant slashes.
- * You may want to use `getDecodedPathname` first
- */
+/** Drop all redundant slashes. You may want to use `getDecodedPathname` first */
 const getCleanPathname = (url: URL | HTMLAnchorElement | string | Location = location): string =>
 	(typeof url === 'string' ? url : url.pathname)
 		.replaceAll(/\/\/+/g, '/')
