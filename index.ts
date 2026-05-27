@@ -1009,7 +1009,7 @@ const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.
 
 /**
  * Drop all redundant slashes.
- * You may want to use `getDecodedPathname` before
+ * You may want to use `getDecodedPathname` first
  */
 const getCleanPathname = (url: URL | HTMLAnchorElement | string | Location = location): string =>
 	(typeof url === 'string' ? url : url.pathname)
