@@ -100,7 +100,7 @@ TEST: addTests('isCompare', [
 	'isQuickPR',
 ]);
 
-export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && processPathname(url).split('/').slice(3, 5).includes('_compare');
+export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).split('/').slice(3, 5).includes('_compare');
 TEST: addTests('isCompareWikiPage', [
 	'https://github.com/brookhong/Surfingkeys/wiki/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
 	'https://github.com/brookhong/Surfingkeys/wiki/Color-Themes/_compare/8ebb46b1a12d16fc1af442b7df0ca13ca3bb34dc...80e51eeabe69b15a3f23880ecc36f800b71e6c6d',
@@ -109,7 +109,7 @@ TEST: addTests('isCompareWikiPage', [
 /**
  * @deprecated Use `isHome` and/or `isFeed` instead
  */
-export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(processPathname(url));
+export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
 TEST: addTests('isDashboard', [
 	'https://github.com///',
 	'https://github.com//',
@@ -131,7 +131,7 @@ TEST: addTests('isDashboard', [
 	'https://github.com/dashboard-feed',
 ]);
 
-export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(processPathname(url));
+export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(getCleanPathname(url));
 TEST: addTests('isHome', [
 	'https://github.com',
 	'https://github.com//dashboard',
@@ -150,7 +150,7 @@ TEST: addTests('isHome', [
 	'https://github.com?search=1', // Gotcha for `isRepoTree`
 ]);
 
-export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)\/?$/.test(processPathname(url));
+export const isFeed = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^(feed|orgs\/[^/]+\/dashboard)\/?$/.test(getCleanPathname(url));
 TEST: addTests('isFeed', [
 	'https://github.com/feed',
 	'https://github.com/orgs/refined-github/dashboard',
@@ -246,12 +246,12 @@ TEST: addTests('isNewRelease', [
 	'https://github.com/sindresorhus/refined-github/releases/new',
 ]);
 
-export const isNewWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && processPathname(url).endsWith('/_new');
+export const isNewWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_new');
 TEST: addTests('isNewWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/_new',
 ]);
 
-export const isNotifications = (url: URL | HTMLAnchorElement | Location = location): boolean => processPathname(url) === 'notifications';
+export const isNotifications = (url: URL | HTMLAnchorElement | Location = location): boolean => getCleanPathname(url) === 'notifications';
 TEST: addTests('isNotifications', [
 	'https://github.com/notifications',
 ]);
@@ -271,7 +271,7 @@ TEST: addTests('isTeamDiscussion', [
 	'https://github.com/orgs/refined-github/teams/core-team',
 ]);
 
-export const isOwnUserProfile = (): boolean => processPathname() === getLoggedInUser();
+export const isOwnUserProfile = (): boolean => getCleanPathname() === getLoggedInUser();
 
 // If there's a Report Abuse link, we're not part of the org
 export const isOwnOrganizationProfile = (): boolean => isOrganizationProfile() && !exists('[href*="contact/report-abuse?report="]');
@@ -437,7 +437,7 @@ TEST: addTests('isEditingRelease', [
 export const hasReleaseEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingRelease(url) || isNewRelease(url);
 TEST: addTests('hasReleaseEditor', combinedTestOnly);
 
-export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && processPathname(url).endsWith('/_edit');
+export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoWiki(url) && getCleanPathname(url).endsWith('/_edit');
 TEST: addTests('isEditingWikiPage', [
 	'https://github.com/tooomm/wikitest/wiki/Getting-Started/_edit',
 ]);
@@ -446,7 +446,7 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
 TEST: addTests('hasWikiPageEditor', combinedTestOnly);
 
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => {
-	const [user, repo, extra] = processPathname(url).split('/');
+	const [user, repo, extra] = getCleanPathname(url).split('/');
 	return Boolean(user
 		&& repo
 		&& !reservedNames.includes(user)
@@ -776,7 +776,7 @@ const doesLookLikeAProfile = (string: string | undefined): boolean =>
 
 export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	!isGist(url)
-	&& doesLookLikeAProfile(processPathname(url));
+	&& doesLookLikeAProfile(getCleanPathname(url));
 
 TEST: addTests('isProfile', [
 	'https://github.com/fregante',
@@ -894,7 +894,7 @@ TEST: addTests('isRepoGitObject', [
 /** Covers blob, trees and blame pages */
 export const isRepoGitObject = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	isRepo(url)
-	&& [undefined, 'blob', 'tree', 'blame'].includes(processPathname(url).split('/')[2]);
+	&& [undefined, 'blob', 'tree', 'blame'].includes(getCleanPathname(url).split('/')[2]);
 
 TEST: addTests('hasFiles', combinedTestOnly);
 /** Has a list of files */
@@ -952,7 +952,7 @@ export const canUserAdminRepo = (): boolean => {
 // eslint-disable-next-line @typescript-eslint/no-deprecated
 export const canUserAccessRepoSettings = canUserAdminRepo;
 
-export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(processPathname(url)));
+export const isNewRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && (url.pathname === '/new' || /^organizations\/[^/]+\/repositories\/new$/.test(getCleanPathname(url)));
 TEST: addTests('isNewRepo', [
 	'https://github.com/new',
 	'https://github.com/organizations/npmhub/repositories/new',
@@ -967,18 +967,25 @@ TEST: addTests('isNewRepoTemplate', [
 /** Get the logged-in user’s username */
 const getLoggedInUser = (): string | undefined => $('meta[name="user-login"]')?.getAttribute('content') ?? undefined;
 
-/** Decode it and drop all redundant slashes */
-const processPathname = (url: URL | HTMLAnchorElement | Location = location): string =>
-	url.pathname
-		.split('/')
-		.map(part => decodeURIComponent(part))
-		.join('/')
+/**
+ * Drop all redundant slashes.
+ * You may want to use `getDecodedPathname` before
+ */
+const getCleanPathname = (url: URL | HTMLAnchorElement | string | Location = location): string =>
+	(typeof url === 'string' ? url : url.pathname)
 		.replaceAll(/\/\/+/g, '/')
 		.replace(/\/$/, '')
 		.slice(1);
 
+/** Decode all path parts */
+const getDecodedPathname = (url: URL | HTMLAnchorElement | Location = location): string =>
+	url.pathname
+		.split('/')
+		.map(part => decodeURIComponent(part))
+		.join('/');
+
 const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location): string | undefined => {
-	const pathname = processPathname(url);
+	const pathname = getCleanPathname(url);
 	if (url.hostname.startsWith('gist.')) {
 		return pathname;
 	}
@@ -988,7 +995,7 @@ const getCleanGistPathname = (url: URL | HTMLAnchorElement | Location = location
 };
 
 const getOrg = (url: URL | HTMLAnchorElement | Location = location): {name: string; path: string} | undefined => {
-	const [orgs, name, ...path] = processPathname(url).split('/');
+	const [orgs, name, ...path] = getCleanPathname(url).split('/');
 	if (orgs === 'orgs' && name) {
 		return {name, path: path.join('/')};
 	}
@@ -1034,7 +1041,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 		if (canonical) {
 			const canonicalUrl = new URL(canonical.content, location.origin);
 			// Sometimes GitHub sets the canonical to an incomplete URL, so it can't be used
-			if (processPathname(canonicalUrl).toLowerCase() === processPathname(location).toLowerCase()) {
+			if (getCleanPathname(canonicalUrl).toLowerCase() === getCleanPathname(location).toLowerCase()) {
 				url = canonicalUrl;
 			}
 		}
@@ -1048,7 +1055,7 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 		return;
 	}
 
-	const [owner, name, ...pathParts] = processPathname(url).split('/') as [string, string, string];
+	const [owner, name, ...pathParts] = getCleanPathname(getDecodedPathname(url)).split('/') as [string, string, string];
 	return {
 		owner,
 		name,
@@ -1061,7 +1068,8 @@ const getRepo = (url?: URL | HTMLAnchorElement | Location | string): RepositoryI
 export const utils = {
 	getOrg,
 	getLoggedInUser,
-	processPathname,
+	getCleanPathname,
+	getDecodedPathname,
 	getCleanGistPathname,
 	getRepositoryInfo: getRepo,
 	parseRepoExplorerTitle,
