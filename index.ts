@@ -38,7 +38,6 @@ function exists(selector: string): boolean {
  * ```
  */
 async function waitFor(detection: () => boolean): Promise<boolean> {
-	// eslint-disable-next-line no-await-in-loop -- We need to wait on each frame
 	while (!detection() && document.readyState !== 'complete') {
 		// eslint-disable-next-line no-await-in-loop
 		await new Promise(resolve => {
@@ -183,18 +182,27 @@ TEST: addTests('isGist', [
 	'https://gist.my-little-hub.com/in-fragrante',
 ]);
 
-export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => ['issues', 'pulls'].includes(url.pathname.split('/', 2)[1]!);
-TEST: addTests('isGlobalIssueOrPRList', [
+export const isGlobalIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^issues($|\/)/.test(getCleanPathname(url));
+TEST: addTests('isGlobalIssueList', [
 	'https://github.com/issues',
-	'https://github.com/issues?q=is%3Apr+is%3Aopen',
 	'https://github.com/issues/assigned',
 	'https://github.com/issues/mentioned',
+	'https://github.com/issues?q=is%3Apr+is%3Aopen',
+	'https://github.com//issues/',
+]);
+
+export const isGlobalPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pulls($|\/)/.test(getCleanPathname(url));
+TEST: addTests('isGlobalPRList', [
 	'https://github.com/pulls',
-	'https://github.com/pulls?q=issues',
 	'https://github.com/pulls/assigned',
 	'https://github.com/pulls/mentioned',
 	'https://github.com/pulls/review-requested',
+	'https://github.com/pulls?q=issues',
+	'https://github.com//pulls/',
 ]);
+
+export const isGlobalIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isGlobalPRList(url) || isGlobalIssueList(url);
+TEST: addTests('isGlobalIssueOrPRList', combinedTestOnly);
 
 export const isGlobalSearchResults = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/search' && new URLSearchParams(url.search).get('q') !== null;
 TEST: addTests('isGlobalSearchResults', [
@@ -206,10 +214,10 @@ TEST: addTests('isIssue', [
 	'https://github.com/sindresorhus/refined-github/issues/146',
 ]);
 
-export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	isGlobalIssueOrPRList(url)
-	|| isRepoIssueOrPRList(url)
-	|| isMilestone(url);
+export const isIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoIssueList(url) || isGlobalIssueList(url) || isMilestone(url);
+TEST: addTests('isIssueList', combinedTestOnly);
+
+export const isIssueOrPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssueList(url) || isPRList(url);
 TEST: addTests('isIssueOrPRList', combinedTestOnly);
 
 export const isConversation = (url: URL | HTMLAnchorElement | Location = location): boolean => isIssue(url) || isPRConversation(url);
@@ -318,15 +326,8 @@ TEST: addTests('isPRConflicts', [
 ]);
 
 /** Any `isIssueOrPRList` can display both issues and PRs, prefer that detection. `isPRList` only exists because this page has PR-specific filters like the "Reviews" dropdown */
-export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => url.pathname === '/pulls' || getRepo(url)?.path === 'pulls';
-TEST: addTests('isPRList', [
-	'https://github.com/pulls',
-	'https://github.com/pulls?q=issues',
-	'https://github.com/sindresorhus/refined-github/pulls',
-	'https://github.com/sindresorhus/refined-github/pulls/',
-	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Aopen+is%3Apr',
-	'https://github.com/sindresorhus/refined-github/pulls?q=is%3Apr+is%3Aclosed',
-]);
+export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoPRList(url) || isGlobalPRList(url);
+TEST: addTests('isPRList', combinedTestOnly);
 
 export const isPRCommit = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(commits|changes)\/[\da-f]{7,40}$/.test(getRepo(url)?.path);
 TEST: addTests('isPRCommit', [
@@ -455,11 +456,46 @@ export const isRepo = (url: URL | HTMLAnchorElement | Location = location): bool
 };
 
 TEST: addTests('isRepo', [
-	// Some of these are here simply as "gotchas" to other detections
-	'https://github.com/sindresorhus/refined-github/blame/master/package.json',
-	'https://github.com/sindresorhus/refined-github/issues/146',
-	'https://github.com/sindresorhus/notifications/',
-	'https://github.com/sindresorhus/refined-github/pull/148',
+	'isActionRun', // Includes isActionJobRun URLs
+	'isBranches',
+	'isCompare', // Includes isQuickPR URLs
+	'isDeletingFile',
+	'isEditingFile',
+	'isEditingRelease',
+	'isFileFinder',
+	'isForkingRepo',
+	'isIssue',
+	'isLabelList',
+	'isMilestone',
+	'isMilestoneList',
+	'isNewAction',
+	'isNewFile',
+	'isNewIssue',
+	'isNewRelease',
+	'isPR', // Includes isPRConversation, isPRFiles (→isPRCommit), isPRCommitList
+	'isPRConflicts',
+	'isProjects',
+	'isReleases',
+	'isRepoPRList',
+	'isRepoCommitList',
+	'isRepoForksList',
+	'isRepoGitObject', // Includes isRepoTree (→isRepoRoot→isRepoHome), isSingleFile (→isRenderedTextFile), isBlame
+	'isRepoIssueList',
+	'isRepoNetworkGraph',
+	'isRepoSearch',
+	'isRepoSettings', // Includes isRepoMainSettings
+	'isRepoTaxonomyIssueOrPRList',
+	'isRepoWiki', // Includes isNewWikiPage, isEditingWikiPage, isCompareWikiPage
+	'isRepositoryActions',
+	'isSingleCommit',
+	'isSingleReleaseOrTag',
+	'isTags',
+	// Repo URLs from detections that also cover non-repo pages
+	'https://github.com/sindresorhus/refined-github/projects/3', // From isProject
+	'https://github.com/tophf/mpiv/discussions/50', // From isDiscussion
+	'https://github.com/withastro/roadmap/discussions/new?category=proposal', // From isNewDiscussion
+	'https://github.com/tophf/mpiv/discussions', // From isDiscussionList
+	// These URLs are repos but don't match any specific detection
 	'https://github.com/sindresorhus/refined-github/milestones/new', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
@@ -538,6 +574,8 @@ TEST: addTests('isRepoHome', [
 	'https://github.com/sindresorhus/search',
 	'https://github.com/sindresorhus/branches',
 	'https://github.com/sindresorhus/refined-github?files=1',
+	'https://github.com/pullsuser/my-library',
+	'https://github.com/issuesuser/my-library',
 ]);
 
 export type RepoExplorerInfo = {
@@ -791,6 +829,8 @@ TEST: addTests('isProfile', [
 	'https://github.com/sindresorhus?tab=followers',
 	'https://github.com/fregante?tab=following',
 	'https://github.com/sindresorhus?tab=following',
+	'https://github.com/pullsuser', // Gotcha for isGlobalPRList
+	'https://github.com/issuesuser', // Gotcha for isGlobalIssueList
 ]);
 
 export const isGistProfile = (url: URL | HTMLAnchorElement | Location = location): boolean => doesLookLikeAProfile(getCleanGistPathname(url));

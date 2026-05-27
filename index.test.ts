@@ -54,11 +54,6 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 		});
 	}
 
-	// Skip negatives for this one, it's too long
-	if (detectName === 'isRepo') {
-		continue;
-	}
-
 	for (const url of allUrls) {
 		if (!validURLs.includes(url)) {
 			test(`${detectName} NO ${url}`, () => {
