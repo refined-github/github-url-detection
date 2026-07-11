@@ -57,7 +57,7 @@ TEST: addTests('__urls_that_dont_match__', [
 	'https://github.com/orgs/community/discussions/new/choose',
 ]);
 
-export const is404 = (): boolean => /^(Page|File) not found · GitHub/.test(document.title); // #98; When logged out, it starts with "File"
+export const is404 = (): boolean => /^(Page|File) not found(?: · GitHub|$)/.test(document.title);
 
 export const is500 = (): boolean => document.title === 'Server Error · GitHub' || document.title === 'Unicorn! · GitHub' || document.title === '504 Gateway Time-out';
 
