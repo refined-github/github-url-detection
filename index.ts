@@ -748,6 +748,7 @@ TEST: addTests('isFileFinder', [
 ]);
 
 /**
+ * @deprecated Use is404 and isSingleFile/isRepoTree directly
  * @example https://github.com/fregante/GhostText/tree/3cacd7df71b097dc525d99c7aa2f54d31b02fcc8/chrome/scripts/InputArea
  * @example https://github.com/refined-github/refined-github/blob/some-non-existent-ref/source/features/bugs-tab.tsx
  */
