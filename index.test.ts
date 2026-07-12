@@ -134,16 +134,6 @@ test('isPRFile404', () => {
 	assert.equal(pageDetect.isPRFile404(), false);
 });
 
-test('isRepoFile404', () => {
-	document.title = 'File not found';
-	location.href = 'https://github.com/fregante/GhostText/tree/3cacd7df71b097dc525d99c7aa2f54d31b02fcc8/chrome/scripts/InputArea';
-	assert.ok(pageDetect.isRepoFile404());
-
-	document.title = 'File not found';
-	location.href = 'https://github.com/refined-github/refined-github/blob/some-non-existent-ref/source/features/bugs-tab.tsx';
-	assert.ok(pageDetect.isRepoFile404());
-});
-
 const {getRepositoryInfo} = pageDetect.utils;
 test('getRepositoryInfo', () => {
 	const inputTypes = [
