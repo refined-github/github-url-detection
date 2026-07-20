@@ -553,6 +553,7 @@ TEST: addTests('isRepoIssueList', [
 	'https://github.com/sindresorhus/refined-github/issues',
 	'https://github.com/sindresorhus/refined-github/issues/fregante',
 	'https://github.com/sindresorhus/refined-github/issues/newton',
+	'https://github.com/refined-github/refined-github/issues/views/4537',
 	'https://github.com/sindresorhus/refined-github/issues/wptemplates',
 	'https://github.com/sindresorhus/refined-github/issues?q=is%3Aclosed+sort%3Aupdated-desc',
 	'https://github.com/sindresorhus/refined-github/labels/bug',
