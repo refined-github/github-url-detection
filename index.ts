@@ -500,6 +500,7 @@ TEST: addTests('isRepo', [
 	'https://github.com/sindresorhus/refined-github/milestones/1/edit', // Gotcha for isRepoTaxonomyIssueOrPRList
 	'https://github.com/sindresorhus/refined-github/issues/new/choose', // Gotcha for isRepoIssueList
 	'https://github.com/sindresorhus/refined-github/issues/templates/edit', // Gotcha for isRepoIssueList
+	'https://github.com/refined-github/refined-github/issues/views', // Gotcha for isRepoIssueList
 ]);
 
 export const hasRepoHeader = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepo(url) && !isRepoSearch(url);
@@ -546,8 +547,8 @@ TEST: addTests('isRepoPRList', [
 ]);
 
 export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = location): boolean =>
-	// `issues/fregante` is a list but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit` aren’t
-	/^labels\/|^issues(?!\/(\d+|new|templates)($|\/))/.test(getRepo(url)?.path);
+	// `issues/fregante` and `issues/views/123` are lists but `issues/1`, `issues/new`, `issues/new/choose`, `issues/templates/edit`, `issues/views` aren’t
+	/^labels\/|^issues(?!\/(\d+|new|templates|views$)($|\/))/.test(getRepo(url)?.path);
 TEST: addTests('isRepoIssueList', [
 	'http://github.com/sindresorhus/ava/issues',
 	'https://github.com/sindresorhus/refined-github/issues',
