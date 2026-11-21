@@ -985,11 +985,7 @@ export const isUserTheOrganizationOwner = (): boolean => isOrganizationProfile()
  */
 export const canUserAdminRepo = (): boolean => {
 	const repo = getRepo();
-	return Boolean(repo && exists(`:is(${[
-		'.GlobalNav',
-		// Remove after June 2026
-		'.js-repo-nav',
-	].join(',')}) a[href="/${repo.nameWithOwner}/settings"]`));
+	return Boolean(repo && exists(`.GlobalNav a[href="/${repo.nameWithOwner}/settings"]`));
 };
 
 // eslint-disable-next-line @typescript-eslint/no-deprecated
