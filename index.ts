@@ -111,12 +111,12 @@ export const isCompareWikiPage = (url: URL | HTMLAnchorElement | Location = loca
  * @example https://github.big-corp.com/
  * @example https://not-github.com/
  * @example https://my-little-hub.com/
- * @example https://github.com/?tab=repositories // Gotcha for `isUserProfileRepoTab`
- * @example https://github.com/?tab=stars // Gotcha for `isUserProfileStarsTab`
- * @example https://github.com/?tab=followers // Gotcha for `isUserProfileFollowersTab`
- * @example https://github.com/?tab=following // Gotcha for `isUserProfileFollowingTab`
- * @example https://github.com/?tab=overview // Gotcha for `isUserProfileMainTab`
- * @example https://github.com?search=1 // Gotcha for `isRepoTree`
+ * @example https://github.com/?tab=repositories
+ * @example https://github.com/?tab=stars
+ * @example https://github.com/?tab=followers
+ * @example https://github.com/?tab=following
+ * @example https://github.com/?tab=overview
+ * @example https://github.com?search=1
  * @example https://github.com/dashboard-feed
  */
 export const isDashboard = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^(orgs\/[^/]+\/)?dashboard(-feed)?(\/|$)/.test(getCleanPathname(url));
@@ -464,7 +464,6 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
 
 /**
  * Repo URLs from detections that also cover non-repo pages
- * These URLs are repos but don't match any specific detection
  * @see isActionRun
  * @see isActionJobRun
  * @see isBranches
@@ -505,10 +504,10 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isSingleCommit
  * @see isSingleReleaseOrTag
  * @see isTags
- * @example https://github.com/sindresorhus/refined-github/projects/3 // From isProject
- * @example https://github.com/tophf/mpiv/discussions/50 // From isDiscussion
- * @example https://github.com/withastro/roadmap/discussions/new?category=proposal // From isNewDiscussion
- * @example https://github.com/tophf/mpiv/discussions // From isDiscussionList
+ * @example https://github.com/sindresorhus/refined-github/projects/3
+ * @example https://github.com/tophf/mpiv/discussions/50
+ * @example https://github.com/withastro/roadmap/discussions/new?category=proposal
+ * @example https://github.com/tophf/mpiv/discussions
  * @example https://github.com/sindresorhus/refined-github/milestones/new // Gotcha for isRepoTaxonomyIssueOrPRList
  * @example https://github.com/sindresorhus/refined-github/milestones/1/edit // Gotcha for isRepoTaxonomyIssueOrPRList
  * @example https://github.com/sindresorhus/refined-github/issues/new/choose // Gotcha for isRepoIssueList
@@ -589,7 +588,6 @@ export const isRepoIssueList = (url: URL | HTMLAnchorElement | Location = locati
 const hasSearchParameter = (url: URL | HTMLAnchorElement | Location): boolean => new URLSearchParams(url.search).get('search') === '1';
 
 /**
- * Some tests are here only as "gotchas" for other tests that may misidentify their pages
  * @example https://github.com/sindresorhus/refined-github
  * @example https://github.com/sindresorhus/refined-github/
  * @example https://github.com/sindresorhus/notifications/
