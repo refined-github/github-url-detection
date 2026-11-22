@@ -1,8 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"emitDeclarationOnly": true,
-		"allowImportingTsExtensions": true
+		"noEmit": true
 	},
 	"include": [
 		"index.ts",

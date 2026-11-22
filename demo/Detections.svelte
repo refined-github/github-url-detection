@@ -1,6 +1,6 @@
 <script>
 	import * as urlDetection from '../index';
-	import { getTests } from './examples';
+	import { getTests } from '../collector';
 </script>
 
 <style>

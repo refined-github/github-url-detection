@@ -1,12 +1,9 @@
 /// <reference lib="dom" />
-import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import {test, expect} from 'vitest';
 import stripIndent from 'strip-indent';
-import {collect} from './collector.js';
+import {getAllUrls, getTests} from './collector.js';
 import * as pageDetect from './index.js';
-
-const {getAllUrls, getTests} = collect(readFileSync('index.ts', 'utf8'));
 
 (globalThis as any).document = {title: '', readyState: 'loading'};
 (globalThis as any).location = new URL('https://github.com/');
