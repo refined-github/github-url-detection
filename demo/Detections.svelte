@@ -1,6 +1,6 @@
 <script>
 	import * as urlDetection from '../index';
-	import { getTests } from '../collector';
+	import { tests } from 'virtual:examples';
 </script>
 
 <style>
@@ -14,7 +14,7 @@
 {#each Object.keys(urlDetection) as name}
 	{#if !name.startsWith('_') && name !== 'utils'}
 		<h2 id={name}><a href="#{name}">{name}</a></h2>
-		{@const urls = getTests(name)}
+		{@const urls = tests[name] ?? []}
 		{#if urls[0] === 'combinedTestOnly'}
 			<p><em>Demo URLs missing</em></p>
 			{:else if urls.length === 0}

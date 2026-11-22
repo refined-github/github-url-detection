@@ -15,7 +15,19 @@ import * as pageDetect from './index.js';
 	clearTimeout(id);
 };
 
-const allUrls = getAllUrls();
+// URLs that no detection should match
+const urlsThatDontMatch = [
+	'https://github.com/sindresorhus/refined-github/issues/new',
+	'https://github.com/sindresorhus/refined-github/issues/new/choose',
+	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
+	'https://github.com/orgs/community/discussions/new/choose',
+];
+
+// Depends on `document.title`, which is not set here
+const needsTitle = new Set(['isRepoFile404']);
+
+const titleUrls = new Set([...needsTitle].flatMap(name => getTests(name)));
+const allUrls = new Set([...getAllUrls(), ...urlsThatDontMatch].filter(url => !titleUrls.has(url)));
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
@@ -24,14 +36,14 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = getTests(detectName);
 
-	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
+	if (validURLs[0] === 'combinedTestOnly' || needsTitle.has(detectName) || String(detect).startsWith('() =>')) {
 		continue;
 	}
 
 	test(detectName + ' has tests', () => {
 		assert.ok(
 			Array.isArray(validURLs),
-			`The function \`${detectName}\` doesn’t have any tests. Set them via \`addTests()\``,
+			`The function \`${detectName}\` doesn’t have any tests. Add \`@example\` tags to its JSDoc`,
 		);
 	});
 
@@ -48,7 +60,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						${url.replace('https://github.com', '')}
 
 					• Yes? The \`${detectName}\` detection is wrong and should be fixed.
-					• No? Remove it from its \`addTests()\` array.
+					• No? Remove it from the \`@example\` tags of its JSDoc.
 				`),
 			);
 		});
@@ -64,7 +76,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						Is this URL \`${detectName}\`?
 							${url.replace('https://github.com', '')}
 
-						• Yes? Add it to the \`addTests()\` array.
+						• Yes? Add it to the \`@example\` tags of its JSDoc.
 						• No? The \`${detectName}\` detection is wrong and should be fixed.
 					`),
 				);

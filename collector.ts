@@ -1,9 +1,27 @@
-/** @file This needs to be in a separate file so it can bee tree-shaken before being published, while still being importable by tests */
+/** @file Reads the example URLs from the JSDoc of each detection in `index.ts` */
+import {fileURLToPath} from 'node:url';
+import {Project} from 'ts-morph';
 
+// `@example` is a URL, `@see` is another detection, `@combinedTestOnly` skips the URL checks
 export const testableUrls = new Map<string, string[]>();
 
-export function addTests(test: string, urls: string[]): void {
-	TEST: testableUrls.set(test, urls);
+const source = new Project({skipAddingFilesFromTsConfig: true})
+	.addSourceFileAtPath(fileURLToPath(new URL('index.ts', import.meta.url)));
+
+for (const statement of source.getVariableStatements()) {
+	const entries: string[] = [];
+	for (const tag of statement.getJsDocs().flatMap(doc => doc.getTags())) {
+		const [, name, value] = /^@(\w+)\s*(\S*)/.exec(tag.getText()) ?? [];
+		if (name === 'combinedTestOnly') {
+			entries.push('combinedTestOnly');
+		} else if ((name === 'example' || name === 'see') && value) {
+			entries.push(value);
+		}
+	}
+
+	if (statement.isExported() && entries.length > 0) {
+		testableUrls.set(statement.getDeclarations()[0]!.getName(), entries);
+	}
 }
 
 export function getTests(detectName: string): string[] {
