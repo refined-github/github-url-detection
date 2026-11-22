@@ -131,12 +131,12 @@ export const isDashboard = (url: URL | HTMLAnchorElement | Location = location):
  * @example https://github.big-corp.com/
  * @example https://not-github.com/
  * @example https://my-little-hub.com/
- * @example https://github.com/?tab=repositories // Gotcha for `isUserProfileRepoTab`
- * @example https://github.com/?tab=stars // Gotcha for `isUserProfileStarsTab`
- * @example https://github.com/?tab=followers // Gotcha for `isUserProfileFollowersTab`
- * @example https://github.com/?tab=following // Gotcha for `isUserProfileFollowingTab`
- * @example https://github.com/?tab=overview // Gotcha for `isUserProfileMainTab`
- * @example https://github.com?search=1 // Gotcha for `isRepoTree`
+ * @example https://github.com/?tab=repositories
+ * @example https://github.com/?tab=stars
+ * @example https://github.com/?tab=followers
+ * @example https://github.com/?tab=following
+ * @example https://github.com/?tab=overview
+ * @example https://github.com?search=1
  */
 export const isHome = (url: URL | HTMLAnchorElement | Location = location): boolean => !isGist(url) && /^$|^dashboard\/?$/.test(getCleanPathname(url));
 
@@ -359,12 +359,11 @@ export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = locatio
 
 /**
  * @see isPRCommit
- * // File contents but lacks "Viewed" checkbox, has commit information
  * @example https://github.com/sindresorhus/refined-github/pull/148/files
- * @example https://github.com/sindresorhus/refined-github/pull/148/files/e1aba6f // This means "every commit until e1aba6f"
- * @example https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f // This means specifically "Between commit A and B"
+ * @example https://github.com/sindresorhus/refined-github/pull/148/files/e1aba6f
+ * @example https://github.com/sindresorhus/refined-github/pull/148/files/1e27d799..e1aba6f
  * @example https://github.com/refined-github/refined-github/pull/148/changes
- * @example https://github.com/refined-github/refined-github/pull/148/changes/1e27d799..e1aba6f // This means specifically "Between commit A and B"
+ * @example https://github.com/refined-github/refined-github/pull/148/changes/1e27d799..e1aba6f
  * @example https://github.com/refined-github/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641..e1aba6febb3fe38aafd1137cff28b536eeeabe7e
  */
 export const isPRFiles = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/(files|(changes(\/[\da-f]{7,40}..[\da-f]{7,40})?$))/.test(getRepo(url)?.path) || isPRCommit(url);
@@ -410,8 +409,8 @@ export const isReleases = (url: URL | HTMLAnchorElement | Location = location): 
 export const isTags = (url: URL | HTMLAnchorElement | Location = location): boolean => getRepo(url)?.path === 'tags';
 
 /**
- * @example https://github.com/refined-github/refined-github/releases/tag/1.20.1 // Tag
- * @example https://github.com/refined-github/refined-github/releases/tag/23.7.25 // Release
+ * @example https://github.com/refined-github/refined-github/releases/tag/1.20.1
+ * @example https://github.com/refined-github/refined-github/releases/tag/23.7.25
  */
 export const isSingleReleaseOrTag = (url: URL | HTMLAnchorElement | Location = location): boolean => Boolean(getRepo(url)?.path!.startsWith('releases/tag'));
 
@@ -507,11 +506,11 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @example https://github.com/tophf/mpiv/discussions/50
  * @example https://github.com/withastro/roadmap/discussions/new?category=proposal
  * @example https://github.com/tophf/mpiv/discussions
- * @example https://github.com/sindresorhus/refined-github/milestones/new // Gotcha for isRepoTaxonomyIssueOrPRList
- * @example https://github.com/sindresorhus/refined-github/milestones/1/edit // Gotcha for isRepoTaxonomyIssueOrPRList
- * @example https://github.com/sindresorhus/refined-github/issues/new/choose // Gotcha for isRepoIssueList
- * @example https://github.com/sindresorhus/refined-github/issues/templates/edit // Gotcha for isRepoIssueList
- * @example https://github.com/refined-github/refined-github/issues/views // Gotcha for isRepoIssueList
+ * @example https://github.com/sindresorhus/refined-github/milestones/new
+ * @example https://github.com/sindresorhus/refined-github/milestones/1/edit
+ * @example https://github.com/sindresorhus/refined-github/issues/new/choose
+ * @example https://github.com/sindresorhus/refined-github/issues/templates/edit
+ * @example https://github.com/refined-github/refined-github/issues/views
  */
 export const isRepo = (url: URL | HTMLAnchorElement | Location = location): boolean => {
 	const [user, repo, extra] = getCleanPathname(url).split('/');
@@ -850,8 +849,8 @@ const doesLookLikeAProfile = (string: string | undefined): boolean =>
  * @example https://github.com/sindresorhus?tab=followers
  * @example https://github.com/fregante?tab=following
  * @example https://github.com/sindresorhus?tab=following
- * @example https://github.com/pullsuser // Gotcha for isGlobalPRList
- * @example https://github.com/issuesuser // Gotcha for isGlobalIssueList
+ * @example https://github.com/pullsuser
+ * @example https://github.com/issuesuser
  */
 export const isProfile = (url: URL | HTMLAnchorElement | Location = location): boolean =>
 	!isGist(url)
