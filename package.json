@@ -25,7 +25,7 @@
 	],
 	"scripts": {
 		"build": "run-p build:*",
-		"build:typescript": "tsc -p tsconfig.build.json",
+		"build:typescript": "tsc",
 		"build:demo": "vite build demo",
 		"fix": "xo --fix",
 		"prepack": "npm run build",
@@ -33,7 +33,7 @@
 		"test:unit": "vitest",
 		"test:demo": "svelte-check",
 		"watch": "run-p watch:*",
-		"watch:typescript": "tsc --watch",
+		"watch:typescript": "tsc --watch --noEmit",
 		"watch:test:unit": "npm run test:unit -- --watch",
 		"watch:demo": "vite preview demo & npm run build:demo -- --watch # vite serve isn't real",
 		"xo": "xo"

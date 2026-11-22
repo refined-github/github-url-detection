@@ -2,12 +2,13 @@ import {resolve} from 'node:path';
 import * as url from 'node:url';
 import {defineConfig} from 'vite';
 import {svelte} from '@sveltejs/vite-plugin-svelte';
+import {examples} from '../vite-plugin-examples.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
 	base: '',
-	plugins: [svelte()],
+	plugins: [svelte(), examples()],
 	build: {
 		rollupOptions: {
 			input: {
