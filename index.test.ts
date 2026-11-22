@@ -15,11 +15,8 @@ import * as pageDetect from './index.js';
 	clearTimeout(id);
 };
 
-// URLs that no detection should match
+// Matched by no detection
 const urlsThatDontMatch = [
-	'https://github.com/sindresorhus/refined-github/issues/new',
-	'https://github.com/sindresorhus/refined-github/issues/new/choose',
-	'https://github.com/sindresorhus/refined-github/issues/templates/edit',
 	'https://github.com/orgs/community/discussions/new/choose',
 ];
 
