@@ -15,9 +15,7 @@
 	{#if !name.startsWith('_') && name !== 'utils'}
 		<h2 id={name}><a href="#{name}">{name}</a></h2>
 		{@const urls = tests[name] ?? []}
-		{#if urls[0] === 'combinedTestOnly'}
-			<p><em>Demo URLs missing</em></p>
-			{:else if urls.length === 0}
+		{#if urls.length === 0}
 			<p><em>Undeterminable via URL</em></p>
 		{:else}
 			<pre><code>

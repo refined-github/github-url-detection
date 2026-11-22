@@ -23,11 +23,14 @@ const urlsThatDontMatch = [
 	'https://github.com/orgs/community/discussions/new/choose',
 ];
 
-// Depends on `document.title`, which is not set here
-const needsTitle = new Set(['isRepoFile404']);
+// Can't be tested via URLs alone
+const skipped = new Set([
+	'isRepoFile404', // Depends on `document.title`
+	'hasRepoHeader', // `isRepo` except `isRepoSearch`
+]);
 
-const titleUrls = new Set([...needsTitle].flatMap(name => getTests(name)));
-const allUrls = new Set([...getAllUrls(), ...urlsThatDontMatch].filter(url => !titleUrls.has(url)));
+const skippedUrls = new Set([...skipped].flatMap(name => getTests(name)));
+const allUrls = new Set([...getAllUrls(), ...urlsThatDontMatch].filter(url => !skippedUrls.has(url)));
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
@@ -36,7 +39,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = getTests(detectName);
 
-	if (validURLs[0] === 'combinedTestOnly' || needsTitle.has(detectName) || String(detect).startsWith('() =>')) {
+	if (skipped.has(detectName) || String(detect).startsWith('() =>')) {
 		continue;
 	}
 

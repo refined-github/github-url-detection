@@ -2,7 +2,7 @@
 import {fileURLToPath} from 'node:url';
 import {Project} from 'ts-morph';
 
-// `@example` is a URL, `@see` is another detection, `@combinedTestOnly` skips the URL checks
+// `@example` is a URL, `@see` is another detection
 export const testableUrls = new Map<string, string[]>();
 
 const source = new Project({skipAddingFilesFromTsConfig: true})
@@ -12,9 +12,7 @@ for (const statement of source.getVariableStatements()) {
 	const entries: string[] = [];
 	for (const tag of statement.getJsDocs().flatMap(doc => doc.getTags())) {
 		const [, name, value] = /^@(\w+)\s*(\S*)/.exec(tag.getText()) ?? [];
-		if (name === 'combinedTestOnly') {
-			entries.push('combinedTestOnly');
-		} else if ((name === 'example' || name === 'see') && value) {
+		if ((name === 'example' || name === 'see') && value) {
 			entries.push(value);
 		}
 	}
@@ -25,10 +23,6 @@ for (const statement of source.getVariableStatements()) {
 }
 
 export function getTests(detectName: string): string[] {
-	if (detectName === 'combinedTestOnly') {
-		return ['combinedTestOnly'];
-	}
-
 	return testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url) ?? []) ?? [];
 }
 
