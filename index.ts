@@ -469,7 +469,6 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isActionJobRun
  * @see isBranches
  * @see isCompare
- * @see isQuickPR
  * @see isDeletingFile
  * @see isEditingFile
  * @see isEditingRelease
@@ -485,8 +484,6 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isNewRelease
  * @see isPR
  * @see isPRConversation
- * @see isPRFiles
- * @see isPRCommitList
  * @see isPRConflicts
  * @see isProjects
  * @see isReleases
@@ -494,9 +491,6 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isRepoCommitList
  * @see isRepoForksList
  * @see isRepoGitObject
- * @see isRepoTree
- * @see isSingleFile
- * @see isBlame
  * @see isRepoIssueList
  * @see isRepoNetworkGraph
  * @see isRepoSearch
