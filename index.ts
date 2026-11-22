@@ -337,7 +337,6 @@ export const isPRConflicts = (url: URL | HTMLAnchorElement | Location = location
 export const isPRList = (url: URL | HTMLAnchorElement | Location = location): boolean => isRepoPRList(url) || isGlobalPRList(url);
 
 /**
- * Since December 2025
  * @example https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d7998afdd3608d9fc3bf95ccf27fa5010641
  * @example https://github.com/sindresorhus/refined-github/pull/148/commits/1e27d79
  * @example https://github.com/sindresorhus/refined-github/pull/148/changes/1e27d7998afdd3608d9fc3bf95ccf27fa5010641
@@ -359,7 +358,6 @@ export const isPRConversation = (url: URL | HTMLAnchorElement | Location = locat
 export const isPRCommitList = (url: URL | HTMLAnchorElement | Location = location): boolean => /^pull\/\d+\/commits$/.test(getRepo(url)?.path);
 
 /**
- * Since December 2025
  * @see isPRCommit
  * // File contents but lacks "Viewed" checkbox, has commit information
  * @example https://github.com/sindresorhus/refined-github/pull/148/files
@@ -468,10 +466,10 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * Repo URLs from detections that also cover non-repo pages
  * These URLs are repos but don't match any specific detection
  * @see isActionRun
- * // Includes isActionJobRun URLs
+ * @see isActionJobRun
  * @see isBranches
  * @see isCompare
- * // Includes isQuickPR URLs
+ * @see isQuickPR
  * @see isDeletingFile
  * @see isEditingFile
  * @see isEditingRelease
@@ -486,7 +484,9 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isNewIssue
  * @see isNewRelease
  * @see isPR
- * // Includes isPRConversation, isPRFiles (→isPRCommit), isPRCommitList
+ * @see isPRConversation
+ * @see isPRFiles
+ * @see isPRCommitList
  * @see isPRConflicts
  * @see isProjects
  * @see isReleases
@@ -494,15 +494,19 @@ export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = loca
  * @see isRepoCommitList
  * @see isRepoForksList
  * @see isRepoGitObject
- * // Includes isRepoTree (→isRepoRoot→isRepoHome), isSingleFile (→isRenderedTextFile), isBlame
+ * @see isRepoTree
+ * @see isSingleFile
+ * @see isBlame
  * @see isRepoIssueList
  * @see isRepoNetworkGraph
  * @see isRepoSearch
  * @see isRepoSettings
- * // Includes isRepoMainSettings
+ * @see isRepoMainSettings
  * @see isRepoTaxonomyIssueOrPRList
  * @see isRepoWiki
- * // Includes isNewWikiPage, isEditingWikiPage, isCompareWikiPage
+ * @see isNewWikiPage
+ * @see isEditingWikiPage
+ * @see isCompareWikiPage
  * @see isRepositoryActions
  * @see isSingleCommit
  * @see isSingleReleaseOrTag

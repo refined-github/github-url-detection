@@ -23,7 +23,7 @@ for (const statement of source.getVariableStatements()) {
 }
 
 export function getTests(detectName: string): string[] {
-	return testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url) ?? []) ?? [];
+	return [...new Set(testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url)))];
 }
 
 export function getAllUrls(): Set<string> {
