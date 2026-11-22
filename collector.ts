@@ -1,19 +1,9 @@
-/** @file This needs to be in a separate file so it can bee tree-shaken before being published, while still being importable by tests */
-
-export const testableUrls = new Map<string, string[]>();
-
-export function addTests(test: string, urls: string[]): void {
-	TEST: testableUrls.set(test, urls);
-}
+import examples from 'virtual:examples';
 
 export function getTests(detectName: string): string[] {
-	if (detectName === 'combinedTestOnly') {
-		return ['combinedTestOnly'];
-	}
-
-	return testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url) ?? []) ?? [];
+	return [...new Set(examples[detectName]?.flatMap(url => url.startsWith('http') ? url : getTests(url)))];
 }
 
 export function getAllUrls(): Set<string> {
-	return new Set<string>([...testableUrls.values()].flat().filter(url => url.startsWith('http')));
+	return new Set(Object.values(examples).flat().filter(url => url.startsWith('http')));
 }

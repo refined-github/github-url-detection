@@ -1,7 +1,7 @@
 <script>
 	import parseUrl from './parse-url.js';
 	import * as urlDetection from '../index';
-	import { getAllUrls, testableUrls } from '../collector';
+	import { getAllUrls } from '../collector';
 
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	const urlParameter = new URLSearchParams(location.search);

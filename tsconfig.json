@@ -1,13 +1,11 @@
 {
 	"extends": "@sindresorhus/tsconfig",
-	"compilerOptions": {
-		"emitDeclarationOnly": true,
-		"allowImportingTsExtensions": true
-	},
 	"include": [
 		"index.ts",
 		"index.test.ts",
 		"global.d.ts",
-		"collector.ts"
+		"collector.ts",
+		"vite-plugin-examples.ts",
+		"vite.config.ts"
 	]
 }

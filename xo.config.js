@@ -17,8 +17,6 @@ const xoConfig = [
 		rules: {
 			'@typescript-eslint/triple-slash-reference': 'off',
 			'@typescript-eslint/naming-convention': 'off',
-			'no-unused-labels': 'off',
-			'no-labels': 'off',
 		},
 	},
 ];

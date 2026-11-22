@@ -15,7 +15,14 @@ import * as pageDetect from './index.js';
 	clearTimeout(id);
 };
 
-const allUrls = getAllUrls();
+// Can't be tested via URLs alone
+const skipped = new Set([
+	'isRepoFile404', // Depends on `document.title`
+	'hasRepoHeader', // `isRepo` except `isRepoSearch`
+]);
+
+const skippedUrls = new Set([...skipped].flatMap(name => getTests(name)));
+const allUrls = new Set([...getAllUrls()].filter(url => !skippedUrls.has(url)));
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
@@ -24,14 +31,14 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 
 	const validURLs = getTests(detectName);
 
-	if (validURLs[0] === 'combinedTestOnly' || String(detect).startsWith('() =>')) {
+	if (skipped.has(detectName) || String(detect).startsWith('() =>')) {
 		continue;
 	}
 
 	test(detectName + ' has tests', () => {
 		assert.ok(
 			Array.isArray(validURLs),
-			`The function \`${detectName}\` doesn’t have any tests. Set them via \`addTests()\``,
+			`The function \`${detectName}\` doesn’t have any tests. Add \`@example\` tags to its JSDoc`,
 		);
 	});
 
@@ -48,7 +55,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						${url.replace('https://github.com', '')}
 
 					• Yes? The \`${detectName}\` detection is wrong and should be fixed.
-					• No? Remove it from its \`addTests()\` array.
+					• No? Remove it from the \`@example\` tags of its JSDoc.
 				`),
 			);
 		});
@@ -64,7 +71,7 @@ for (const [detectName, detect] of Object.entries(pageDetect)) {
 						Is this URL \`${detectName}\`?
 							${url.replace('https://github.com', '')}
 
-						• Yes? Add it to the \`addTests()\` array.
+						• Yes? Add it to the \`@example\` tags of its JSDoc.
 						• No? The \`${detectName}\` detection is wrong and should be fixed.
 					`),
 				);
