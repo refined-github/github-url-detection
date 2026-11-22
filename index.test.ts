@@ -15,11 +15,6 @@ import * as pageDetect from './index.js';
 	clearTimeout(id);
 };
 
-// Matched by no detection
-const urlsThatDontMatch = [
-	'https://github.com/orgs/community/discussions/new/choose',
-];
-
 // Can't be tested via URLs alone
 const skipped = new Set([
 	'isRepoFile404', // Depends on `document.title`
@@ -27,7 +22,7 @@ const skipped = new Set([
 ]);
 
 const skippedUrls = new Set([...skipped].flatMap(name => getTests(name)));
-const allUrls = new Set([...getAllUrls(), ...urlsThatDontMatch].filter(url => !skippedUrls.has(url)));
+const allUrls = new Set([...getAllUrls()].filter(url => !skippedUrls.has(url)));
 
 for (const [detectName, detect] of Object.entries(pageDetect)) {
 	if (typeof detect !== 'function') {
