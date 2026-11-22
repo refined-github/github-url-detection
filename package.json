@@ -25,7 +25,8 @@
 	],
 	"scripts": {
 		"build": "run-p build:*",
-		"build:typescript": "tsc",
+		"build:js": "tsc --removeComments --declaration false",
+		"build:types": "tsc --emitDeclarationOnly",
 		"build:demo": "vite build demo",
 		"fix": "xo --fix",
 		"prepack": "npm run build",
