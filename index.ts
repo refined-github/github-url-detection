@@ -463,7 +463,6 @@ export const isEditingWikiPage = (url: URL | HTMLAnchorElement | Location = loca
 export const hasWikiPageEditor = (url: URL | HTMLAnchorElement | Location = location): boolean => isEditingWikiPage(url) || isNewWikiPage(url);
 
 /**
- * Repo URLs from detections that also cover non-repo pages
  * @see isActionRun
  * @see isActionJobRun
  * @see isBranches
