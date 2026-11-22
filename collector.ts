@@ -1,31 +1,22 @@
-/** @file Reads the example URLs from the JSDoc of each detection in `index.ts` */
-import {fileURLToPath} from 'node:url';
-import {Project} from 'ts-morph';
+/** @file Reads the example URLs from the JSDoc of each detection in the source of `index.ts` */
 
-// `@example` is a URL, `@see` is another detection
-export const testableUrls = new Map<string, string[]>();
-
-const source = new Project({skipAddingFilesFromTsConfig: true})
-	.addSourceFileAtPath(fileURLToPath(new URL('index.ts', import.meta.url)));
-
-for (const statement of source.getVariableStatements()) {
-	const entries: string[] = [];
-	for (const tag of statement.getJsDocs().flatMap(doc => doc.getTags())) {
-		const [, name, value] = /^@(\w+)\s*(\S*)/.exec(tag.getText()) ?? [];
-		if ((name === 'example' || name === 'see') && value) {
-			entries.push(value);
+export function collect(source: string) {
+	// `@example` is a URL, `@see` is another detection
+	const testableUrls = new Map<string, string[]>();
+	for (const [, jsdoc, name] of source.matchAll(/^\/\*\*\n((?: \*(?: .*)?\n)*) \*\/\nexport (?:const|function) (\w+)/gm)) {
+		const entries = [...jsdoc!.matchAll(/^ \* @(?:example|see) (\S+)/gm)].map(match => match[1]!);
+		if (entries.length > 0) {
+			testableUrls.set(name!, entries);
 		}
 	}
 
-	if (statement.isExported() && entries.length > 0) {
-		testableUrls.set(statement.getDeclarations()[0]!.getName(), entries);
+	function getTests(detectName: string): string[] {
+		return [...new Set(testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url)))];
 	}
-}
 
-export function getTests(detectName: string): string[] {
-	return [...new Set(testableUrls.get(detectName)?.flatMap(url => url.startsWith('http') ? url : getTests(url)))];
-}
+	function getAllUrls(): Set<string> {
+		return new Set([...testableUrls.values()].flat().filter(url => url.startsWith('http')));
+	}
 
-export function getAllUrls(): Set<string> {
-	return new Set<string>([...testableUrls.values()].flat().filter(url => url.startsWith('http')));
+	return {getTests, getAllUrls};
 }

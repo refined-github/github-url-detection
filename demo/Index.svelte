@@ -1,7 +1,7 @@
 <script>
 	import parseUrl from './parse-url.js';
 	import * as urlDetection from '../index';
-	import { allUrls as examples } from 'virtual:examples';
+	import { getAllUrls } from './examples';
 
 	const defaultUrl = 'https://github.com/refined-github/github-url-detection';
 	const urlParameter = new URLSearchParams(location.search);
@@ -9,7 +9,7 @@
 	// Parse partial URL in the parameter so that it's shown as full URL in the field
 	let urlField = $state(parsedUrlParameter || '');
 
-	const allUrls = [...examples].sort();
+	const allUrls = [...getAllUrls()].sort();
 
 	// Do not use ?? because it should work on empty strings
 	let parsedUrl = $derived(parseUrl(urlField || defaultUrl));

@@ -1,6 +1,6 @@
 <script>
 	import * as urlDetection from '../index';
-	import { tests } from 'virtual:examples';
+	import { getTests } from './examples';
 </script>
 
 <style>
@@ -14,7 +14,7 @@
 {#each Object.keys(urlDetection) as name}
 	{#if !name.startsWith('_') && name !== 'utils'}
 		<h2 id={name}><a href="#{name}">{name}</a></h2>
-		{@const urls = tests[name] ?? []}
+		{@const urls = getTests(name)}
 		{#if urls.length === 0}
 			<p><em>Undeterminable via URL</em></p>
 		{:else}
